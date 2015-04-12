@@ -1,3 +1,7 @@
 Dummy:
   data: 'txt'
   param: "33333"
+
+LoadTXT:
+  file: "./recipes/dummy.yml"
+  type: "yml"

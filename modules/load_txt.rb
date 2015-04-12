@@ -1,11 +1,12 @@
 require_relative('../module_med')
 
 gem 'sqlite3', '~> 1.3.10'
+require 'sqlite3'
 
-class LoadTXT < ModuleMed
+class LoadTXT < ModuleMED
   def initialize
     @db = SQLite3::Database.new(":memory:")
-
+    @db.execute("Create table data (line varchar(255));")
   end
   def inputRecipe(fdata)
     # nacteni parametru pro zpracovani
@@ -17,6 +18,8 @@ class LoadTXT < ModuleMed
 
     @type = fdata["type"]
     @file = fdata["file"]
+
+    printf("Data načtena")
 
   end
 
@@ -37,9 +40,13 @@ class LoadTXT < ModuleMed
 
   def execute(fdata)
     # spusteni zpracovani
+    @db.execute "delete from data;"
     data = File.open(@file)
-    data.readline.each { |line|
-      fdata
+    data.each_line { |line|
+      printf(line)
+      @db.execute "insert into data values (?)", [line]
     }
+    printf("vkládání provedeno")
+    fdata = @db
   end
 end

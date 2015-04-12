@@ -2,6 +2,7 @@ require 'yaml'
 require './module_med.rb'
 
 gem 'sqlite3', '~> 1.3.10'
+require 'sqlite3'
 
 class ArbitrMED
   def initialize
@@ -24,6 +25,11 @@ class ArbitrMED
     print mod[0]
     emodule = eval(mod[0] +".new")
     emodule.properties(mod[1])
+
+    emodule.preprocessing(@db)
+    emodule.execute(@db)
+    emodule.postprocessing(@db)
+
   end
 
   def loadRecipe (recipe)
