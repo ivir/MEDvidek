@@ -1,5 +1,28 @@
 # Trida DB je urcena pro abstrakci pristupu dat
 # bude zprostredkovávat pridavani/odebirani sloupcu, dat a i jejich aktualizaci s ohledem na narocnost uprav
+#------------------------------------------------------------------------------------------------------------
+#
+# Myslenka:
+#    Objekt si do SQLite nacte data z externich dat/DB. V pripade DB provede nejdrive overeni na pocet zaznamu a pripadne nacte pouze cast
+#
+#
+#
+#
+#
+#
+#
+#
+class DB_row
+   def initialize
+       @modified = false
+       @data = nil
+   end
+   
+   def [](column, sdata=nil)
+       @data[column] = data unless sdata.nil
+       @data
+   end
+end
 
 class DB
 private
@@ -7,6 +30,10 @@ private
     
     
 public
+    #construktor fce
+    def initialize
+        
+    end
     #prida sloupec
     def column_add(what, column_data)
         
