@@ -12,6 +12,9 @@
 #
 #
 #
+gem 'sqlite3', '~> 1.3.10'
+require 'sqlite3'
+
 class DB_row
    def initialize
        @modified = false
@@ -32,7 +35,7 @@ private
 public
     #construktor fce
     def initialize
-        
+        @data = SQLite3::Database.new(":memory:")
     end
     #prida sloupec
     def column_add(what, column_data)
@@ -65,10 +68,15 @@ public
     
     #nacteni dat
     def load(what)
+        @data.load(what) if(what.class == String)
+        @data = what.clone() if(what.class == SQLite3::Database)
     end
     
     #ulozeni dat
     def store(where)
+        tmp = SQLite3::Database.new(where)
+        tmp = @data.clone
+        tmp.close
     end
     
     #ulozeni vsech zmen
@@ -79,7 +87,7 @@ public
     def clear
     end
     
-    #konfigurage pracovniho prostredi
+    #konfigurace pracovniho prostredi
     def configuration(parameters)
     end
 end
