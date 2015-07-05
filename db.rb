@@ -34,12 +34,38 @@ class Dataset
         def initialize
             @data = nil
         end
+        
+        # pristup k datum a jejich uprava
         def [](row, sdata=nil)
             @data = Hash.new if @data.nil?
             @data[row] = sdata
         end
         
+        #pridani sloupce
+        def add_column(name,value)
+        end
         
+        #prejmenovani sloupce
+        def rename_column(oldname,newname)
+        end
+        
+        #spojeni dat z vice datasetu
+        def join(secDataset,pair)
+        end
+        
+        #ulozeni datasetu, v columns jsou uvedeny sloupce, ktere se maji ulozit
+        def store(columns=nil)
+        end
+        
+        #vlozeni dat do datasetu
+        def push(sdata)
+        end
+        
+        #navrati dataset sloupcu dle columns
+        def get_data(columns=nil)
+        end
+end
+
 class DB
 private
     
