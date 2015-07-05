@@ -6,9 +6,9 @@
 #    Objekt si do SQLite nacte data z externich dat/DB. V pripade DB provede nejdrive overeni na pocet zaznamu a pripadne nacte pouze cast
 #
 #
-#
-#
-#
+#    DB - provadi nacitani dat a poskytnuti datasetu pro zpracovani s pripadnym poskytnutim dalsich dat
+#    Dataset - data navracena DB pro zpracovani s moznosti pridavani/odebirani sloupcu a podobne upravy
+#    DB_row - provedene upravy
 #
 #
 #
@@ -27,6 +27,19 @@ class DB_row
    end
 end
 
+class Dataset
+    private
+    
+    public
+        def initialize
+            @data = nil
+        end
+        def [](row, sdata=nil)
+            @data = Hash.new if @data.nil?
+            @data[row] = sdata
+        end
+        
+        
 class DB
 private
     
@@ -57,6 +70,7 @@ public
     def column_rename(from, to)
         
     end
+    
     
     #odstrani dany sloupec
     def column_remove(what)
