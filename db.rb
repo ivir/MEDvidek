@@ -32,7 +32,13 @@ class Dataset
     
     public
         def initialize
+            #@data obsahuje skutecna data s nimiz se pracuje
             @data = nil
+            #@renamed obsahuje informace o provedenych prejmenovani
+            @renamed = Hash.new
+            #@zaznam provedenych operaci
+            @operations = Array.new
+            
         end
         
         # pristup k datum a jejich uprava
@@ -43,14 +49,25 @@ class Dataset
         
         #pridani sloupce
         def add_column(name,value)
+            @data.each do |row|
+                row[name]=value
+            end
         end
         
         #prejmenovani sloupce
         def rename_column(oldname,newname)
+            @renamed[oldname]=newname
+            @data.each do |row|
+                row[newname] = row[oldname]
+            end
         end
         
         #spojeni dat z vice datasetu
         def join(secDataset,pair)
+            @data.each do |row|
+                #secDataset.find(pair[0])
+                #TODO dodělat spojovani dvou tabulek
+            end
         end
         
         #ulozeni datasetu, v columns jsou uvedeny sloupce, ktere se maji ulozit
