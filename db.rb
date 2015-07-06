@@ -80,6 +80,7 @@ class Dataset
         
         #navrati dataset sloupcu dle columns
         def get_data(columns=nil)
+            @data
         end
 end
 
