@@ -54,6 +54,7 @@ public
     end
     
     #prejmenuje sloupce z from na to
+    # chybi zpusob vyuziti krom prejmenovavani na vystupu
     def column_rename(from, to)
         
     end

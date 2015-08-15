@@ -1,0 +1,17 @@
+#ukazkovy recept pro zjisteni prumeru ze dvou cisel
+LoadCSV:
+  store: "numbers"
+  file: "./recipes/numbers.csv"
+  type: "csv"
+
+Compute:
+  source: "numbers"
+  store: "average"
+  calculate: "(first + second)/2"
+
+Agregate:
+  store: "cumul_avg"
+  source: "average"
+
+Print:
+  source: "average"
