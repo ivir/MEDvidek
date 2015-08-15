@@ -26,9 +26,9 @@ class ArbitrMED
     emodule = eval(mod[0] +".new")
     emodule.properties(@memory,mod[1])
 
-    emodule.preprocessing(@db)
-    emodule.execute(@db)
-    emodule.postprocessing(@db)
+    emodule.preprocessing(@memory)
+    emodule.execute(@memory)
+    emodule.postprocessing(@memory)
 
   end
 

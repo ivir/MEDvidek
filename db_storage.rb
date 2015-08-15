@@ -1,13 +1,13 @@
-# Trida DB je urcena pro abstrakci pristupu dat
+# Trida DBStorage je urcena pro abstrakci pristupu dat
 # bude zprostredkovávat pridavani/odebirani sloupcu, dat a i jejich aktualizaci s ohledem na narocnost uprav
 #------------------------------------------------------------------------------------------------------------
 #
 # Myslenka:
-#    Objekt si do SQLite nacte data z externich dat/DB. V pripade DB provede nejdrive overeni na pocet zaznamu a pripadne nacte pouze cast
+#    Objekt si do SQLite nacte data z externich dat/DBStorage. V pripade DBStorage provede nejdrive overeni na pocet zaznamu a pripadne nacte pouze cast
 #
 #
-#    DB - provadi nacitani dat a poskytnuti datasetu pro zpracovani s pripadnym poskytnutim dalsich dat
-#    Dataset - data navracena DB pro zpracovani s moznosti pridavani/odebirani sloupcu a podobne upravy
+#    DBStorage - provadi nacitani dat a poskytnuti datasetu pro zpracovani s pripadnym poskytnutim dalsich dat
+#    Dataset - data navracena DBStorage pro zpracovani s moznosti pridavani/odebirani sloupcu a podobne upravy
 #    DB_row - provedene upravy
 #
 #
@@ -49,6 +49,7 @@ class Dataset
         
         #pridani sloupce
         def add_column(name,value)
+            @data = Hash.new if @data.nil?
             @data.each do |row|
                 row[name]=value
             end
@@ -88,7 +89,7 @@ class Dataset
         end
 end
 
-class DB
+class DBStorage
 private
     
     
@@ -100,13 +101,14 @@ public
         @data = SQLite3::Database.new(":memory:")
         @changes = Hash.new
     end
+
+    def create
+        return Dataset.new
+    end
+
     #prida sloupec
     #what = jakou tabulku rozsiruje
     #column = nazev rozsirujici polozky
-
-    def create()
-        return Dataset.new
-    end
     def column_add(what, column)
         ctype = "TEXT"
         ctype = "INT" if(column.is_a?(Integer))
@@ -134,7 +136,7 @@ public
     #where - do jake tabulky
     #sdata - data do konkretnich sloupcu
     # funguje na principu zapsani zmen do @changes, pricemz tyto zmeny se pomalu zapisuji do originalni databaze,
-    # aby v situaci radku, ktery se bude casto menit se menit v pameti a do DB se ulozil az po ustabilizovani
+    # aby v situaci radku, ktery se bude casto menit se menit v pameti a do DBStorage se ulozil az po ustabilizovani
     def add(where,sdata)
         @changes[where] = sdata
     end

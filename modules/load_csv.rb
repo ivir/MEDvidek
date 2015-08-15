@@ -1,5 +1,5 @@
 require_relative('../module_med')
-require_relative('../db')
+require_relative('../db_storage')
 
 gem 'sqlite3', '~> 1.3.10'
 require 'sqlite3'
@@ -7,7 +7,8 @@ require 'sqlite3'
 
 class LoadCSV < ModuleMED
   def initialize
-    @db = DB.create()
+    @db = Dataset.new
+
   end
   def inputRecipe(fdata)
     # nacteni parametru pro zpracovani
@@ -50,11 +51,10 @@ class LoadCSV < ModuleMED
       values = line.split(",")
       if(i == 0)
         values.each { |column|
-          @db.add_column(column)
+          @db.add_column(column,nil)
         }
-        @db.prepare()
         ++i
-        continue
+        next
       end
       @db.insert values
     }
