@@ -14,9 +14,10 @@ class LoadCSV < ModuleMED
 
   end
 
-  def properties(fdata)
+  def properties(memory,fdata)
     # navraci seznam podporovanych vstupu a vystupu
 
+    @store = memory[fdata["store"]]
     @type = fdata["type"]
     @file = fdata["file"]
 
@@ -58,6 +59,6 @@ class LoadCSV < ModuleMED
       @db.insert values
     }
     printf("vkládání provedeno")
-    fdata = @db
+    @store = @db
   end
 end
