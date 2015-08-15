@@ -7,7 +7,7 @@ require 'sqlite3'
 
 class LoadCSV < ModuleMED
   def initialize
-    @db = DB.new
+    @db = DB.create()
   end
   def inputRecipe(fdata)
     # nacteni parametru pro zpracovani

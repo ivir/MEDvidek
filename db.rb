@@ -81,6 +81,11 @@ class Dataset
         #navrati dataset sloupcu dle columns
         def get_data(columns=nil)
         end
+
+        #smazani vsech dat v datasetu
+        def clear
+
+        end
 end
 
 class DB
@@ -98,6 +103,10 @@ public
     #prida sloupec
     #what = jakou tabulku rozsiruje
     #column = nazev rozsirujici polozky
+
+    def create()
+        return Dataset.new
+    end
     def column_add(what, column)
         ctype = "TEXT"
         ctype = "INT" if(column.is_a?(Integer))
