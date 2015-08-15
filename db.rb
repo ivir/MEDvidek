@@ -6,9 +6,9 @@
 #    Objekt si do SQLite nacte data z externich dat/DB. V pripade DB provede nejdrive overeni na pocet zaznamu a pripadne nacte pouze cast
 #
 #
-#
-#
-#
+#    DB - provadi nacitani dat a poskytnuti datasetu pro zpracovani s pripadnym poskytnutim dalsich dat
+#    Dataset - data navracena DB pro zpracovani s moznosti pridavani/odebirani sloupcu a podobne upravy
+#    DB_row - provedene upravy
 #
 #
 #
@@ -25,6 +25,62 @@ class DB_row
        @data[column] = data unless sdata.nil
        @data
    end
+end
+
+class Dataset
+    private
+    
+    public
+        def initialize
+            #@data obsahuje skutecna data s nimiz se pracuje
+            @data = nil
+            #@renamed obsahuje informace o provedenych prejmenovani
+            @renamed = Hash.new
+            #@zaznam provedenych operaci
+            @operations = Array.new
+            
+        end
+        
+        # pristup k datum a jejich uprava
+        def [](row, sdata=nil)
+            @data = Hash.new if @data.nil?
+            @data[row] = sdata
+        end
+        
+        #pridani sloupce
+        def add_column(name,value)
+            @data.each do |row|
+                row[name]=value
+            end
+        end
+        
+        #prejmenovani sloupce
+        def rename_column(oldname,newname)
+            @renamed[oldname]=newname
+            @data.each do |row|
+                row[newname] = row[oldname]
+            end
+        end
+        
+        #spojeni dat z vice datasetu
+        def join(secDataset,pair)
+            @data.each do |row|
+                #secDataset.find(pair[0])
+                #TODO dodělat spojovani dvou tabulek
+            end
+        end
+        
+        #ulozeni datasetu, v columns jsou uvedeny sloupce, ktere se maji ulozit
+        def store(columns=nil)
+        end
+        
+        #vlozeni dat do datasetu
+        def push(sdata)
+        end
+        
+        #navrati dataset sloupcu dle columns
+        def get_data(columns=nil)
+        end
 end
 
 class DB
@@ -58,6 +114,7 @@ public
     def column_rename(from, to)
         
     end
+    
     
     #odstrani dany sloupec
     def column_remove(what)
