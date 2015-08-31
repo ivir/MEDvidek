@@ -36,8 +36,10 @@ class Dataset
             @data = nil
             #@renamed obsahuje informace o provedenych prejmenovani
             @renamed = Hash.new
-            #@zaznam provedenych operaci
+            #@operations provedenych operaci
             @operations = Array.new
+            #@columns nazvy jednotlivych sloupcu
+            @columns = Hash.new
             
         end
         
@@ -49,9 +51,12 @@ class Dataset
         
         #pridani sloupce
         def add_column(name,value)
-            @data = Hash.new if @data.nil?
-            @data.each do |row|
-                row[name]=value
+            @columns = Hash.new if @data.nil?
+            @columns[name] = value
+            if !(@data.nil?)
+                @data.each do |row|
+                    row[name]=value
+                end
             end
         end
         
@@ -77,6 +82,11 @@ class Dataset
         
         #vlozeni dat do datasetu
         def push(sdata)
+          row = Hash.new
+          @columns.each do |column,value|
+            row[column] = sdata[column]
+            row[column] = value if sdata[column].nil?
+          end
         end
         
         #navrati dataset sloupcu dle columns

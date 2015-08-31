@@ -56,7 +56,7 @@ class LoadCSV < ModuleMED
         ++i
         next
       end
-      @db.insert values
+      @db.push values
     }
     printf("vkládání provedeno")
     @store = @db
