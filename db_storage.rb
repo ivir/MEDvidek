@@ -33,7 +33,7 @@ class Dataset
     public
         def initialize
             #@data obsahuje skutecna data s nimiz se pracuje
-            @data = nil
+            @data = Array.new
             #@renamed obsahuje informace o provedenych prejmenovani
             @renamed = Hash.new
             #@operations provedenych operaci
@@ -45,10 +45,13 @@ class Dataset
         
         # pristup k datum a jejich uprava
         def [](row, sdata=nil)
-            @data = Hash.new if @data.nil?
-            @data[row] = sdata
+            @data = Array.new if @data.nil?
+            @data.push(Hash.new()) if (@data.last()).nil?
+            (@data.last())[row] = sdata
         end
-        
+
+        #TODO doplnit each fci pro prochazeni celeho datasetu
+
         #pridani sloupce
         def add_column(name,value)
             @columns = Hash.new if @data.nil?
