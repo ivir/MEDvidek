@@ -16,6 +16,7 @@ class Compute < ModuleMED
   def compute(fdata)
 
   end
+  
   def execute(fdata)
     printf "Jdu pracovat\n"
   end

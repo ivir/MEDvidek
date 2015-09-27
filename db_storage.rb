@@ -47,7 +47,7 @@ class Dataset
         def [](row, sdata=nil)
             @data = Array.new if @data.nil?
             @data.push(Hash.new()) if (@data.last()).nil?
-            (@data.last())[row] = sdata
+            (@data.last())[row] = sdata if !stdata.nil?
         end
 
         #TODO doplnit each fci pro prochazeni celeho datasetu
