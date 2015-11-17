@@ -3,7 +3,8 @@
 #------------------------------------------------------------------------------------------------------------
 #
 # Myslenka:
-#    Objekt si do SQLite nacte data z externich dat/DBStorage. V pripade DBStorage provede nejdrive overeni na pocet zaznamu a pripadne nacte pouze cast
+#    Objekt si do SQLite nacte data z externich dat/DBStorage. V pripade DBStorage provede nejdrive overeni
+# na pocet zaznamu a pripadne nacte pouze cast
 #
 #
 #    DBStorage - provadi nacitani dat a poskytnuti datasetu pro zpracovani s pripadnym poskytnutim dalsich dat
@@ -50,7 +51,13 @@ class Dataset
             (@data.last())[row] = sdata if !stdata.nil?
         end
 
-        #TODO doplnit each fci pro prochazeni celeho datasetu
+        def each
+            if block_given?
+                @data.each {|i| yield(i)}
+            else
+              #TODO osetrit variantu, kdy je pouze volana fce s each <-- teoreticky by nemelo nastat
+            end
+        end
 
         #pridani sloupce
         def add_column(name,value)
@@ -99,6 +106,15 @@ class Dataset
         #smazani vsech dat v datasetu
         def clear
 
+        end
+
+        def to_s
+            @columns.each_key(){|key| print key + "\t"}
+            print "\n"
+            @data.each do |row|
+               row.each_key { |key,value| print value + "\t"}
+                print("\n")
+            end           
         end
 end
 
