@@ -94,9 +94,10 @@ class Dataset
         def push(sdata)
           row = Hash.new
           @columns.each do |column,value|
-            row[column] = sdata[column]
-            row[column] = value if sdata[column].nil?
+            row.store(column,sdata.pop())
+            row.store(column,value) if row[column].nil?
           end
+          @data.push(row)
         end
         
         #navrati dataset sloupcu dle columns
@@ -112,9 +113,11 @@ class Dataset
             @columns.each_key(){|key| print key + "\t"}
             print "\n"
             @data.each do |row|
-               row.each_key { |key,value| print value + "\t"}
+               row.each_key { |key,value|
+                   print value + "\t" unless value.nil?
+               }
                 print("\n")
-            end           
+            end
         end
 end
 
