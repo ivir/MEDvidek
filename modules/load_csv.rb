@@ -17,7 +17,8 @@ class LoadCSV < ModuleMED
 
   def properties(memory,fdata)
     # navraci seznam podporovanych vstupu a vystupu
-    @store = memory[fdata["store"]]
+    @store = fdata["store"]
+    @memory = memory
     #@store = Dataset.new if @store.nil?
     @type = fdata["type"]
     @file = fdata["file"]
@@ -47,18 +48,21 @@ class LoadCSV < ModuleMED
     data.each_line { |line|
       #printf(line)
       values = line.split(",")
-      if(i == 0)
+      print i
+      if(i <= 0)
         values.each { |column|
           @db.add_column(column,nil)
         }
-        ++i
+        i = i + 1
         next
+      else
+        @db.push values
       end
-      @db.push values
+      i = i + 1
     }
+    #@store = @db
     print @db
-    printf("vkládání provedeno")
-    @store = @db
-    print @store
+    @memory.store(@store,@db)
+    #print @store
   end
 end
