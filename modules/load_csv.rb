@@ -47,6 +47,7 @@ class LoadCSV < ModuleMED
     i = 0
     data.each_line { |line|
       #printf(line)
+      line.tr!("\n","")
       values = line.split(",")
       print i
       if(i <= 0)

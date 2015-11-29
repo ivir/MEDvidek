@@ -7,7 +7,7 @@ class Compute < ModuleMED
   def properties(memory,fdata)
     printf "\nSpusten Compute\n"
     #print fdata
-    print memory
+    #print memory
     @what = memory[fdata["source"]]
     @source = fdata["source"]
     @destination = fdata["store"]
@@ -22,19 +22,23 @@ class Compute < ModuleMED
   #compute rozseka retezec pomoci operatoru (+-*/%) a nasledne promenne nahradi za variantu pro pristup do datasetu pro provedeni dane operace.
   def compute(fdata)
     print "Jdu spocitat: " + @calculate.to_s + "\n"
-    @destination = @calculator.evaluate(@calculate)
+    @calculator.evaluate(@calculate)
   end
   
   def execute(fdata)
     printf "Jdu pracovat\n"
+    temp = Hash.new
     @what.each do |value|
-      value.each_key { |key,val|
-        print "K: #{key} V: #{val}"
+      print value
+      value.each_pair { |key,val|
+        print "K: #{key} V: #{val} \n"
         @calculator.store(key,val)
-        @destination.push(compute(nil))
       }
+      temp.store(@destination,compute(nil))
+      value.merge!(temp)
     end
-    print @destination
+
+    print @what.to_s
   end
 
 end
