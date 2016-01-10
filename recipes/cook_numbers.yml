@@ -10,8 +10,13 @@ Compute:
   calculate: "(first + second)/2"
 
 Agregate:
-  store: "cumul_avg"
-  source: "average"
+  store: "CUMUL_AVG"
+  source: "numbers"
+  calculate: "average"
+  operation: "+"
 
-Print:
-  source: "average"
+#Print:
+#  source: "average"
+
+#Print:
+#  source: "AVERAGE"
