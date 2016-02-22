@@ -30,7 +30,7 @@ end
 
 class Dataset
     private
-    
+
     public
         def initialize
             #@data obsahuje skutecna data s nimiz se pracuje
@@ -100,7 +100,8 @@ class Dataset
         def push(sdata)
           row = Hash.new
           @columns.each do |column,value|
-            row.store(column,sdata.shift())
+            nvalue = sdata.shift()
+            row.store(column,nvalue)
             row.store(column,value) if row[column].nil?
           end
           @data.push(row)
