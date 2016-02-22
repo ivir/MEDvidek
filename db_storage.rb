@@ -59,6 +59,12 @@ class Dataset
             end
         end
 
+        def delete_if
+            if block_given?
+                @data.delete_if{|i| yield(i)}
+            end
+        end
+
         #pridani sloupce
         def add_column(name,value)
             @columns = Hash.new if @data.nil?
@@ -94,7 +100,7 @@ class Dataset
         def push(sdata)
           row = Hash.new
           @columns.each do |column,value|
-            row.store(column,sdata.pop())
+            row.store(column,sdata.shift())
             row.store(column,value) if row[column].nil?
           end
           @data.push(row)
