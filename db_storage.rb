@@ -71,7 +71,7 @@ class Dataset
             @columns[name] = value
             if !(@data.nil?)
                 @data.each do |row|
-                    row[name]=value
+                    row[name]=value if row[name].nil?
                 end
             end
         end
@@ -83,12 +83,23 @@ class Dataset
                 row[newname] = row[oldname]
             end
         end
-        
+
+        def verify_column(name)
+          return false if @columns[name].nil?
+          return true
+        end
+
         #spojeni dat z vice datasetu
         def join(secDataset,pair)
             @data.each do |row|
+                secDataset.each do |row2|
+                  if (row[pair[0]] == row2[pair[1]])
+                    row.merge!(row2)
+                    break
+                  end
+                end
                 #secDataset.find(pair[0])
-                #TODO dodělat spojovani dvou tabulek
+                #TODO zoptimalizovat -> zlepsit slozitost z m*n!
             end
         end
         
@@ -120,8 +131,8 @@ class Dataset
             @columns.each_key(){|key| print key + "\t"}
             print "\n"
             @data.each do |row|
-               row.each_key { |key,value|
-                   print value + "\t" unless value.nil?
+               row.each_pair { |key,value|
+                   print "#{value}\t" unless value.nil?
                }
                 print("\n")
             end
