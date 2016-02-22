@@ -43,7 +43,7 @@ class Compute < ModuleMED
 
     end
 
-
+    @what.add_column(@destination,0) unless @what.verify_column(@destination)
   end
 
 end
