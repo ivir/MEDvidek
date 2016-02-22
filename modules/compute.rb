@@ -33,7 +33,7 @@ class Compute < ModuleMED
     @what.each do |value|
       #print value
       value.each_pair { |key,val|
-        #print "K: #{key} V: #{val} \n"
+        #print "K: #{key} V: #{val} #{val.class}\n"
         @calculator.store(key,val)
       }
 
@@ -72,8 +72,8 @@ class Agregate < Compute
         first = false
       end
 
-      print @store
-      print "\n"
+      #print @store
+      #print "\n"
 
     end
 

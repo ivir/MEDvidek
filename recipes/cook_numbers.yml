@@ -15,8 +15,12 @@ Agregate:
   calculate: "average"
   operation: "+"
 
+Filter:
+  source: "numbers"
+  condition: "first < second"
+
 #Print:
-#  source: "average"
+#  source: "numbers"
 
 #Print:
 #  source: "AVERAGE"
