@@ -21,7 +21,7 @@ class Filter < ModuleMED
 
   def execute(fdata)
     printf "Jdu pracovat s filtrem\n"
-    @what.delete_if do |value|
+    res = @what.delete_if do |value|
       #print value
       value.each_pair { |key,val|
         print "K: #{key} V: #{val} #{val.class}\n"
@@ -30,10 +30,9 @@ class Filter < ModuleMED
       print "#{@condition} \n"
       out = @calculator.evaluate(@condition)
 
-      out
+      !out
 
     end
-    @what
-
+    res
   end
 end
