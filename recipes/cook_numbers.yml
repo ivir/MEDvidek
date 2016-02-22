@@ -17,10 +17,10 @@ Agregate:
 
 Filter:
   source: "numbers"
-  condition: "first < second"
+  condition: "first < 10"
 
-#Print:
-#  source: "numbers"
+Print:
+  source: "numbers"
 
 #Print:
 #  source: "AVERAGE"

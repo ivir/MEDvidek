@@ -11,7 +11,8 @@ class Print < ModuleMED
 
   def execute(fdata)
     return if @what.nil?
-    printf "Printing: " + @what
+    printf "Printing:\n"
+    print @what
     printf "Jdu pracovat\n"
   end
 
