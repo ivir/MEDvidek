@@ -45,11 +45,12 @@ class LoadCSV < ModuleMED
     @db.clear
     data = File.open(@file)
     i = 0
+    td = Array.new
+
     data.each_line { |line|
       #printf(line)
       line.tr!("\n","")
       values = line.split(",")
-      print i
       if(i <= 0)
         values.each { |column|
           @db.add_column(column,nil)
@@ -57,12 +58,27 @@ class LoadCSV < ModuleMED
         i = i + 1
         next
       else
-        @db.push values
+        #print "#{values}\n"
+        td.clear()
+        values.each { |tval|
+          if(tval =~ /^[+-]{0,1}\d+$/)
+            td.push(Integer(tval));
+            next
+          end
+          if(tval =~ /^[+-]{0,1}\d+\.\d+[e+\-\d]*$/)
+              td.push(Float(tval));
+              next
+          end
+          #nebylo rozpoznano co to jest -> ulozime jak to je
+          td.push(String(tval))
+        }
+        #print "#{td}\n"
+        @db.push td
       end
       i = i + 1
     }
     #@store = @db
-    print @db
+    #print @db
     @memory.store(@store,@db)
     #print @store
   end
