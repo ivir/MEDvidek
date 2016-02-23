@@ -8,7 +8,7 @@ class ArbitrMED
   def initialize
     loadModules
     @data = nil
-    @db = SQLite3::Database.new(":memory:")
+    @memory = Hash.new()
   end
   #nacteni veskerych dostupnych modulu
   def loadModules()
@@ -24,11 +24,11 @@ class ArbitrMED
     # Spusteni zpracovani dat
     print mod[0]
     emodule = eval(mod[0] +".new")
-    emodule.properties(mod[1])
+    emodule.properties(@memory,mod[1])
 
-    emodule.preprocessing(@db)
-    emodule.execute(@db)
-    emodule.postprocessing(@db)
+    emodule.preprocessing(@memory)
+    emodule.execute(@memory)
+    emodule.postprocessing(@memory)
 
   end
 

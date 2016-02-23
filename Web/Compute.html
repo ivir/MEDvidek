@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Přidání provedených výpočtů</title>
+</head>
+<body>
+<div class="data">
+    Načíst vzorová data ze zdroje <select><option value="DB">Přehled občanů</option><option value="DB">Z CSV</option><option value="DB">Malá zahrádka</option></select>
+<table>
+    <th><td>first</td><td>second</td></th>
+    <tr><td>1</td><td>2</td></tr>
+    <tr><td>1</td><td>2</td></tr>
+    <tr><td>1</td><td>2</td></tr>
+    <tr><td>1</td><td>2</td></tr>
+    <tr><td>1</td><td>2</td></tr>
+    <tr><td>1</td><td>2</td></tr>
+</table>
+
+</div>
+<div class="formulas">
+    <div><label>Výpočet:</label><input type="text" size="20" /><button>Přidat</button></div>
+    <div class="calculation">
+        <table>
+            <thead><td>Pořadí</td><td>Výraz</td><td>Jednotlivě</td></thead>
+            <tbody>
+                <tr><td>1.</td><td>average = (first + second)/2</td><td><input type="checkbox" checked disabled/></td></tr>
+                <tr><td>1.</td><td>AVERAGE = average/SIZE</td><td><input type="checkbox" disabled/></td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

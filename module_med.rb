@@ -8,7 +8,7 @@ class ModuleMED
     # nacteni parametru pro zpracovani
   end
 
-  def properties(fdata)
+  def properties(memory,fdata)
     # navraci seznam podporovanych vstupu a vystupu
   end
 

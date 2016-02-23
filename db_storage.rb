@@ -1,13 +1,14 @@
-# Trida DB je urcena pro abstrakci pristupu dat
+# Trida DBStorage je urcena pro abstrakci pristupu dat
 # bude zprostredkovávat pridavani/odebirani sloupcu, dat a i jejich aktualizaci s ohledem na narocnost uprav
 #------------------------------------------------------------------------------------------------------------
 #
 # Myslenka:
-#    Objekt si do SQLite nacte data z externich dat/DB. V pripade DB provede nejdrive overeni na pocet zaznamu a pripadne nacte pouze cast
+#    Objekt si do SQLite nacte data z externich dat/DBStorage. V pripade DBStorage provede nejdrive overeni
+# na pocet zaznamu a pripadne nacte pouze cast
 #
 #
-#    DB - provadi nacitani dat a poskytnuti datasetu pro zpracovani s pripadnym poskytnutim dalsich dat
-#    Dataset - data navracena DB pro zpracovani s moznosti pridavani/odebirani sloupcu a podobne upravy
+#    DBStorage - provadi nacitani dat a poskytnuti datasetu pro zpracovani s pripadnym poskytnutim dalsich dat
+#    Dataset - data navracena DBStorage pro zpracovani s moznosti pridavani/odebirani sloupcu a podobne upravy
 #    DB_row - provedene upravy
 #
 #
@@ -29,28 +30,49 @@ end
 
 class Dataset
     private
-    
+
     public
         def initialize
             #@data obsahuje skutecna data s nimiz se pracuje
-            @data = nil
+            @data = Array.new
             #@renamed obsahuje informace o provedenych prejmenovani
             @renamed = Hash.new
-            #@zaznam provedenych operaci
+            #@operations provedenych operaci
             @operations = Array.new
+            #@columns nazvy jednotlivych sloupcu
+            @columns = Hash.new
             
         end
         
         # pristup k datum a jejich uprava
         def [](row, sdata=nil)
-            @data = Hash.new if @data.nil?
-            @data[row] = sdata
+            @data = Array.new if @data.nil?
+            @data.push(Hash.new()) if (@data.last()).nil?
+            (@data.last())[row] = sdata if !stdata.nil?
         end
-        
+
+        def each
+            if block_given?
+                @data.each {|i| yield(i)}
+            else
+              #TODO osetrit variantu, kdy je pouze volana fce s each <-- teoreticky by nemelo nastat
+            end
+        end
+
+        def delete_if
+            if block_given?
+                @data.delete_if{|i| yield(i)}
+            end
+        end
+
         #pridani sloupce
         def add_column(name,value)
-            @data.each do |row|
-                row[name]=value
+            @columns = Hash.new if @data.nil?
+            @columns[name] = value
+            if !(@data.nil?)
+                @data.each do |row|
+                    row[name]=value if row[name].nil?
+                end
             end
         end
         
@@ -61,12 +83,23 @@ class Dataset
                 row[newname] = row[oldname]
             end
         end
-        
+
+        def verify_column(name)
+          return false if @columns[name].nil?
+          return true
+        end
+
         #spojeni dat z vice datasetu
         def join(secDataset,pair)
             @data.each do |row|
+                secDataset.each do |row2|
+                  if (row[pair[0]] == row2[pair[1]])
+                    row.merge!(row2)
+                    break
+                  end
+                end
                 #secDataset.find(pair[0])
-                #TODO dodělat spojovani dvou tabulek
+                #TODO zoptimalizovat -> zlepsit slozitost z m*n!
             end
         end
         
@@ -76,15 +109,38 @@ class Dataset
         
         #vlozeni dat do datasetu
         def push(sdata)
+          row = Hash.new
+          @columns.each do |column,value|
+            nvalue = sdata.shift()
+            row.store(column,nvalue)
+            row.store(column,value) if row[column].nil?
+          end
+          @data.push(row)
         end
         
         #navrati dataset sloupcu dle columns
         def get_data(columns=nil)
             @data
         end
+
+        #smazani vsech dat v datasetu
+        def clear
+
+        end
+
+        def to_s
+            @columns.each_key(){|key| print key + "\t"}
+            print "\n"
+            @data.each do |row|
+               row.each_pair { |key,value|
+                   print "#{value}\t" unless value.nil?
+               }
+                print("\n")
+            end
+        end
 end
 
-class DB
+class DBStorage
 private
     
     
@@ -96,6 +152,11 @@ public
         @data = SQLite3::Database.new(":memory:")
         @changes = Hash.new
     end
+
+    def create
+        return Dataset.new
+    end
+
     #prida sloupec
     #what = jakou tabulku rozsiruje
     #column = nazev rozsirujici polozky
@@ -111,6 +172,7 @@ public
     end
     
     #prejmenuje sloupce z from na to
+    # chybi zpusob vyuziti krom prejmenovavani na vystupu
     def column_rename(from, to)
         
     end
@@ -125,7 +187,7 @@ public
     #where - do jake tabulky
     #sdata - data do konkretnich sloupcu
     # funguje na principu zapsani zmen do @changes, pricemz tyto zmeny se pomalu zapisuji do originalni databaze,
-    # aby v situaci radku, ktery se bude casto menit se menit v pameti a do DB se ulozil az po ustabilizovani
+    # aby v situaci radku, ktery se bude casto menit se menit v pameti a do DBStorage se ulozil az po ustabilizovani
     def add(where,sdata)
         @changes[where] = sdata
     end
