@@ -89,6 +89,11 @@ class Dataset
           return true
         end
 
+        #navrati pole nazvu sloupcu
+        def columns()
+            return @columns.keys
+        end
+
         #spojeni dat z vice datasetu
         def join(secDataset,pair)
             @data.each do |row|

@@ -19,6 +19,10 @@ Filter:
   source: "numbers"
   condition: "first < 10"
 
+ExportCSV:
+  source: "numbers"
+  file: "./nums.cvs"
+  type: "ssv"
 Print:
   source: "numbers"
 
