@@ -1,4 +1,13 @@
 #ukazkovy recept pro zjisteni prumeru ze dvou cisel
+LoadO2:
+  store: "o2data"
+  file: "./Data/2016-03-3606068384-4_2251_11_00_100001-01-s-mob.xml"
+  information:
+    - mobil
+    - celkem
+    - uctovano
+    - tretistrana
+
 LoadCSV:
   store: "numbers"
   file: "./recipes/numbers.csv"
