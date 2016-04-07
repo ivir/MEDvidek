@@ -5,8 +5,9 @@ LoadO2:
   information:
     - mobil
     - celkem
-    - uctovano
-    - tretistrana
+    - uctovana_castka
+    - sleva
+    - treti_strana
 
 LoadCSV:
   store: "numbers"

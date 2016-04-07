@@ -16,7 +16,7 @@ class LoadO2 < ModuleMED
 
     @data = Dataset.new
     @columns.each do |col|
-      @data.add_column :name=>col, :value=>0
+      @data.add_column(col, 0)
     end
     ''
   end
@@ -43,6 +43,7 @@ class LoadO2 < ModuleMED
       @line.clear
       @content.clear
     end
+    puts @data
   end
 
   private
@@ -79,7 +80,7 @@ class LoadO2 < ModuleMED
       disc = node.at_css("discounts")
       sleva = disc["discountTotalPrice"] unless disc.nil?
 
-      @line["discountTotalPrice"] = sleva
+      @line["sleva"] = sleva
 
     end
 
@@ -87,7 +88,7 @@ class LoadO2 < ModuleMED
       paym = node.at_css("payments")
       treti_strana = paym["paymentTotalPrice"] unless paym.nil?
 
-      @line["paymentTotalPrice"] = treti_strana
+      @line["treti_strana"] = treti_strana
 
     end
 end
