@@ -75,6 +75,11 @@ class Dataset
                 end
             end
         end
+
+        #pridani sloupce
+        def set_column(name,value)
+            @columns[name] = value
+        end
         
         #prejmenovani sloupce
         def rename_column(oldname,newname)
@@ -96,9 +101,12 @@ class Dataset
 
         #spojeni dat z vice datasetu
         def join(secDataset,pair)
+            print "\n#{pair}\n"
             @data.each do |row|
                 secDataset.each do |row2|
+                    #print "\nPorovnavam #{row[pair[0]]} s #{row2[pair[1]]}\n"
                   if (row[pair[0]] == row2[pair[1]])
+                      print "Spojuji\n"
                     row.merge!(row2)
                     break
                   end
@@ -106,6 +114,11 @@ class Dataset
                 #secDataset.find(pair[0])
                 #TODO zoptimalizovat -> zlepsit slozitost z m*n!
             end
+            sloupce = secDataset.columns
+            sloupce.each do |sl|
+                set_column(sl,nil)
+            end
+
         end
         
         #ulozeni datasetu, v columns jsou uvedeny sloupce, ktere se maji ulozit

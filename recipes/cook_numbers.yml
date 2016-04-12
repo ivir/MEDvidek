@@ -4,37 +4,48 @@ LoadO2:
   file: "./Data/2016-03-3606068384-4_2251_11_00_100001-01-s-mob.xml"
   information:
     - mobil
-    - celkem
+    - uctovano
     - uctovana_castka
     - sleva
     - treti_strana
 
 LoadCSV:
-  store: "numbers"
-  file: "./recipes/numbers.csv"
-  type: "csv"
+  store: "users"
+  file: "./Data/_20160404-AKTUALNI_seznam_MT.csv"
+  type: "ssv"
+
+DBJoin:
+  store: "o2data"
+  source: "users"
+  pair:
+    - mobil
+    - MTC
 
 Compute:
-  source: "numbers"
-  store: "average"
-  calculate: "(first + second)/2"
+  source: "o2data"
+  store: "zaplatit"
+  calculate: "( treti_strana + uctovano)"
 
-Agregate:
-  store: "CUMUL_AVG"
-  source: "numbers"
-  calculate: "average"
-  operation: "+"
+#Filter:
+#  source: "o2data"
+#  condition: "(zaplatit <=limit_Kc) AND (treti_strana == 0)"
 
-Filter:
-  source: "numbers"
-  condition: "first < 10"
+#Agregate:
+#  store: "CUMUL_ZAPLATIT"
+#  source: "o2data"
+#  calculate: "zaplatit"
+#  operation: "+"
+
+#Filter:
+#  source: "numbers"
+#  condition: "first < 10"
 
 ExportCSV:
-  source: "numbers"
-  file: "./nums.cvs"
+  source: "o2data"
+  file: "./nums.csv"
   type: "ssv"
 Print:
-  source: "numbers"
+  source: "o2data"
 
 #Print:
 #  source: "AVERAGE"

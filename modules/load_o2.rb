@@ -43,7 +43,9 @@ class LoadO2 < ModuleMED
       @line.clear
       @content.clear
     end
-    puts @data
+    #puts @data
+    @data
+    @memory.store(@store,@data)
   end
 
   private
@@ -52,8 +54,8 @@ class LoadO2 < ModuleMED
       #puts phoneNumber
       summaryPrice = node["summaryPrice"]
 
-      @line["mobil"] = phoneNumber
-      @line["celkem"] = summaryPrice
+      @line["mobil"] = Integer(phoneNumber)
+      @line["uctovano"] = summaryPrice
 
       regularCharges node
       usageCharges node
