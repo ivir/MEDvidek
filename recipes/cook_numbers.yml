@@ -24,7 +24,17 @@ DBJoin:
 Compute:
   source: "o2data"
   store: "zaplatit"
-  calculate: "( treti_strana + uctovano)"
+  calculate: "(uctovano - limit)"
+  minimum: 0
+  precision: 2
+
+Compute:
+  source: "o2data"
+  store: "zaplatit"
+  calculate: "(zaplatit + treti_strana)"
+  minimum: 0
+  precision: 2
+
 
 #Filter:
 #  source: "o2data"
@@ -43,7 +53,17 @@ Compute:
 ExportCSV:
   source: "o2data"
   file: "./nums.csv"
+  columns:
+    - ODB
+    - Jmeno
+    - mobil
+    - uctovano
+    - treti_strana
+    - limit_Kc : limit
+    - zaplatit
   type: "ssv"
+
+
 Print:
   source: "o2data"
 
