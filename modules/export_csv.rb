@@ -18,6 +18,7 @@ class ExportCSV < ModuleMED
     #@store = Dataset.new if @store.nil?
     @type = fdata["type"]
     @file = fdata["file"]
+    @columns = fdata["columns"]
 
   end
 
@@ -44,11 +45,41 @@ class ExportCSV < ModuleMED
     data = ""
 
     ds = @memory[@store]
-    header = separate(ds.columns)
-    data += header + "\n"
-    ds.each do |row|
-      data += separate(row.values) + "\n"
+    if(@columns.nil?)
+      header = separate(ds.columns)
+      data += header + "\n"
+      ds.each do |row|
+        data += separate(row.values) + "\n"
+      end
+    else
+      #resime prejmenovnai prvku, apod
+      arr = Array.new
+      @columns.each do |col|
+        unless (col.class == Hash)
+          arr.push(col)
+        else
+          col.each_pair do |key,value|
+            arr.push(value)
+          end
+        end
+      end
+      data += separate(arr) + "\n"
+      # nyni nahrajeme data jak je chteji
+      ds.each do |row|
+        arr.clear
+        @columns.each do |col|
+          unless col.class == Hash
+            arr.push(row[col])
+          else
+            col.each_pair do |key,value|
+              arr.push(row[key])
+            end
+          end
+        end
+        data += separate(arr) + "\n"
+      end
     end
+
 
     File.write(@file,data)
   end
