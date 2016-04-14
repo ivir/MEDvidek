@@ -24,16 +24,16 @@ DBJoin:
 Compute:
   source: "o2data"
   store: "zaplatit"
-  calculate: "(uctovano - limit)"
-  minimum: 0
+  calculate: "MAX(uctovano - limit_Kc,0) + treti_strana"
+  #minimum: 0
   precision: 2
 
-Compute:
-  source: "o2data"
-  store: "zaplatit"
-  calculate: "(zaplatit + treti_strana)"
-  minimum: 0
-  precision: 2
+#Compute:
+#  source: "o2data"
+#  store: "zaplatit"
+#  calculate: "(zaplatit + treti_strana)"
+  #minimum: 0
+  #precision: 2
 
 
 #Filter:
@@ -64,8 +64,8 @@ ExportCSV:
   type: "ssv"
 
 
-Print:
-  source: "o2data"
+#Print:
+#  source: "o2data"
 
 #Print:
 #  source: "AVERAGE"
