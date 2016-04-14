@@ -42,8 +42,9 @@ class Compute < ModuleMED
       hodnota = compute(nil)
       unless hodnota.nil?
         hodnota = hodnota.round(@precision) unless @precision.nil?
-        hodnota = @minimum if (!(@minimum.nil?) && (hodnota < @minimum))
-        hodnota = @maximum if (!(@maximum.nil?) && (hodnota > @maximum))
+        #print "Vyšlo #{hodnota}\n"
+        #hodnota = @minimum if (!(@minimum.nil?) && (hodnota < @minimum))
+        #hodnota = @maximum if (!(@maximum.nil?) && (hodnota > @maximum))
       end
 
       temp.store(@destination,hodnota)
