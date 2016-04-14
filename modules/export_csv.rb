@@ -69,10 +69,10 @@ class ExportCSV < ModuleMED
         arr.clear
         @columns.each do |col|
           unless col.class == Hash
-            arr.push(row[col])
+            arr.push(format(row[col]))
           else
             col.each_pair do |key,value|
-              arr.push(row[key])
+              arr.push(format(row[key]))
             end
           end
         end
@@ -95,6 +95,18 @@ class ExportCSV < ModuleMED
           separator = ','
       end
       arr.join(separator)
+    end
+
+    def format(input)
+      case input
+        when Float then
+          return input.to_s
+        when BigDecimal then
+          return input.to_s('F')
+        else
+          print "#{input.class} s daty #{input}\n"
+          return input.to_s
+      end
     end
 
 end
