@@ -101,12 +101,11 @@ class Dataset
 
         #spojeni dat z vice datasetu
         def join(secDataset,pair)
-            print "\n#{pair}\n"
+            #print "\n#{pair}\n"
             @data.each do |row|
                 secDataset.each do |row2|
                     #print "\nPorovnavam #{row[pair[0]]} s #{row2[pair[1]]}\n"
                   if (row[pair[0]] == row2[pair[1]])
-                      print "Spojuji\n"
                     row.merge!(row2)
                     break
                   end
