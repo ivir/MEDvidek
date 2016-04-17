@@ -74,22 +74,10 @@ class ExportJSON < ModuleMED
       datas.push(data)
     end
     data = "[#{datas.join(",")}]"
-    print data
-    #File.write(@file,data)
+    File.write(@file,data)
   end
 
   private
-    def separate(arr)
-      case @type
-        when 'csv'
-          separator = ','
-        when 'ssv'
-          separator = ';'
-        else
-          separator = ','
-      end
-      arr.join(separator)
-    end
 
     def format(input)
       case input
