@@ -1,0 +1,23 @@
+<div class="LoadO2">
+    <script src="./loadcsv"></script>
+    <form>
+        <label>Store:</label><input type="text" name="store" /><br />
+        <input type="file" name="loadfile" /><button value="Load" onClick="loadFile(e)" />
+        <ul>
+            <li><input type="checkbox" name="information" value="mobil" />Mobilní číslo</li>
+            <li><input type="checkbox" name="information" value="uctovano" />Účtováno</li>
+            <li><input type="checkbox" name="information" value="uctovana_castka" />Hovorné</li>
+            <li><input type="checkbox" name="information" value="tarifni_castka" />Tarifní částka</li>
+            <li><input type="checkbox" name="information" value="sleva" />Sleva</li>
+            <li><input type="checkbox" name="information" value="treti_strana" />Mobilní číslo</li>
+            <li><input type="checkbox" name="information" value="data_objem" />Mobilní číslo</li>
+            <li><input type="checkbox" name="information" value="data_jednotka" />Mobilní číslo</li>
+            <li><input type="checkbox" name="information" value="data_castka" />Mobilní číslo</li>
+            <li><input type="checkbox" name="information" value="volani_castka" />Provoláno</li>
+            <li><input type="checkbox" name="information" value="zpravy_castka" />Částky za zprávy</li>
+            <li><input type="checkbox" name="information" value="roaming_castka" />Roaming</li>
+        </ul>
+    </form>
+    <button value="Preview" />
+    <textarea></textarea>
+</div>
