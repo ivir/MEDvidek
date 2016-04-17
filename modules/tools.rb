@@ -30,6 +30,7 @@ end
 
 module Format
   def convert(data)
+      return nil if data.nil?
       data.gsub!(/^".*"$/,'')
 
       if data =~ /^[+-]?\d+\s*$/
