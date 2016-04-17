@@ -37,6 +37,10 @@ class ArbitrMED
     @data = YAML.load_file(recipe)
   end
 
+  def loadRecipeText(recipe)
+    @data = YAML.load(recipe)
+  end
+
   def cook()
     @data.each { |execMod|
       execModule(execMod)
