@@ -1,14 +1,12 @@
 <div class="LoadCSV">
-    <script src="./loadcsv.js"></script>
-    <form>
+    <form name="LoadCSV">
         <label>Store:</label><input type="text" name="store" /><br />
-        <input type="file" name="loadfile" /><button value="Load" onClick="loadFile(e)" /><br />
+        <input type="file" name="file" /><button value="Load" onClick="loadFile(e)" /><br />
         <label>Type:</label>
             <select name="type">
                 <option value="csv">Comma separed value (CSV)</option>
                 <option value="ssv">Semi-colon separed value (SSV)</option>
             </select>
     </form>
-    <button value="Preview" />
-    <textarea></textarea>
+    <button value="Preview" onClick="preview(e)"/>
 </div>
