@@ -59,7 +59,16 @@ class Dataset
             end
         end
 
-        def delete_if
+        def each_with_index
+            if block_given?
+                @data.each_with_index {|v,i| yield(v,i)}
+            else
+                #TODO osetrit variantu, kdy je pouze volana fce s each <-- teoreticky by nemelo nastat
+            end
+        end
+
+
+    def delete_if
             if block_given?
                 @data.delete_if{|i| yield(i)}
             end
