@@ -8,6 +8,9 @@ LoadO2:
     - uctovana_castka
     - sleva
     - treti_strana
+    - data_objem
+    - data_jednotka
+    - data_castka
 
 LoadCSV:
   store: "users"
@@ -36,9 +39,9 @@ Compute:
   #precision: 2
 
 
-#Filter:
-#  source: "o2data"
-#  condition: "(zaplatit <=limit_Kc) AND (treti_strana == 0)"
+Filter:
+  source: "o2data"
+  condition: "zaplatit>0"
 
 #Agregate:
 #  store: "CUMUL_ZAPLATIT"
@@ -57,6 +60,24 @@ ExportCSV:
     - ODB
     - Jmeno
     - mobil
+    - uctovano
+    - treti_strana
+    - data_castka
+    - data_objem : Staženo
+    - data_jednotka
+    - limit_Kc : limit
+    - zaplatit
+  type: "ssv"
+
+ExportJSON:
+  source: "o2data"
+  file: "./nums.json"
+  columns:
+    - ODB
+    - Jmeno
+    - mobil
+    - data_objem
+    - data_castka
     - uctovano
     - treti_strana
     - limit_Kc : limit
