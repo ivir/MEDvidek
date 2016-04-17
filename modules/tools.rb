@@ -1,19 +1,29 @@
 require_relative('../module_med')
+require 'net/http'
 
 class Print < ModuleMED
 
   def properties(memory,fdata)
-    printf "Spusten\n"
-    print fdata
     @what = memory[fdata["source"]]
     @source = fdata["source"]
   end
 
   def execute(fdata)
     return if @what.nil?
-    printf "Printing:\n"
     print @what
-    printf "Jdu pracovat\n"
+  end
+
+end
+
+class Ping < ModuleMED
+
+  def properties(memory,fdata)
+    @ping = fdata["url"]
+  end
+
+  def execute(fdata)
+    uri = URI(@ping)
+    Net::HTTP.get(uri)
   end
 
 end
