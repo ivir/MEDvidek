@@ -1,6 +1,8 @@
 require_relative('../module_med')
 require_relative('../db_storage')
 
+require_relative("../modules/tools")
+
 gem 'nokogiri'
 require 'nokogiri'
 
@@ -49,13 +51,15 @@ class LoadO2 < ModuleMED
   end
 
   private
+    include Format
+
     def subscriber(node)
       phoneNumber = node["phoneNumber"]
       #puts phoneNumber
       summaryPrice = node["summaryPrice"]
 
-      @line["mobil"] = Integer(phoneNumber)
-      @line["uctovano"] = summaryPrice
+      @line["mobil"] = convert(phoneNumber)
+      @line["uctovano"] = convert summaryPrice
 
       regularCharges node
       usageCharges node
@@ -68,21 +72,31 @@ class LoadO2 < ModuleMED
       regch = node.at_css("regularCharges")
       standardni_cena = regch["rcTotalPrice"] unless regch.nil?
 
-      @line["tarifni_castka"] = standardni_cena
+      @line["tarifni_castka"] = convert(standardni_cena)
     end
 
     def usageCharges(node)
       usach = node.at_css("usageCharges")
       uctovana_castka = usach["ucTotalPrice"] unless usach.nil?
 
-      @line["uctovana_castka"] = uctovana_castka
+      @line["uctovana_castka"] = convert(uctovana_castka)
+
+      #podrobne polozky
+
+      @line["data_castka"] = getValue(usach,'usageCharge[usageType="D"]','subtotalPrice')
+      @line["volani_castka"] = getValue(usach,'usageCharge[usageType="V"]','subtotalPrice')
+      @line["zpravy_castka"] = getValue(usach,'usageCharge[usageType="M"]','subtotalPrice')
+      @line["roaming_castka"] = getValue(usach,'usageCharge[usageType="R"]','subtotalPrice')
+
+      @line["data_objem"] = getValue(usach,'usageCharge[usageType="D"] ucItem','quantity')
+      @line["data_jednotka"] = getValue(usach,'usageCharge[usageType="D"] ucItem','displayedUom')
     end
 
     def discounts(node)
       disc = node.at_css("discounts")
       sleva = disc["discountTotalPrice"] unless disc.nil?
 
-      @line["sleva"] = sleva
+      @line["sleva"] = convert(sleva)
 
     end
 
@@ -90,7 +104,17 @@ class LoadO2 < ModuleMED
       paym = node.at_css("payments")
       treti_strana = paym["paymentTotalPrice"] unless paym.nil?
 
-      @line["treti_strana"] = treti_strana
+      @line["treti_strana"] = convert(treti_strana)
 
     end
+
+    def getValue(node,path,value)
+      #nalezne hodnotu a provede konverzi, kterou navrati
+      return nil if node.nil?
+      where = node.at_css(path)
+      something = where[value] unless where.nil?
+
+      convert(something)
+    end
+
 end
