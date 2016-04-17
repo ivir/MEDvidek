@@ -19,7 +19,7 @@ class ExportCSV < ModuleMED
     @type = fdata["type"]
     @file = fdata["file"]
     @columns = fdata["columns"]
-
+    @enviroment = fdata["enviroment"]
   end
 
   def status(fdata)
@@ -100,11 +100,13 @@ class ExportCSV < ModuleMED
     def format(input)
       case input
         when Float then
-          return input.to_s
+          num = input.to_s
+          return num.tr!(".",",")
         when BigDecimal then
-          return input.to_s('F')
+          num = input.to_s('F')
+          return num.tr!(".",",")
         else
-          print "#{input.class} s daty #{input}\n"
+          #print "#{input.class} s daty #{input}\n"
           return input.to_s
       end
     end
