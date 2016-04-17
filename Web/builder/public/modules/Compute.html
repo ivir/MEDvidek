@@ -1,14 +1,8 @@
 <div class="Compute">
     Provedení výpočtů.<br />
-
-    <div><label>Výpočet:</label><input type="text" size="20" /><button onClick="add(e)">Přidat</button></div>
-    <div class="calculation">
-        <table>
-            <thead><td>Pořadí</td><td>Výraz</td><td>Jednotlivě</td></thead>
-            <tbody>
-                <tr><td>1.</td><td>average = (first + second)/2</td><td><input type="checkbox" checked disabled/></td></tr>
-                <tr><td>1.</td><td>AVERAGE = average/SIZE</td><td><input type="checkbox" disabled/></td></tr>
-            </tbody>
-        </table>
-    </div>
+    <form name="Compute">
+        <div><label>Načíst z:</label><input type="text" name="source" size="20" /></div>
+        <div><label>Uložit do:</label><input type="text" name="store" size="20" /></div>
+        <div><label>Výpočet:</label><input type="text" name="calculate" size="20" /><button onClick="add(e)">Přidat</button></div>
+    </form>
 </div>
