@@ -1,12 +1,11 @@
 <div class="LoadCSV">
     <form name="LoadCSV">
         <label>Store:</label><input type="text" name="store" /><br />
-        <input type="file" name="file" /><button value="Load" onClick="loadFile(e)" /><br />
+        <input type="hidden" value="csv" />
         <label>Type:</label>
             <select name="type">
                 <option value="csv">Comma separed value (CSV)</option>
                 <option value="ssv">Semi-colon separed value (SSV)</option>
             </select>
     </form>
-    <button value="Preview" onClick="preview(e)"/>
 </div>
