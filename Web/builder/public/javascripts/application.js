@@ -24,7 +24,7 @@ function createRecipe(){
     $.each(moduly,function (index, modul){
         recept += modul.className +":\n";
         alert(recept);
-        var parametry = $(modul).find("input");
+        var parametry = $(modul).find("input,select");
         $.each(parametry, function (index,parametr){
             recept += "\t" + parametr.name + ":" + parametr.value + "\n";
         });
