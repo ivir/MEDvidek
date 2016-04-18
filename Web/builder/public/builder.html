@@ -1,8 +1,25 @@
 <html>
   <head>
-    <title></title>
+    <title>Builder - tvorba receptu</title>
     <meta content="">
     <style></style>
+    <script src="./javascripts/jquery.js" ></script>
+    <script src="./javascripts/jquery-ujs.js" ></script>
+    <script src="./javascripts/application.js" ></script>
   </head>
-  <body></body>
+  <body>
+  <nav>
+    <a href="#" onClick="loadModule('LoadCSV')">LoadCSV</a>
+    <a href="#" onClick="loadModule('LoadO2')">LoadO2</a>
+    <a href="#" onClick="loadModule('Compute')">Výpočet</a>
+    <a href="#" onClick="loadModule('ExportCSV')">Export CSV</a>
+    <a href="#" onClick="loadModule('ExportJSON')">Export JSON</a>
+    <a href="#" onClick="loadModule('Filter')">Filtr</a>
+    <a href="#" onClick="loadModule('DBJoin')">Spojit tabulku</a>
+  </nav>
+  <div class="recipe">
+
+  </div>
+  <button onClick="createRecipe()">Vytvořit recept</button>
+  </body>
 </html>
