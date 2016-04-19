@@ -1,6 +1,8 @@
 // Put your application scripts here
 document.addEventListener("deviceready",pripraven);
 $(document).ready(function () { pripraven(); });
+var recipe = {}; // ulozi jednotlive recepty do hashe
+var recipes = ""; // textova data pro prime stazeni, prip. upravu
 
 function pripraven(){
     
@@ -21,8 +23,9 @@ function createRecipe(){
     var instrukce = $(".recipe");
     var moduly = instrukce.find("div[data-module]");
     var recept = "", checkboxes = "";
+    var postup = "";
     $.each(moduly,function (index, modul){
-        recept += $(modul).attr("data-module") +":\n";
+        recept = $(modul).attr("data-module") +":\n";
         var parametry = $(modul).find("input,select");
         checkboxes = "";
         $.each(parametry, function (index,parametr){
@@ -46,11 +49,69 @@ function createRecipe(){
                 recept += "    " + parametr.name + ": " + vyber + "\n";
             }
         });
+        recipe[$(modul).attr("data-module")] = recept;
+        recipes += recept;
     });
-    download(recept,"recipe.yml","text/plain");
 }
 
+function downloadRecipes(){
+    download(recipes,"recipe.yml","text/plain");
+}
 
+function createStep(part){
+    var moduly = $("div[data-module=\"" + part +"\"]");
+    var recept = "", checkboxes = "";
+    $.each(moduly,function (index, modul){
+        recept += $(modul).attr("data-module") +":\n";
+        var parametry = $(modul).find("input,select");
+        checkboxes = "";
+        $.each(parametry, function (index,parametr){
+            if (parametr.tagName == "INPUT") {
+                if((parametr.type == "CHECKBOX") || (parametr.type == "checkbox")){
+                    //kontrolujeme zdali je name stejny jako predtim;pokud je jiny, vytvarime novou polozku
+                    if(checkboxes != parametr.name){
+                        //vytvarime novy paramettr
+                        recept += "    " + parametr.name + ":\n";
+                        checkboxes = parametr.name;
+                    }
+                    if (parametr.checked) recept += "        - " + parametr.value + "\n";
+                } else {
+                    if ((parametr.type == "text") || (parametr.type == "TEXT"))
+                        recept += "    " + parametr.name + ": \"" + parametr.value + "\"\n";
+                }
+
+            } else if (parametr.tagName == "SELECT") {
+
+                vyber = parametr.value;
+                recept += "    " + parametr.name + ": " + vyber + "\n";
+            }
+        });
+    });
+    return recept;
+}
+
+function verify(module,fce){
+    var recip = "";
+    $.each(recipe,function(key,value){
+        recip += value;
+        if(key == module){
+            return false;
+        }
+    });
+    //mame pripraven recept k odeslani -> posleme
+    $.post("/verify",recip,function (data){
+        fce(data);
+    },"json");
+}
+
+function upload(module,parameter,from){
+    var formData = new FormData({file: $(from).value});
+    $.post("/upload",formData,function(data){
+        var path = $(module);
+        path.find('input[name="' + parameter + '"]').val(data);
+    }
+    );
+}
 //-------------
 
 //download.js v4.1, by dandavis; 2008-2015. [CCBY2] see http://danml.com/download.html for tests/usage
