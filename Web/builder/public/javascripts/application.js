@@ -26,7 +26,13 @@ function createRecipe(){
         alert(recept);
         var parametry = $(modul).find("input,select");
         $.each(parametry, function (index,parametr){
-            recept += "\t" + parametr.name + ":" + parametr.value + "\n";
+            if (parametr.tagName == "INPUT") {
+                recept += "    " + parametr.name + ":" + parametr.value + "\n";
+            } else if (parametr.tagName == "SELECT") {
+                alert("Máme select")
+                vyber = $(parametr).find("option :selected").val()
+                recept += "    " + parametr.name + ":" + vyber + "\n";
+            }
         });
     });
     alert(recept);
