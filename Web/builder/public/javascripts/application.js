@@ -19,19 +19,31 @@ function loadModule(file){
 
 function createRecipe(){
     var instrukce = $(".recipe");
-    var moduly = instrukce.find("div");
-    var recept = "";
+    var moduly = instrukce.find("div[data-module]");
+    var recept = "", checkboxes = "";
     $.each(moduly,function (index, modul){
-        recept += modul.className +":\n";
-        alert(recept);
+        recept += modul.attr("data-module") +":\n";
         var parametry = $(modul).find("input,select");
+        checkboxes = "";
         $.each(parametry, function (index,parametr){
             if (parametr.tagName == "INPUT") {
-                recept += "    " + parametr.name + ":" + parametr.value + "\n";
+                if((parametr.type == "CHECKBOX") || (parametr.type == "checkbox")){
+                    //kontrolujeme zdali je name stejny jako predtim;pokud je jiny, vytvarime novou polozku
+                    if(checkboxes != parametr.name){
+                        //vytvarime novy paramettr
+                        recept += "    " + parametr.name + ":\n";
+                        checkboxes = parametr.name;
+                    }
+                    if (parametr.checked) recept += "        - " + parametr.value + "\n";
+                } else {
+                    if ((parametr.type == "text") || (parametr.type == "TEXT"))
+                    recept += "    " + parametr.name + ": \"" + parametr.value + "\"\n";
+                }
+
             } else if (parametr.tagName == "SELECT") {
-                alert("Máme select")
-                vyber = $(parametr).find("option :selected").val()
-                recept += "    " + parametr.name + ":" + vyber + "\n";
+
+                vyber = parametr.value;
+                recept += "    " + parametr.name + ": " + vyber + "\n";
             }
         });
     });
