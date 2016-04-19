@@ -1,4 +1,5 @@
-<div class="module" data-module="LoadO2">
+<div class="module">
+    <div data-module="LoadO2">
         <label>Store:</label><input type="text" name="store" /><br />
         <input type="hidden" name="file" value="o2"/>
         <ul>
@@ -15,4 +16,10 @@
             <li><input type="checkbox" name="information" value="zpravy_castka" />Částky za zprávy</li>
             <li><input type="checkbox" name="information" value="roaming_castka" />Roaming</li>
         </ul>
+    </div>
+    <div class="cverify">
+        <input type="file" name="sfile" onClick="upload('Load02','file')">
+        <button name="verify" onClick="verify('LoadO2',function (data){$('.outO2').text(data);})">Ověřit</button>
+        <div class="outO2"></div>
+    </div>
 </div>
