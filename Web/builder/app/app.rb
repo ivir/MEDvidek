@@ -10,6 +10,14 @@ module Builder
         "Hello world!"
     end
     
+    post "/verify" do
+      #overeni funkcnosti receptu
+    end
+    
+    post "/upload" do
+      #harani souboru
+    end
+    
     ##
     # Caching support.
     #
