@@ -20,11 +20,16 @@ Builder::App.controllers :build do
   #   'Hello world!'
   # end
   post :verify, :map => "/verify" do
-    #overeni funkcnosti receptu
+    #ulozeni receptu
+    path = 'upload/' + params['file'][:filename]
+    File.open(path, "w") do |f|
+      f.write(params['file'][:tempfile].read)
+    end
+    return path
   end
     
   post :upload, :map => "/upload" do
-    #harani souboru
+    #nahravani souboru
     #vezmeme soubor, ulozime do tempu a navratime cestu
     path = 'upload/' + params['file'][:filename]
     File.open(path, "w") do |f|
