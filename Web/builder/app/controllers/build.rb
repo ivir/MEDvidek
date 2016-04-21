@@ -4,6 +4,7 @@ Builder::App.controllers :build do
   #   session[:foo] = 'bar'
   #   render 'index'
   # end
+  
 
   # get :sample, :map => '/sample/url', :provides => [:any, :js] do
   #   case content_type
@@ -18,6 +19,12 @@ Builder::App.controllers :build do
   # get '/example' do
   #   'Hello world!'
   # end
-  
+  post "/verify" do
+    #overeni funkcnosti receptu
+  end
+    
+  post "/upload" do
+    #harani souboru
+  end
 
 end
