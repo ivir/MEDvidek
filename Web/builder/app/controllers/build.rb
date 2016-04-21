@@ -19,12 +19,18 @@ Builder::App.controllers :build do
   # get '/example' do
   #   'Hello world!'
   # end
-  post "/verify" do
+  post :verify, :map => "/verify" do
     #overeni funkcnosti receptu
   end
     
-  post "/upload" do
+  post :upload, :map => "/upload" do
     #harani souboru
+    #vezmeme soubor, ulozime do tempu a navratime cestu
+    path = 'upload/' + params['file'][:filename]
+    File.open(path, "w") do |f|
+      f.write(params['file'][:tempfile].read)
+    end
+    return path
   end
 
 end
