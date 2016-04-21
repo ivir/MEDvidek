@@ -13,6 +13,9 @@ class Compute < ModuleMED
     @destination = fdata["store"]
     @store = memory[@destination]
     @calculate = fdata["calculate"]
+    @minimum = fdata["minimum"]
+    @maximum = fdata["maximum"]
+    @precision = fdata["precision"]
     @calculator = Dentaku::Calculator.new
 
     memory.each_key { |key,value|
@@ -36,8 +39,15 @@ class Compute < ModuleMED
         #print "K: #{key} V: #{val} #{val.class}\n"
         @calculator.store(key,val)
       }
+      hodnota = compute(nil)
+      unless hodnota.nil?
+        hodnota = hodnota.round(@precision) unless @precision.nil?
+        #print "Vyšlo #{hodnota}\n"
+        #hodnota = @minimum if (!(@minimum.nil?) && (hodnota < @minimum))
+        #hodnota = @maximum if (!(@maximum.nil?) && (hodnota > @maximum))
+      end
 
-      temp.store(@destination,compute(nil))
+      temp.store(@destination,hodnota)
 
       value.merge!(temp)
 

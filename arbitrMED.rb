@@ -22,18 +22,23 @@ class ArbitrMED
 
   def execModule(mod)
     # Spusteni zpracovani dat
+    return if mod.nil?
     print mod[0]
     emodule = eval(mod[0] +".new")
     emodule.properties(@memory,mod[1])
 
-    emodule.preprocessing(@memory)
+    execModule(emodule.preprocessing(@memory))
     emodule.execute(@memory)
-    emodule.postprocessing(@memory)
+    execModule(emodule.postprocessing(@memory))
 
   end
 
   def loadRecipe (recipe)
     @data = YAML.load_file(recipe)
+  end
+
+  def loadRecipeText(recipe)
+    @data = YAML.load(recipe)
   end
 
   def cook()

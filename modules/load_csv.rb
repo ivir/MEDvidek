@@ -50,7 +50,8 @@ class LoadCSV < ModuleMED
     data.each_line { |line|
       #printf(line)
       line.tr!("\n","")
-      values = line.split(",")
+      values = line.split(",") if @type == "csv"
+      values = line.split(";") if @type == "ssv"
       if(i <= 0)
         values.each { |column|
           @db.add_column(column,nil)
@@ -61,13 +62,22 @@ class LoadCSV < ModuleMED
         #print "#{values}\n"
         td.clear()
         values.each { |tval|
-          if(tval =~ /^[+-]{0,1}\d+$/)
+          tval.gsub!(/^".*"$/,'')
+
+          if(tval =~ /^[+-]{0,1}\d+\s*$/)
             td.push(Integer(tval));
             next
           end
-          if(tval =~ /^[+-]{0,1}\d+\.\d+[e+\-\d]*$/)
+          if(tval =~ /^[+-]?\d+\s*\d*\.\d+[e+\-\d]*\s*$/)
               td.push(Float(tval));
               next
+          end
+          if(tval =~ /^[+-]?\d+[\S\s]*\d*,?\d+[e+\-\d]*\s*$/)
+            #pouzita ceska forma zapisu
+            tval.gsub!(/[^+\-0-9,e]/,'')
+            tval.tr!(",",".")
+            td.push(Float(tval));
+            next
           end
           #nebylo rozpoznano co to jest -> ulozime jak to je
           td.push(String(tval))

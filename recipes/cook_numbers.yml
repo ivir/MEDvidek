@@ -1,26 +1,92 @@
 #ukazkovy recept pro zjisteni prumeru ze dvou cisel
+LoadO2:
+  store: "o2data"
+  file: "./Data/2016-03-3606068384-4_2251_11_00_100001-01-s-mob.xml"
+  information:
+    - mobil
+    - uctovano
+    - uctovana_castka
+    - sleva
+    - treti_strana
+    - data_objem
+    - data_jednotka
+    - data_castka
+
 LoadCSV:
-  store: "numbers"
-  file: "./recipes/numbers.csv"
-  type: "csv"
+  store: "users"
+  file: "./Data/_20160404-AKTUALNI_seznam_MT.csv"
+  type: "ssv"
+
+DBJoin:
+  store: "o2data"
+  source: "users"
+  pair:
+    - mobil
+    - MTC
 
 Compute:
-  source: "numbers"
-  store: "average"
-  calculate: "(first + second)/2"
+  source: "o2data"
+  store: "zaplatit"
+  calculate: "MAX(uctovano - limit_Kc,0) + treti_strana"
+  #minimum: 0
+  precision: 2
 
-Agregate:
-  store: "CUMUL_AVG"
-  source: "numbers"
-  calculate: "average"
-  operation: "+"
+#Compute:
+#  source: "o2data"
+#  store: "zaplatit"
+#  calculate: "(zaplatit + treti_strana)"
+  #minimum: 0
+  #precision: 2
+
 
 Filter:
-  source: "numbers"
-  condition: "first < 10"
+  source: "o2data"
+  condition: "zaplatit>0"
 
-Print:
-  source: "numbers"
+#Agregate:
+#  store: "CUMUL_ZAPLATIT"
+#  source: "o2data"
+#  calculate: "zaplatit"
+#  operation: "+"
+
+#Filter:
+#  source: "numbers"
+#  condition: "first < 10"
+
+ExportCSV:
+  source: "o2data"
+  file: "./nums.csv"
+  columns:
+    - ODB
+    - Jmeno
+    - mobil
+    - uctovano
+    - treti_strana
+    - data_castka
+    - data_objem : Staženo
+    - data_jednotka
+    - limit_Kc : limit
+    - zaplatit
+  type: "ssv"
+
+ExportJSON:
+  source: "o2data"
+  file: "./nums.json"
+  columns:
+    - ODB
+    - Jmeno
+    - mobil
+    - data_objem
+    - data_castka
+    - uctovano
+    - treti_strana
+    - limit_Kc : limit
+    - zaplatit
+  type: "ssv"
+
+
+#Print:
+#  source: "o2data"
 
 #Print:
 #  source: "AVERAGE"
