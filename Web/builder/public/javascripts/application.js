@@ -111,6 +111,32 @@ function prepareUpload(evt, module,parameter){
     $(tlacitko).click(function (evt){ upload(evt,kam,module,parameter)});
 
 }
+
+//funkce se pokusi nalezt v danem modulu parametr a nastavi jej na hodnotu value
+function findSet(start,module,parameter,value){
+    var zacatek = start.parentElement;
+    while( (zacatek != undefined)){
+        if( zacatek.hasAttribute("data-module")){
+            var modu = zacatek.getAttribute("data-module");
+            if (modu.localeCompare(module) == 0){
+                break;
+            }
+        }
+        if( typeof zacatek.previousElementSibling !== undefined){
+            zacatek = zacatek.previousElementSibling;
+        } else {
+            zacatek = zacatek.parentElement;
+        }
+    }
+    if (zacatek == undefined){
+        //nepovedlo se najit, zkusime jQuery
+        zacatek = $(start).closest("[data-module='" + module + "']");
+    }
+
+    var hodnota = $(zacatek).find("[name='" + parameter + "']");
+    hodnota.val(value);
+}
+
 function upload(evt,from,module,parameter){
     var sformData = new FormData();
     var prvek = from.files;
@@ -132,8 +158,8 @@ function upload(evt,from,module,parameter){
             data: sformData,
             processData: false, // Don't process the files
             contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
-            success: function () {
-                alert("Data Uploaded: ");
+            success: function (data) {
+                findSet(evt.target,module,parameter,data);
             }
         });
     //};
@@ -313,6 +339,5 @@ var CSRF_TOKEN = '';
 function configureCSRF() {
     $.get('/csrf_token','', function (data, textStatus, jqXHR) {
             CSRF_TOKEN = data.csrf;
-            alert(data.csrf);
         });
 }
