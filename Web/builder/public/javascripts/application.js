@@ -5,7 +5,7 @@ var recipe = {}; // ulozi jednotlive recepty do hashe
 var recipes = ""; // textova data pro prime stazeni, prip. upravu
 
 function pripraven(){
-    
+    configureCSRF(); //ziskame token pro komunikaci
 }
 
 function loadModule(file){
@@ -104,13 +104,46 @@ function verify(module,fce){
     },"json");
 }
 
-function upload(module,parameter,from){
-    var formData = new FormData({file: $(from).value});
+function prepareUpload(evt, module,parameter){
+    var kam = evt.target;
+    var tlacitko = kam.nextElementSibling;
+
+    $(tlacitko).click(function (evt){ upload(evt,kam,module,parameter)});
+
+}
+function upload(evt,from,module,parameter){
+    var sformData = new FormData();
+    var prvek = from.files;
+    $.each(prvek, function (key,value){
+        sformData.append(key,value);
+    });
+    sformData.append("authenticity_token",CSRF_TOKEN);
+    //zdroj: https://www.w3.org/TR/file-upload/
+    var reader = new FileReader();
+
+    // Read file into memory as UTF-16
+    /*reader.readAsText(prvek,'UTF-8');
+    reader.onload = function (evt){*/
+        //var data = evt.target.result;
+        $.ajax({
+            type: "POST",
+            url: "/upload",
+            enctype: 'multipart/form-data',
+            data: sformData,
+            processData: false, // Don't process the files
+            contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
+            success: function () {
+                alert("Data Uploaded: ");
+            }
+        });
+    //};
+    /*formData.append();
     $.post("/upload",formData,function(data){
         var path = $(module);
         path.find('input[name="' + parameter + '"]').val(data);
     }
-    );
+    );*/
+
 }
 //-------------
 
@@ -271,3 +304,15 @@ function upload(module,parameter,from){
     }; /* end download() */
 }));
 //-----------------------------
+
+//------ zdroj: http://www.randomactsofsentience.com/2013/06/the-dreaded-attack-prevented-by.html
+// osetreni CSRF - ziskani tokenu pro overeni opravnenosti pozadavku
+
+var CSRF_TOKEN = '';
+
+function configureCSRF() {
+    $.get('/csrf_token','', function (data, textStatus, jqXHR) {
+            CSRF_TOKEN = data.csrf;
+            alert(data.csrf);
+        });
+}

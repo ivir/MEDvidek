@@ -6,9 +6,9 @@ module Builder
 
     enable :sessions
 
-    get "/" do
-        "Hello world!"
-    end
+    #get "/" do
+    #
+    #end
     
     ##
     # Caching support.

@@ -4,7 +4,20 @@ Builder::App.controllers :build do
   #   session[:foo] = 'bar'
   #   render 'index'
   # end
-  
+
+  get :index, :map => "/" do
+    session[:test] = 'zkouska'
+    render 'builder'
+  end
+
+
+  #osetreni ziskani CSRF tokenu pro moznost nahravani dat pomoci GET/POST
+  get :csrf_token, :map => '/csrf_token', :provides => :json do
+    logger.debug 'Retrieving csrf_token'
+    result = '{ "csrf": "' + session[:csrf] + '"}'
+    logger.debug result
+    result
+  end
 
   # get :sample, :map => '/sample/url', :provides => [:any, :js] do
   #   case content_type
@@ -21,9 +34,9 @@ Builder::App.controllers :build do
   # end
   post :verify, :map => "/verify" do
     #ulozeni receptu
-    path = 'upload/' + params['file'][:filename]
+    path = 'upload/' + params["0"][:filename]
     File.open(path, "w") do |f|
-      f.write(params['file'][:tempfile].read)
+      f.write(params["0"][:tempfile].read)
     end
     return path
   end
@@ -31,10 +44,13 @@ Builder::App.controllers :build do
   post :upload, :map => "/upload" do
     #nahravani souboru
     #vezmeme soubor, ulozime do tempu a navratime cestu
-    path = 'upload/' + params['file'][:filename]
-    File.open(path, "w") do |f|
-      f.write(params['file'][:tempfile].read)
-    end
+    logger.debug params.to_s
+    userdir = File.join("public", "upload")
+    FileUtils.mkdir_p(userdir)
+    path = File.join(userdir,params["0"][:filename])
+
+    #zkopirujeme docasny soubor na spravne misto
+    FileUtils.cp(params["0"][:tempfile].path,path)
     return path
   end
 
