@@ -48,7 +48,7 @@ function createRecipe(){
                     }
                     if (parametr.checked) recept += "        - " + parametr.value + "\n";
                 } else {
-                    if ((parametr.type == "text") || (parametr.type == "TEXT"))
+                    //if ((parametr.type == "text") || (parametr.type == "TEXT"))
                     recept += "    " + parametr.name + ": \"" + parametr.value + "\"\n";
                 }
 
