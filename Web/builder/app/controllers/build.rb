@@ -34,11 +34,10 @@ Builder::App.controllers :build do
   # end
   post :verify, :map => "/verify" do
     #ulozeni receptu
-    path = 'upload/' + params["0"][:filename]
-    File.open(path, "w") do |f|
-      f.write(params["0"][:tempfile].read)
-    end
-    return path
+    logger.debug params.to_s
+    recipe = params["recipe"]
+
+    return "True"
   end
     
   post :upload, :map => "/upload" do

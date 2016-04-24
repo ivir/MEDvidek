@@ -114,10 +114,23 @@ function verify(evt,module,fce){
     });
     alert(recip);
     //mame pripraven recept k odeslani -> posleme
-    $.post("/verify",recip,function (data){
-        fce(data);
-    },"json");
+
+    var sformData = new FormData();
+    sformData.append("recipe",recip);
+    sformData.append("authenticity_token",CSRF_TOKEN);
+
+    $.ajax({
+        type: "POST",
+        url: "/verify",
+        data: sformData,
+        processData: false, // Don't process the files
+        contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
+        success: function (data) {
+            showOutput(data);
+        }
+    });
 }
+
 
 function prepareUpload(evt, module,parameter){
     var kam = evt.target;
@@ -185,6 +198,11 @@ function upload(evt,from,module,parameter){
     }
     );*/
 
+}
+
+
+function showOutput(data){
+    alert(data);
 }
 //-------------
 
