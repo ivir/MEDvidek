@@ -1,5 +1,5 @@
 require 'yaml'
-require './module_med.rb'
+require_relative './module_med.rb'
 
 gem 'sqlite3', '~> 1.3.10'
 require 'sqlite3'
@@ -9,6 +9,7 @@ class ArbitrMED
     loadModules
     @data = nil
     @memory = Hash.new()
+    @output = nil
   end
   #nacteni veskerych dostupnych modulu
   def loadModules()
@@ -22,14 +23,18 @@ class ArbitrMED
 
   def execModule(mod)
     # Spusteni zpracovani dat
+    #mod[0] - modul co se bude spoustet
+    #mod[1] - YAML parametry
     return if mod.nil?
-    print mod[0]
+
     emodule = eval(mod[0] +".new")
     emodule.properties(@memory,mod[1])
-
     execModule(emodule.preprocessing(@memory))
     emodule.execute(@memory)
     execModule(emodule.postprocessing(@memory))
+
+    #nastaveni vystupu pro pripad extrakce dat
+    @output = mod[1]["store"] unless mod[1]["store"].nil?
 
   end
 
@@ -45,5 +50,9 @@ class ArbitrMED
     @data.each { |execMod|
       execModule(execMod)
     }
+  end
+
+  def getOuput()
+    return @memory[@output] unless @output.nil?
   end
 end

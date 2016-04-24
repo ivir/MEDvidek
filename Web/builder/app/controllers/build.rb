@@ -1,3 +1,5 @@
+require_relative("../../../../arbitrMED")
+
 Builder::App.controllers :build do
   
   # get :index, :map => '/foo/bar' do
@@ -36,8 +38,10 @@ Builder::App.controllers :build do
     #ulozeni receptu
     logger.debug params.to_s
     recipe = params["recipe"]
-
-    return "True"
+    app = ArbitrMED.new
+    app.loadRecipeText(recipe)
+    out = app.getOutput()
+    return out
   end
     
   post :upload, :map => "/upload" do

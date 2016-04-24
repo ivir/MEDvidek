@@ -27,6 +27,8 @@ gem 'dm-aggregates'
 gem 'dm-types'
 gem 'dm-core'
 
+gem 'sqlite3'
+
 # Test requirements
 gem 'mocha', :group => 'test', :require => false
 gem 'riot', :group => 'test'
