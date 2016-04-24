@@ -35,7 +35,6 @@ class ArbitrMED
 
     #nastaveni vystupu pro pripad extrakce dat
     @output = mod[1]["store"] unless mod[1]["store"].nil?
-
   end
 
   def loadRecipe (recipe)
@@ -52,7 +51,7 @@ class ArbitrMED
     }
   end
 
-  def getOuput()
+  def getOutput()
     return @memory[@output] unless @output.nil?
   end
 end

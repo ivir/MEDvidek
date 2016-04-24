@@ -28,6 +28,8 @@ gem 'dm-types'
 gem 'dm-core'
 
 gem 'sqlite3'
+gem 'dentaku'
+gem 'nokogiri'
 
 # Test requirements
 gem 'mocha', :group => 'test', :require => false

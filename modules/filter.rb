@@ -1,5 +1,5 @@
 require_relative('../module_med')
-require_relative('../libs/dentaku/lib/dentaku')
+require "dentaku"
 
 class Filter < ModuleMED
 

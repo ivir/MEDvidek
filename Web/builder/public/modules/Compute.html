@@ -1,6 +1,11 @@
-<div class="module" data-module="Compute">
+<div class="module">
+    <div data-module="Compute">
     Provedení výpočtů.<br />
         <div><label>Načíst z:</label><input type="text" name="source" size="20" /></div>
         <div><label>Uložit do:</label><input type="text" name="store" size="20" /></div>
         <div><label>Výpočet:</label><input type="text" name="calculate" size="20" /></div>
+    </div>
+    <div class="cverify">
+        <button name="verify" onClick="verify(event,'Compute',function (data){$('.demoView').text(data);})">Ověřit</button>
+    </div>
 </div>
