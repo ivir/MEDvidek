@@ -1,19 +1,24 @@
 // Put your application scripts here
 document.addEventListener("deviceready",pripraven);
 $(document).ready(function () { pripraven(); });
-var recipe = {}; // ulozi jednotlive recepty do hashe
+var recipe = new Array; // ulozi jednotlive recepty do hashe
 var recipes = ""; // textova data pro prime stazeni, prip. upravu
-
+var I=0;
 function pripraven(){
     configureCSRF(); //ziskame token pro komunikaci
 }
 
 function loadModule(file){
     var formular,fsource;
+
     fsource = "/modules/" + file + ".html";
     $.get(fsource, function( data ) {
-        var sr = $(data)
-        sr.appendTo($(".recipe"));
+        var tg = "<input type=\"hidden\" name=\"__i__\" value=\""+ I + "\" />";
+        I= I + 1;
+        var sr = $(data);
+        $(tg).appendTo(sr);
+        var t = $(sr).wrap("<div class='module'></div>")
+        t.appendTo($(".recipe"));
         return false;
     });
     return false;
@@ -24,6 +29,10 @@ function createRecipe(){
     var moduly = instrukce.find("div[data-module]");
     var recept = "", checkboxes = "";
     var postup = "";
+
+    recipe = []; //smazeme predchozi hodnoty
+    recipes = "";
+
     $.each(moduly,function (index, modul){
         recept = $(modul).attr("data-module") +":\n";
         var parametry = $(modul).find("input,select");
@@ -49,7 +58,7 @@ function createRecipe(){
                 recept += "    " + parametr.name + ": " + vyber + "\n";
             }
         });
-        recipe[$(modul).attr("data-module")] = recept;
+        recipe.push(recept);
         recipes += recept;
     });
 }
@@ -90,14 +99,20 @@ function createStep(part){
     return recept;
 }
 
-function verify(module,fce){
+function verify(evt,module,fce){
     var recip = "";
+    var __I__ = $(evt.target.closest('.module')).find("[name='__i__']");;
+    var cislo = __I__.val();
+    var k = 0;
     $.each(recipe,function(key,value){
-        recip += value;
-        if(key == module){
+        if(k > cislo){
             return false;
+        } else {
+            recip += value;
         }
+        k++;
     });
+    alert(recip);
     //mame pripraven recept k odeslani -> posleme
     $.post("/verify",recip,function (data){
         fce(data);

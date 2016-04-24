@@ -19,7 +19,7 @@
     </div>
     <div class="cverify">
         <input type="file" id="fileinput" name="file[]" onChange="prepareUpload(event,'LoadO2','file')"><button>Nahrát data</button>
-        <button name="verify" onClick="verify('LoadO2',function (data){$('.outO2').text(data);})">Ověřit</button>
+        <button name="verify" onClick="verify(event,'LoadO2',function (data){$('.outO2').text(data);})">Ověřit</button>
         <div class="outO2"></div>
     </div>
 </div>
