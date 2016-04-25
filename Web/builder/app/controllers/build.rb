@@ -40,6 +40,7 @@ Builder::App.controllers :build do
     recipe = params["recipe"]
     app = ArbitrMED.new
     app.loadRecipeText(recipe)
+    app.cook() #provedeme predany recept
     out = app.getOutput()
     return out
   end
