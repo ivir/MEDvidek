@@ -21,7 +21,14 @@ class Compute < ModuleMED
     memory.each_key { |key,value|
       @calculator.store(key,value) if value.is_a?(Integer) || value.is_a?(Float)
     }
-    @calculator.store("SIZE",@source.length)
+
+    if @source.nil?
+      data = 1
+      @calculator.store("SIZE",data)
+    else
+      @calculator.store("SIZE",@source.length)
+    end
+
   end
 
   #compute rozseka retezec pomoci operatoru (+-*/%) a nasledne promenne nahradi za variantu pro pristup do datasetu pro provedeni dane operace.
@@ -33,6 +40,17 @@ class Compute < ModuleMED
   def execute(fdata)
     #printf "Jdu pracovat\n"
     temp = Hash.new
+
+    if @what.nil?
+      #nepocitame neco v datasetu
+      hodnota = compute(nil)
+      if hodnota
+        hodnota = hodnota.round(@precision) unless @precision.nil?
+      end
+      @memory[@store] = hodnota unless @store.nil?
+      return
+    end
+    
     @what.each do |value|
       #print value
       value.each_pair { |key,val|
@@ -40,7 +58,7 @@ class Compute < ModuleMED
         @calculator.store(key,val)
       }
       hodnota = compute(nil)
-      unless hodnota.nil?
+      if hodnota
         hodnota = hodnota.round(@precision) unless @precision.nil?
         #print "Vyšlo #{hodnota}\n"
         #hodnota = @minimum if (!(@minimum.nil?) && (hodnota < @minimum))
@@ -75,11 +93,11 @@ class Agregate < Compute
         #print "K: #{key} V: #{val} \n"
         @calculator.store(key,val)
       }
-      unless first
-        @store = cumul(@operation,@store,compute(nil))
-      else
+      if first
         @store = compute(nil)
         first = false
+      else
+        @store = cumul(@operation,@store,compute(nil))
       end
 
       #print @store
