@@ -16,6 +16,8 @@ class Compute < ModuleMED
     @minimum = fdata["minimum"]
     @maximum = fdata["maximum"]
     @precision = fdata["precision"]
+    @memory = memory
+
     @calculator = Dentaku::Calculator.new
 
     memory.each_key { |key,value|
@@ -47,10 +49,10 @@ class Compute < ModuleMED
       if hodnota
         hodnota = hodnota.round(@precision) unless @precision.nil?
       end
-      @memory[@store] = hodnota unless @store.nil?
+      @store = hodnota unless @destination.nil?
       return
     end
-    
+
     @what.each do |value|
       #print value
       value.each_pair { |key,val|
