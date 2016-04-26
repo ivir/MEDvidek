@@ -202,7 +202,15 @@ function upload(evt,from,module,parameter){
 
 
 function showOutput(data){
-    alert(data);
+    var result = JSON.parse(data).result;
+    alert(typeof(result));
+    var objectType = typeof(result);
+    if ( objectType == 'object') {
+        var resu = ConvertJsonToTable(result,"result",null,null);
+        $('.DemoView').html(resu);
+    } else {
+        $('.DemoView').text(result);
+    }
 }
 //-------------
 

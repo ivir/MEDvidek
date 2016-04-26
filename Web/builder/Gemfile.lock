@@ -62,6 +62,7 @@ GEM
       enumerable-lazy
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    oj (2.15.0)
     padrino (0.13.1)
       padrino-admin (= 0.13.1)
       padrino-cache (= 0.13.1)
@@ -137,6 +138,7 @@ DEPENDENCIES
   dm-validations
   mocha
   nokogiri
+  oj
   padrino (= 0.13.1)
   rack-test
   rake

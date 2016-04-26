@@ -43,7 +43,7 @@ Builder::App.controllers :build do
     app.loadRecipeText(recipe)
     app.cook() #provedeme predany recept
     out = app.getOutput()
-
+    return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
     return JSON.generate({:result => out})
   end
     
