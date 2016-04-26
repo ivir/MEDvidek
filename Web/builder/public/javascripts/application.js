@@ -100,6 +100,8 @@ function createStep(part){
 }
 
 function verify(evt,module,fce){
+
+    createRecipe(); //vygenerujeme aktualni recept (pro snizeni nutnosti neustaleho klikani na "Vytvorit recept" v pripade zmeny)
     var recip = "";
     var __I__ = $(evt.target.closest('.module')).find("[name='__i__']");;
     var cislo = __I__.val();
