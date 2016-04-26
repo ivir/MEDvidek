@@ -164,6 +164,43 @@ class Dataset
                 print("\n")
             end
         end
+
+        #to_json provede konverzi datasetu do formy JSONu
+        def to_json
+            i = 0
+            datas = Array.new
+            td = Array.new
+
+            ds = @data
+            ds.each_with_index do |row,index|
+                data = "{"
+                td.clear
+                row.each_pair do |key,value|
+                    td.push("#{format(key)}: #{format(value)}")
+                end
+
+                data +=td.join(",")
+                data += "}"
+                datas.push(data)
+            end
+            data = "[#{datas.join(",")}]"
+            data
+        end
+
+    def format(input)
+        case input
+            when Float then
+                return input.to_s
+            when BigDecimal then
+                return input.to_s('F')
+            when String then
+                return "\"#{input.to_s}\""
+            when nil then
+                return "\"#{input.to_s}\""
+            else
+                return input.to_s
+        end
+    end
 end
 
 class DBStorage
