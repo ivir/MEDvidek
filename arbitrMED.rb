@@ -52,6 +52,6 @@ class ArbitrMED
   end
 
   def getOutput()
-    return @memory[@output] unless @output.nil?
+    @memory[@output] unless @output.nil?
   end
 end
