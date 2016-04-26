@@ -1,4 +1,5 @@
 require_relative("../../../../arbitrMED")
+require 'json'
 
 Builder::App.controllers :build do
   
@@ -42,7 +43,8 @@ Builder::App.controllers :build do
     app.loadRecipeText(recipe)
     app.cook() #provedeme predany recept
     out = app.getOutput()
-    return out
+
+    return JSON.generate({:result => out})
   end
     
   post :upload, :map => "/upload" do
@@ -59,3 +61,4 @@ Builder::App.controllers :build do
   end
 
 end
+
