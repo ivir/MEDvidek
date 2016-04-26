@@ -18,6 +18,8 @@ class Compute < ModuleMED
     @precision = fdata["precision"]
     @memory = memory
 
+    @memory["output"] = @destination
+    
     @calculator = Dentaku::Calculator.new
 
     memory.each_key { |key,value|

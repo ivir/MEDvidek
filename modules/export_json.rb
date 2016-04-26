@@ -20,6 +20,8 @@ class ExportJSON < ModuleMED
     @ping = fdata["ping"]
     @columns = fdata["columns"]
 
+    # @memory["output"]
+
   end
 
   def status(fdata)

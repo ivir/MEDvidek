@@ -23,6 +23,7 @@ class LoadCSV < ModuleMED
     @type = fdata["type"]
     @file = fdata["file"]
 
+    @memory["output"] = @store
   end
 
   def status(fdata)

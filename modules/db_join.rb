@@ -23,6 +23,7 @@ class DBJoin < ModuleMED
     @source = fdata["source"]
     @pair = fdata["pair"]
 
+    @memory["output"] = @store
   end
 
   def status(fdata)

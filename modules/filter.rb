@@ -13,6 +13,10 @@ class Filter < ModuleMED
     @condition = fdata["condition"]
     @calculator = Dentaku::Calculator.new
 
+    # TODO - ošetřit situaci, kdy chci vysledek ulozit nekam jinam
+
+    @memory["output"] = @what
+
     memory.each_key { |key,value|
       @calculator.store(key,value) if value.is_a?(Integer) || value.is_a?(Float)
     }

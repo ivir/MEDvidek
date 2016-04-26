@@ -16,6 +16,8 @@ class LoadO2 < ModuleMED
     @columns = fdata["information"]
     @file = fdata["file"]
 
+    @memory["output"] = @store
+
     @data = Dataset.new
     @columns.each do |col|
       @data.add_column(col, 0)

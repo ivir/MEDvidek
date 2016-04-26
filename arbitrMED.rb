@@ -33,8 +33,6 @@ class ArbitrMED
     emodule.execute(@memory)
     execModule(emodule.postprocessing(@memory))
 
-    #nastaveni vystupu pro pripad extrakce dat
-    @output = mod[1]["store"] unless mod[1]["store"].nil?
   end
 
   def loadRecipe (recipe)
@@ -52,6 +50,8 @@ class ArbitrMED
   end
 
   def getOutput()
-    @memory[@output] unless @output.nil?
+    return if @output.nil?
+    return if @memory[@output].nil?
+    @memory[@memory["output"]]
   end
 end
