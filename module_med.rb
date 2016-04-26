@@ -10,6 +10,9 @@ class ModuleMED
 
   def properties(memory,fdata)
     # navraci seznam podporovanych vstupu a vystupu
+
+    #povinne musi byt definovana polozka memory["output"]uvadejici kde je ulozen vystup
+    #memory["output"] = nil
   end
 
   def status(fdata)
