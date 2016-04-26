@@ -50,8 +50,8 @@ class ArbitrMED
   end
 
   def getOutput()
-    return if @output.nil?
-    return if @memory[@output].nil?
+    return if @memory["output"].nil?
+    logger.debug @memory["output"]
     @memory[@memory["output"]]
   end
 end

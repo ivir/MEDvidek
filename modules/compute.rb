@@ -18,8 +18,6 @@ class Compute < ModuleMED
     @precision = fdata["precision"]
     @memory = memory
 
-    @memory["output"] = @destination
-    
     @calculator = Dentaku::Calculator.new
 
     memory.each_key { |key,value|
@@ -46,7 +44,9 @@ class Compute < ModuleMED
     temp = Hash.new
 
     if @what.nil?
-      #nepocitame neco v datasetu
+      #nepocitame neco v datasetu -> navratime cislo do promenne
+      @memory["output"] = @destination
+
       hodnota = compute(nil)
       if hodnota
         hodnota = hodnota.round(@precision) unless @precision.nil?
@@ -54,6 +54,9 @@ class Compute < ModuleMED
       @memory.store(@destination,hodnota) unless @destination.nil?
       return
     end
+
+    #vysledkem bude dataset -> navracime dataset
+    @memory["output"] = @source
 
     @what.each do |value|
       #print value
