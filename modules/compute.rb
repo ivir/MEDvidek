@@ -49,7 +49,7 @@ class Compute < ModuleMED
       if hodnota
         hodnota = hodnota.round(@precision) unless @precision.nil?
       end
-      @store = hodnota unless @destination.nil?
+      @memory.store(@destination,hodnota) unless @destination.nil?
       return
     end
 
