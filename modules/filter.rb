@@ -4,7 +4,7 @@ require "dentaku"
 class Filter < ModuleMED
 
   def properties(memory,fdata)
-    printf "Spusten filtr\n"
+    #printf "Spusten filtr\n"
 
     @what = memory[fdata["source"]]
     @source = fdata["source"]
@@ -14,7 +14,7 @@ class Filter < ModuleMED
     @calculator = Dentaku::Calculator.new
 
     # TODO - ošetřit situaci, kdy chci vysledek ulozit nekam jinam
-
+    @memory = memory
     @memory["output"] = @what
 
     memory.each_key { |key,value|
@@ -24,7 +24,7 @@ class Filter < ModuleMED
   end
 
   def execute(fdata)
-    printf "Jdu pracovat s filtrem\n"
+    #printf "Jdu pracovat s filtrem\n"
     res = @what.delete_if do |value|
       #print value
       value.each_pair { |key,val|

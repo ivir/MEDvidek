@@ -1,5 +1,5 @@
 require_relative('../module_med')
-require_relative('../libs/dentaku/lib/dentaku')
+require 'dentaku'
 
 #Compute vypocte hodnotu pro konkretni radek a ulozi jej nazpet.
 class Compute < ModuleMED
