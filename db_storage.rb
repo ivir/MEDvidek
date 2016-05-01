@@ -128,7 +128,11 @@ class Dataset
             end
 
         end
-        
+
+        #seradi vzestupne
+        def sort(column)
+            @data.sort! {|x,y| x[column] <=> y[column]}
+        end
         #ulozeni datasetu, v columns jsou uvedeny sloupce, ktere se maji ulozit
         def store(columns=nil)
         end
