@@ -35,7 +35,7 @@ function createRecipe(){
 
     $.each(moduly,function (index, modul){
         recept = $(modul).attr("data-module") +":\n";
-        var parametry = $(modul).find("input,select");
+        var parametry = "- " + $(modul).find("input,select");
         checkboxes = "";
         $.each(parametry, function (index,parametr){
             if (parametr.tagName == "INPUT") {
@@ -71,7 +71,7 @@ function createStep(part){
     var moduly = $("div[data-module=\"" + part +"\"]");
     var recept = "", checkboxes = "";
     $.each(moduly,function (index, modul){
-        recept += $(modul).attr("data-module") +":\n";
+        recept += "- " + $(modul).attr("data-module") +":\n";
         var parametry = $(modul).find("input,select");
         checkboxes = "";
         $.each(parametry, function (index,parametr){
