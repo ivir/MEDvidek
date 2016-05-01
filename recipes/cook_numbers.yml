@@ -1,8 +1,8 @@
 #ukazkovy recept pro zjisteni prumeru ze dvou cisel
-LoadO2:
-  store: "o2data"
-  file: "./Data/2016-03-3606068384-4_2251_11_00_100001-01-s-mob.xml"
-  information:
+- LoadO2:
+   store: "o2data"
+   file: "./Data/2016-03-3606068384-4_2251_11_00_100001-01-s-mob.xml"
+   information:
     - mobil
     - uctovano
     - uctovana_castka
@@ -12,36 +12,36 @@ LoadO2:
     - data_jednotka
     - data_castka
 
-LoadCSV:
-  store: "users"
-  file: "./Data/_20160404-AKTUALNI_seznam_MT.csv"
-  type: "ssv"
+- LoadCSV:
+   store: "users"
+   file: "./Data/_20160404-AKTUALNI_seznam_MT.csv"
+   type: "ssv"
 
-DBJoin:
-  store: "o2data"
-  source: "users"
-  pair:
+- DBJoin:
+   store: "o2data"
+   source: "users"
+   pair:
     - mobil
     - MTC
 
-Compute:
-  source: "o2data"
-  store: "zaplatit"
-  calculate: "MAX(uctovano - limit_Kc,0) + treti_strana"
-  #minimum: 0
-  precision: 2
+- Compute:
+   source: "o2data"
+   store: "zaplatit"
+   calculate: "MAX(uctovano - limit_Kc,0) + treti_strana"
+   #minimum: 0
+   precision: 2
 
-#Compute:
-#  source: "o2data"
-#  store: "zaplatit"
-#  calculate: "(zaplatit + treti_strana)"
-  #minimum: 0
-  #precision: 2
+- Compute:
+   source: "o2data"
+   store: "zaplatit"
+   calculate: "(zaplatit + treti_strana)"
+   #minimum: 0
+   #precision: 2
 
 
-Filter:
-  source: "o2data"
-  condition: "zaplatit>0"
+- Filter:
+   source: "o2data"
+   condition: "zaplatit>0"
 
 #Agregate:
 #  store: "CUMUL_ZAPLATIT"
@@ -53,10 +53,10 @@ Filter:
 #  source: "numbers"
 #  condition: "first < 10"
 
-ExportCSV:
-  source: "o2data"
-  file: "./nums.csv"
-  columns:
+- ExportCSV:
+   source: "o2data"
+   file: "./nums.csv"
+   columns:
     - ODB
     - Jmeno
     - mobil
@@ -67,12 +67,12 @@ ExportCSV:
     - data_jednotka
     - limit_Kc : limit
     - zaplatit
-  type: "ssv"
+   type: "ssv"
 
-ExportJSON:
-  source: "o2data"
-  file: "./nums.json"
-  columns:
+- ExportJSON:
+   source: "o2data"
+   file: "./nums.json"
+   columns:
     - ODB
     - Jmeno
     - mobil
@@ -82,7 +82,7 @@ ExportJSON:
     - treti_strana
     - limit_Kc : limit
     - zaplatit
-  type: "ssv"
+   type: "ssv"
 
 
 #Print:
