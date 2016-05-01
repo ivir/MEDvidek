@@ -10,10 +10,6 @@ class LoadCSV < ModuleMED
     @db = Dataset.new
 
   end
-  def inputRecipe(fdata)
-    # nacteni parametru pro zpracovani
-
-  end
 
   def properties(memory,fdata)
     # navraci seznam podporovanych vstupu a vystupu

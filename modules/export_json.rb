@@ -6,11 +6,6 @@ class ExportJSON < ModuleMED
     @db = Dataset.new
 
   end
-  def inputRecipe(fdata)
-    # nacteni parametru pro zpracovani
-
-  end
-
   def properties(memory,fdata)
     # navraci seznam podporovanych vstupu a vystupu
     @store = fdata["source"]
@@ -21,11 +16,6 @@ class ExportJSON < ModuleMED
     @columns = fdata["columns"]
 
     # @memory["output"]
-
-  end
-
-  def status(fdata)
-    #vysledek posledni operace
 
   end
 

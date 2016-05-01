@@ -6,13 +6,7 @@ class ExportCSV < ModuleMED
     @db = Dataset.new
 
   end
-  def inputRecipe(fdata)
-    # nacteni parametru pro zpracovani
-
-  end
-
   def properties(memory,fdata)
-    # navraci seznam podporovanych vstupu a vystupu
     @store = fdata["source"]
     @memory = memory
     #@store = Dataset.new if @store.nil?
@@ -20,11 +14,6 @@ class ExportCSV < ModuleMED
     @file = fdata["file"]
     @columns = fdata["columns"]
     @enviroment = fdata["enviroment"]
-  end
-
-  def status(fdata)
-    #vysledek posledni operace
-
   end
 
   def preprocessing(fdata)

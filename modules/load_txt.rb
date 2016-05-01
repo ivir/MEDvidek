@@ -8,18 +8,12 @@ class LoadTXT < ModuleMED
     @db = SQLite3::Database.new(":memory:")
     @db.execute("Create table data (line varchar(255));")
   end
-  def inputRecipe(fdata)
-    # nacteni parametru pro zpracovani
 
-  end
-
-  def properties(fdata)
-    # navraci seznam podporovanych vstupu a vystupu
+  def properties(memory,fdata)
 
     @type = fdata["type"]
     @file = fdata["file"]
 
-    printf("Data načtena")
 
   end
 
@@ -46,7 +40,6 @@ class LoadTXT < ModuleMED
       printf(line)
       @db.execute "insert into data values (?)", [line]
     }
-    printf("vkládání provedeno")
     fdata = @db
   end
 end

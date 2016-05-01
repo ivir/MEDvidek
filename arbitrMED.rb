@@ -27,7 +27,7 @@ class ArbitrMED
     #mod[1] - YAML parametry
     return if mod.nil?
 
-    emodule = eval(mod[0] +".new")
+    emodule = eval(mod[0] +".new") # TODO - osetrit vstup, ze obsahuje pouze nazev modulu
     emodule.properties(@memory,mod[1])
     execModule(emodule.preprocessing(@memory))
     emodule.execute(@memory)
