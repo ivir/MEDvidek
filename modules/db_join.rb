@@ -1,9 +1,6 @@
 require_relative('../module_med')
 require_relative('../db_storage')
 
-gem 'sqlite3', '~> 1.3.10'
-require 'sqlite3'
-
 
 class DBJoin < ModuleMED
   def initialize
@@ -42,6 +39,6 @@ class DBJoin < ModuleMED
     stor = @memory[@store]
     stor.join(@memory[@source],@pair)
 
-    puts @memory
+    #puts @memory
   end
 end

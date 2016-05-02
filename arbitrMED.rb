@@ -48,7 +48,7 @@ class ArbitrMED
 
   def cook()
     @data.each { |execMod|
-      puts execMod
+      #puts execMod
       execModule(execMod)
     }
   end

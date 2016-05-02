@@ -1,4 +1,12 @@
 #ukazkovy recept pro zjisteni prumeru ze dvou cisel
+- LoadMail:
+    server: code.itik.cz
+    username: jan.mares@manast.eu
+    password:
+    subject: T-mobile
+    attachment: "Vyuctovani"
+    store: "vyuctovani"
+
 - LoadO2:
    store: "o2data"
    file: "./Data/2016-03-3606068384-4_2251_11_00_100001-01-s-mob.xml"

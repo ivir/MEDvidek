@@ -9,6 +9,7 @@ class ModuleMED
   end
 
   def properties(memory,fdata)
+    #povinne
     # navraci seznam podporovanych vstupu a vystupu
 
     #povinne musi byt definovana polozka memory["output"]uvadejici kde je ulozen vystup
@@ -29,6 +30,7 @@ class ModuleMED
   end
 
   def execute(fdata)
+    # povinne
     # spusteni zpracovani
   end
 end

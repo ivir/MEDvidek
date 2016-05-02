@@ -159,13 +159,14 @@ class Dataset
         end
 
         def to_s
-            @columns.each_key(){|key| print key + "\t"}
-            print "\n"
+            s = ""
+            @columns.each_key(){|key| s += key + "\t"}
+            s += "\n"
             @data.each do |row|
                row.each_pair { |key,value|
-                   print "#{value}\t" unless value.nil?
+                   s += "#{value}\t" unless value.nil?
                }
-                print("\n")
+                 s += "\n"
             end
         end
 

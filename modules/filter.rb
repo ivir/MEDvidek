@@ -28,10 +28,10 @@ class Filter < ModuleMED
     res = @what.delete_if do |value|
       #print value
       value.each_pair { |key,val|
-        print "K: #{key} V: #{val} #{val.class}\n"
+        #print "K: #{key} V: #{val} #{val.class}\n"
         @calculator.store(key,val)
       }
-      print "#{@condition} \n"
+      #print "#{@condition} \n"
       out = @calculator.evaluate(@condition)
 
       !out

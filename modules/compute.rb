@@ -92,7 +92,7 @@ class Agregate < Compute
   end
 
   def execute(fdata)
-    printf "Jdu pracovat Agregate\n"
+    #printf "Jdu pracovat Agregate\n"
     first = true
     @what.each do |value|
       #print value
