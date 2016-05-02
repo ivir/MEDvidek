@@ -16,6 +16,8 @@ class LoadO2 < ModuleMED
     @columns = fdata["information"]
     @file = fdata["file"]
 
+    @file = @memory[@file] unless @memory[@file].nil?
+
     @memory["output"] = @store
 
     @data = Dataset.new
@@ -26,6 +28,8 @@ class LoadO2 < ModuleMED
   end
 
   def execute(fdata)
+
+    @file = @file[0] if @file.is_a?(Array)
 
     doc = Nokogiri::XML(File.open(@file))
 
