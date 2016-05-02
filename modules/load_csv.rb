@@ -1,9 +1,6 @@
 require_relative('../module_med')
 require_relative('../db_storage')
 
-gem 'sqlite3', '~> 1.3.10'
-require 'sqlite3'
-
 
 class LoadCSV < ModuleMED
   def initialize
@@ -18,6 +15,8 @@ class LoadCSV < ModuleMED
     #@store = Dataset.new if @store.nil?
     @type = fdata["type"]
     @file = fdata["file"]
+
+    @file = @memory[@file] unless @memory[@file].nil?
 
     @memory["output"] = @store
   end
@@ -39,6 +38,9 @@ class LoadCSV < ModuleMED
 
   def execute(fdata)
     # spusteni zpracovani
+
+    @file = @file[0] if @file.is_a?(Array)
+
     @db.clear
     data = File.open(@file)
     i = 0
