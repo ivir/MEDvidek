@@ -25,7 +25,7 @@ class Report < ModuleMED
     @store = fdata["store"]
     @file = fdata["file"]
 
-    @memory["output"]
+    @memory["output"] = @store
     ''
   end
 
@@ -43,6 +43,16 @@ class Report < ModuleMED
     case @format
       when "pdf"
         # generujeme do PDF
+        kit = PDFKit.new(vysledek, :page_size => 'A4')
+        #CSS styl
+        #kit.stylesheets << '/path/to/css/file'
+
+        # Get an inline PDF
+        @memory[@store] = kit.to_pdf unless @store.nil?
+
+        # Save the PDF to a file
+        file = kit.to_file(@file) unless @file.nil?
+
       when "txt"
         # generovani do TXT souboru
       when "html"
