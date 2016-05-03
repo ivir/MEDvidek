@@ -4,8 +4,7 @@
     username: jan.mares@manast.eu
     password:
     subject: T-mobile
-    attachment: "Vyuctovani"
-    store: "vyuctovani"
+    filter: "Vyuctovani"
 
 - LoadO2:
    store: "o2data"
