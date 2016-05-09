@@ -87,16 +87,37 @@ class ExportCSV < ModuleMED
     end
 
     def format(input)
-      case input
-        when Float then
-          num = input.to_s
-          return num.tr!(".",",")
-        when BigDecimal then
-          num = input.to_s('F')
-          return num.tr!(".",",")
-        else
-          #print "#{input.class} s daty #{input}\n"
-          return input.to_s
+      if @enviroment.nil?
+        case input
+          when Float then
+            num = input.to_s
+            return num
+          when BigDecimal then
+            num = input.to_s('F')
+            return num
+          when NilClass then
+            return 0
+          else
+            #print "#{input.class} s daty #{input}\n"
+            return input.to_s
+        end
+      else
+          if (@enviroment == "cz")
+            case input
+              when Float then
+                num = input.to_s
+                return num.tr!(".",",")
+              when BigDecimal then
+                num = input.to_s('F')
+                return num.tr!(".",",")
+              when NilClass then
+                return 0
+              else
+                #print "#{input.class} s daty #{input}\n"
+                return input.to_s
+            end
+          end
+
       end
     end
 
