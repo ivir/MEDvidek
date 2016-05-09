@@ -53,7 +53,8 @@ class LoadCSV < ModuleMED
       values = line.split(";") if @type == "ssv"
       if(i <= 0)
         values.each { |column|
-          @db.add_column(column,nil)
+          # prevadi se na mala pismena kvuli vypoctum
+          @db.add_column(column.downcase(),nil)
         }
         i = i + 1
         next
@@ -77,6 +78,10 @@ class LoadCSV < ModuleMED
             tval.tr!(",",".")
             td.push(Float(tval));
             next
+          end
+          if tval.nil?
+              td.push(0);
+              next
           end
           #nebylo rozpoznano co to jest -> ulozime jak to je
           td.push(String(tval))
