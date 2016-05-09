@@ -111,6 +111,8 @@ class Dataset
         #spojeni dat z vice datasetu
         def join(secDataset,pair)
             #print "\n#{pair}\n"
+            pair[0].downcase! unless @columns.include?(pair[0])
+            pair[1].downcase! unless secDataset.columns.include?(pair[1])
             @data.each do |row|
                 secDataset.each do |row2|
                     #print "\nPorovnavam #{row[pair[0]]} s #{row2[pair[1]]}\n"
