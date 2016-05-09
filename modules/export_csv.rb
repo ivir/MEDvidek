@@ -58,10 +58,19 @@ class ExportCSV < ModuleMED
         arr.clear
         @columns.each do |col|
           unless col.class == Hash
-            arr.push(format(row[col]))
+            if row[col].nil?
+              arr.push(format(row[col.downcase]))
+            else
+              arr.push(format(row[col]))
+            end
+
           else
             col.each_pair do |key,value|
-              arr.push(format(row[key]))
+              if row[key].nil?
+                arr.push(format(row[key.downcase]))
+              else
+                arr.push(format(row[key]))
+              end
             end
           end
         end
@@ -96,7 +105,7 @@ class ExportCSV < ModuleMED
             num = input.to_s('F')
             return num
           when NilClass then
-            return 0
+            return ""
           else
             #print "#{input.class} s daty #{input}\n"
             return input.to_s
@@ -111,7 +120,7 @@ class ExportCSV < ModuleMED
                 num = input.to_s('F')
                 return num.tr!(".",",")
               when NilClass then
-                return 0
+                return ""
               else
                 #print "#{input.class} s daty #{input}\n"
                 return input.to_s

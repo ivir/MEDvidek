@@ -60,10 +60,20 @@ class Compute < ModuleMED
 
     @what.each do |value|
       #print value
-      value.each_pair { |key,val|
-        #print "K: #{key} V: #{val} #{val.class}\n"
-        @calculator.store(key,val)
-      }
+      @calculator.clear()
+      depend = @calculator.dependencies(@calculate)
+      depend.each do |variable|
+        if value[variable].nil?
+          if @memory[variable].nil?
+            @calculator.store(variable,0)
+          else
+            @calculator.store(variable,@memory[variable])
+          end
+        else
+          @calculator.store(variable,value[variable])
+        end
+      end
+
       hodnota = compute(nil)
       if hodnota
         hodnota = hodnota.round(@precision) unless @precision.nil?
@@ -76,6 +86,7 @@ class Compute < ModuleMED
 
       value.merge!(temp)
 
+      puts value if value["mobil"] == 725823634
     end
 
     @what.add_column(@destination,0) unless @what.verify_column(@destination)
