@@ -10,7 +10,7 @@ class Print < ModuleMED
 
   def execute(fdata)
     return if @what.nil?
-    print @what
+    print @what.to_s
   end
 
 end
