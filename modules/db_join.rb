@@ -42,3 +42,29 @@ class DBJoin < ModuleMED
     #puts @memory
   end
 end
+
+class DBSort < ModuleMED
+  def initialize
+    @db = Dataset.new
+
+  end
+
+  def properties(memory,fdata)
+    # navraci seznam podporovanych vstupu a vystupu
+    @memory = memory
+    #@store = Dataset.new if @store.nil?
+    @source = fdata["source"]
+    @sort = fdata["sort"]
+    @asc = (fdata["asceding"].nil?)? true : false
+
+    @memory["output"] = @store
+  end
+
+  def execute(fdata)
+    # spusteni zpracovani
+    stor = @memory[@source]
+    stor.sort(@sort,@asc)
+
+    #puts @memory
+  end
+end

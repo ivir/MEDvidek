@@ -132,8 +132,12 @@ class Dataset
         end
 
         #seradi vzestupne
-        def sort(column)
-            @data.sort! {|x,y| x[column] <=> y[column]}
+        def sort(column,asceding=true)
+            if asceding
+                @data.sort! {|x,y| x[column] <=> y[column]}
+            else
+                @data.sort! {|x,y| y[column] <=> x[column]}
+            end
         end
         #ulozeni datasetu, v columns jsou uvedeny sloupce, ktere se maji ulozit
         def store(columns=nil)
