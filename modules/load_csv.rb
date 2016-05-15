@@ -68,10 +68,25 @@ class LoadCSV < ModuleMED
             td.push(Integer(tval));
             next
           end
+
+          if(tval =~ /^\s*[+-]{0,1}\d+[\s\d]*$/) #osetreni mobilnich cisel
+            tval.gsub!(/[^+\-0-9,e]/,'')
+            tval.rstrip!
+            tval.lstrip!
+            td.push(Integer(tval));
+            next
+          end
+
           if(tval =~ /^[+-]?\d+\s*\d*\.\d+[e+\-\d]*\s*$/)
               td.push(Float(tval));
               next
           end
+
+          if(tval =~ /^\d+-\d+$/)
+            td.push(String(tval))
+            next
+          end
+
           if(tval =~ /^[+-]?\d+[\S\s]*\d*,?\d+[e+\-\d]*\s*$/)
             #pouzita ceska forma zapisu
             tval.gsub!(/[^+\-0-9,e]/,'')
