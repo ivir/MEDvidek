@@ -141,6 +141,9 @@
 #   type: "ssv"
 #   enviroment: "cz"
 
+- Filter:
+   source: "o2data"
+   condition: "zaplatit>0"
 
 - DBSort:
     source: "o2data"
