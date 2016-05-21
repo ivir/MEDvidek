@@ -34,8 +34,8 @@ function createRecipe(){
     recipes = "";
 
     $.each(moduly,function (index, modul){
-        recept = $(modul).attr("data-module") +":\n";
-        var parametry = "- " + $(modul).find("input,select");
+        recept = "- " + $(modul).attr("data-module") +":\n";
+        var parametry = $(modul).find("input,select");
         checkboxes = "";
         $.each(parametry, function (index,parametr){
             if (parametr.tagName == "INPUT") {
