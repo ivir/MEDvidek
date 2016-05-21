@@ -90,8 +90,7 @@ end
 
 class ImportJson < ModuleMed
   def initialize
-    @db = Dataset.new
-
+    require "json"
   end
   def properties(memory,fdata)
     # navraci seznam podporovanych vstupu a vystupu
@@ -120,38 +119,16 @@ class ImportJson < ModuleMed
 
   def execute(fdata)
     # spusteni zpracovani
-
     i = 0
     datas = Array.new
     td = Array.new
 
     ds = @memory[@store]
-    ds.each_with_index do |row,index|
-      data = "{"
-      td.clear
-      if @columns.nil? then
-        row.each_pair do |key,value|
-          td.push("#{format(key)}: #{format(value)}")
-        end
-      else
-        # chce jen cast
-        @columns.each do |col|
-          unless col.class == Hash
-            td.push("#{format(col)}: #{format(row[col])}")
-          else
-            col.each_pair do |key,value|
-              td.push("#{format(value)}: #{format(row[key])}")
-            end
-          end
-        end
-      end
-
-      data +=td.join(",")
-      data += "}"
-      datas.push(data)
+    unless @file.nil?
+      ds = JSON.parse(File.open(@file))
+    else
+      ds = JSON.parse(@source)
     end
-    data = "[#{datas.join(",")}]"
-    File.write(@file,data)
   end
 
   private
