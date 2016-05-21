@@ -88,7 +88,7 @@ class ExportJson < ModuleMED
 
 end
 
-class ImportJson < ModuleMed
+class ImportJson < ModuleMED
   def initialize
     require "json"
   end
