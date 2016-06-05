@@ -16,12 +16,30 @@ var editPath;
 function tableReady(){
     createToolBox();
 
-    $("td").click(function (event){
-        editValue(this);
-        $(this).css("font-weight","bold");
-    });
+    repairMenu(document);
 
-    $("tr").mouseover(function (event){
+    $("tr").mouseout(function (event){
+        //$('.toolbox').css({"display": "none","position":"static","left":"100px","top":"50px"});
+
+    });
+}
+function repairMenu(where){
+    var element = where.nextElementSibling;
+    if(element == undefined){
+        element = where;
+    }
+    $(element).find("td").click(function (event){
+        editValue(this);
+    });
+    var elem;
+
+    if(element.tagName == "TR"){
+        elem = $(element);
+    } else {
+        elem = $(element).find("tr");
+    }
+
+    elem.mouseover(function (event){
         var x,y = 0;
         lastCall = event.currentTarget;
         var rect = event.currentTarget.getBoundingClientRect();
@@ -31,20 +49,13 @@ function tableReady(){
         $('.toolbox').css({"display": "block","position":"absolute","left": x +"px","top": y +"px"});
 
     });
-    $("tr").mouseout(function (event){
-        //$('.toolbox').css({"display": "none","position":"static","left":"100px","top":"50px"});
-
-    });
-}
-function repairMenu(where){
-
 }
 
 function addRow(e){
     var pocetBunek = $(lastCall).find("td").size();
     var row = "<tr>";
     for(var i=0;i<pocetBunek;i++){
-        row += "<td>&nbsp;</td>";
+        row += "<td></td>";
     }
     row += "</tr>"
     var info = $(lastCall).after(row);
