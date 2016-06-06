@@ -1,0 +1,47 @@
+<html>
+<head>
+  <ŧitle>Vyúčtování</ŧitle>
+</head>
+<body>
+<h2>Přehled částek předepsaných k úhradě</h2>
+Níže uvedení uživatelé mobilních telefonů překročili v KVĚTNU 2016 stanovený měsíční limit nákladů
+  <table>
+    <th>
+    <td>Poř. čslo</td>
+    <td>Jméno uživatele</td>
+    <td>Číslo mobilního telefonu</td>
+    <td>Fakturovaná částka za telekomunikační služby celkem (v Kč)</td>
+    <td>Z toho částka za služby třetích stran (v Kč)</td>
+    <td>Měsíční limit (v Kč)</td>
+    <td>Rozdíl mezi fakturovanou částkou sníženou o čstku za služby třetích stran a měsíčním limitem (v Kč)</td>
+    <td>Předepsaná částka k úhradě<sup>1)</sup> (v Kč)</td>
+    <td>Předepsaná částka k úhradě<sup>2)</sup> (zaokrouhledno v Kč)</td>
+    </th>
+    <%= @vars %>
+    <%
+      i=0
+      @data = @memory["o2data"]
+    %>
+    <% for item in @data %>
+        <tr>
+          <td><%= i %></td>
+          <td><%= item["jmeno"] %></td>
+          <td><%= item["mobil"] %></td>
+          <td><%= item["celkem"] %></td>
+          <td><%= item["treti_strana"] %></td>
+          <td><%= item["limit_Kc"] %></td>
+          <td><%= item["uctovano_bez_limitu"] %></td>
+          <td><%= item["zaplatit"] %></td>
+          <td><%= item["zaplatit_zaokr"] %></td>
+        </tr>
+        <% i=i+1 %>
+    <% end %>
+    <tr>
+      <td class="vystavil" colspan="3">Vystavil: Hana Matrasová</td>
+      <td class="prikazce" colspan="6">Podpis příkazce operce:<br /><br />V Praze dne:</td>
+    </tr>
+  </table>
+<p><sup>1)</sup> Předepsaná částka k úhradě (nezaokrouhlená je vypočtena jako součet částky za služby třetích stran a částky překročení měsíčního limitu.</p>
+<p><sup>2)</sup> Předepsaná částka k úhradě se zaokrouhluje na celé koruny do výše 50 haléřů směrem dolů a částka od 50 haléřů včetně směrem nahoru.</p>
+</body>
+</html>

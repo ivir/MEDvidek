@@ -150,6 +150,12 @@
     sort: "zaplatit_zaokr"
     asceding: false
 
+- Report:
+    template: "vyuctovani.erb"
+    file: "vysledek.html"
+    source: "o2data"
+    format: "html"
+
 - ExportCSV:
    source: "o2data"
    file: "./nums.csv"

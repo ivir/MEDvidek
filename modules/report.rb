@@ -23,6 +23,7 @@ class Report < ModuleMED
     @orientation = fdata["orientation"]
     @format = fdata["format"]
     @store = fdata["store"]
+    @source = fdata["source"]
     @file = fdata["file"]
 
     @memory["output"] = @store
@@ -32,13 +33,13 @@ class Report < ModuleMED
   def execute(fdata)
     #printf "Jdu pracovat\n"
 
-    vars = ErbBinding.new(@memory)
+    vars = OpenStruct.new(@memory)
 
     template = "foo <%= bar %>"
-    erb = ERB.new(File.read(@template))
+    erb = ERB.new(File.read("./templates/#{@template}"))
 
     vars_binding = vars.send(:get_binding)
-    vysledek = erb.result(vars_binding)
+    vysledek = erb.result(vars.send(:binding))
 
     case @format
       when "pdf"
@@ -57,6 +58,12 @@ class Report < ModuleMED
         # generovani do TXT souboru
       when "html"
         # generovani do HTML
+        if(@file.nil?)
+          @memory[@store] = vysledek
+        else
+          File.open(@file,"w") { |fil| fil.write(vysledek) }
+        end
+
       else
         #neznamy format -> ulozime do store
         @memory[@store] = vysledek unless @store.nil?
