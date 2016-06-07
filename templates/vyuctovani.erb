@@ -1,38 +1,38 @@
 <html>
 <head>
-  <ŧitle>Vyúčtování</ŧitle>
+  <title>Vyúčtování</title>
 </head>
 <body>
 <h2>Přehled částek předepsaných k úhradě</h2>
 Níže uvedení uživatelé mobilních telefonů překročili v KVĚTNU 2016 stanovený měsíční limit nákladů
   <table>
-    <th>
-    <td>Poř. čslo</td>
-    <td>Jméno uživatele</td>
-    <td>Číslo mobilního telefonu</td>
-    <td>Fakturovaná částka za telekomunikační služby celkem (v Kč)</td>
-    <td>Z toho částka za služby třetích stran (v Kč)</td>
-    <td>Měsíční limit (v Kč)</td>
-    <td>Rozdíl mezi fakturovanou částkou sníženou o čstku za služby třetích stran a měsíčním limitem (v Kč)</td>
-    <td>Předepsaná částka k úhradě<sup>1)</sup> (v Kč)</td>
-    <td>Předepsaná částka k úhradě<sup>2)</sup> (zaokrouhledno v Kč)</td>
-    </th>
+    <tr>
+    <th>Poř. čslo</th>
+    <th>Jméno uživatele</th>
+    <th>Číslo mobilního telefonu</th>
+    <th>Fakturovaná částka za telekomunikační služby celkem (v Kč)</th>
+    <th>Z toho částka za služby třetích stran (v Kč)</th>
+    <th>Měsíční limit (v Kč)</th>
+    <th>Rozdíl mezi fakturovanou částkou sníženou o čstku za služby třetích stran a měsíčním limitem (v Kč)</th>
+    <th>Předepsaná částka k úhradě<sup>1)</sup> (v Kč)</th>
+    <th>Předepsaná částka k úhradě<sup>2)</sup> (zaokrouhledno v Kč)</th>
+    </tr>
     <%= @vars %>
     <%
-      i=0
+      i=1
       @data = @memory["o2data"]
     %>
     <% for item in @data %>
         <tr>
           <td><%= i %></td>
           <td><%= item["jmeno"] %></td>
-          <td><%= item["mobil"] %></td>
-          <td><%= item["celkem"] %></td>
-          <td><%= item["treti_strana"] %></td>
-          <td><%= item["limit_Kc"] %></td>
-          <td><%= item["uctovano_bez_limitu"] %></td>
-          <td><%= item["zaplatit"] %></td>
-          <td><%= item["zaplatit_zaokr"] %></td>
+          <td><%= format(item["mobil"]) %></td>
+          <td><%= format(item["celkem"]) %></td>
+          <td><%= format(item["treti_strana"]) %></td>
+          <td><%= format(item["limit_kc"]) %></td>
+          <td><%= format(item["uctovano_bez_limitu"]) %></td>
+          <td><%= format(item["zaplatit"]) %></td>
+          <td><%= format(item["zaplatit_zaokr"]) %></td>
         </tr>
         <% i=i+1 %>
     <% end %>

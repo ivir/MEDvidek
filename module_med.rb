@@ -1,5 +1,9 @@
 class ModuleMED
 
+  def initialize
+    @enviroment = "cz"
+  end
+
   def inputData(fdata)
     # vstupni data pro zpracovani
   end
@@ -33,4 +37,41 @@ class ModuleMED
     # povinne
     # spusteni zpracovani
   end
+
+  private
+
+    def format(input)
+      if @enviroment.nil?
+        case input
+          when Float then
+            num = input.to_s
+            return num
+          when BigDecimal then
+            num = input.to_s('F')
+            return num
+          when NilClass then
+            return ""
+          else
+            #print "#{input.class} s daty #{input}\n"
+            return input.to_s
+        end
+      else
+        if (@enviroment == "cz")
+          case input
+            when Float then
+              num = input.to_s
+              return num.tr!(".",",")
+            when BigDecimal then
+              num = input.to_s('F')
+              return num.tr!(".",",")
+            when NilClass then
+              return ""
+            else
+              #print "#{input.class} s daty #{input}\n"
+              return input.to_s
+          end
+        end
+
+      end
+    end
 end
