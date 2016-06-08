@@ -24,6 +24,7 @@ class Report < ModuleMED
     @format = fdata["format"]
     @store = fdata["store"]
     @source = fdata["source"]
+    @attributes = fdata["atributes"]
     @file = fdata["file"]
 
     @memory["output"] = @store
