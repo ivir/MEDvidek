@@ -2,6 +2,7 @@ require_relative('../module_med')
 require 'erb'
 require 'ostruct'
 
+require 'pdfkit'
 #-----------
 # zdroj - http://stackoverflow.com/questions/3242470/problem-using-openstruct-with-erb/8293786#8293786
 # trida pro omezeni pristupu k datum

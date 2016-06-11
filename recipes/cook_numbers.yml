@@ -24,8 +24,8 @@
    file: "./Data/mobily_tarify.csv"
    type: "ssv"
 
-- Print:
-   source: "users"
+#- Print:
+#   source: "users"
 
 - DBJoin:
    store: "o2data"
@@ -152,9 +152,9 @@
 
 - Report:
     template: "vyuctovani.erb"
-    file: "vysledek.html"
+    file: "vysledek.pdf"
     source: "o2data"
-    format: "html"
+    format: "pdf"
 
 - ExportCSV:
    source: "o2data"

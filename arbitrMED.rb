@@ -14,6 +14,7 @@ class ArbitrMED
   #nacteni veskerych dostupnych modulu
   def loadModules()
     Dir[(__dir__) + '/modules/*.rb'].each {|file| require file }
+    self..constants.select {|c| Foo.const_get(c).is_a? Class}
   end
 
   def loadModule(mod)
