@@ -6,14 +6,18 @@ class Filter < ModuleMED
   def properties(memory,fdata)
     #printf "Spusten filtr\n"
 
-    @what = memory[fdata["source"]]
     @source = fdata["source"]
     @destination = fdata["store"]
-    @store = memory[@destination]
     @condition = fdata["condition"]
     @calculator = Dentaku::Calculator.new
 
-    # TODO - ošetřit situaci, kdy chci vysledek ulozit nekam jinam
+    @what = memory[@source]
+
+    unless (@source.eql? @destination) || (@destination.nil?)
+      memory[@destination] = @what.clone
+      @what = memory[@destination]
+    end
+
     @memory = memory
     @memory["output"] = @what
 
@@ -29,7 +33,7 @@ class Filter < ModuleMED
       #print value
       value.each_pair { |key,val|
         #print "K: #{key} V: #{val} #{val.class}\n"
-        @calculator.store(key,val)
+        @calculator.store(key,val) unless val.nil?
       }
       #print "#{@condition} \n"
       out = @calculator.evaluate(@condition)
