@@ -86,7 +86,6 @@ class Compute < ModuleMED
 
       value.merge!(temp)
 
-      puts value if value["mobil"] == 725823634
     end
 
     @what.add_column(@destination,0) unless @what.verify_column(@destination)
@@ -105,12 +104,37 @@ class Agregate < Compute
   def execute(fdata)
     #printf "Jdu pracovat Agregate\n"
     first = true
+
+    if @what.nil?
+      #nepocitame neco v datasetu -> navratime cislo do promenne
+      @memory["output"] = @destination
+
+      hodnota = compute(nil)
+      if hodnota
+        hodnota = hodnota.round(@precision) unless @precision.nil?
+      end
+      @memory.store(@destination,hodnota) unless @destination.nil?
+      return
+    end
+
+    #vysledkem bude hodnota
+    @memory["output"] = @destination
+
     @what.each do |value|
       #print value
-      value.each_pair { |key,val|
-        #print "K: #{key} V: #{val} \n"
-        @calculator.store(key,val)
-      }
+      @calculator.clear()
+      depend = @calculator.dependencies(@calculate)
+      depend.each do |variable|
+        if value[variable].nil?
+          if @memory[variable].nil?
+            @calculator.store(variable,0)
+          else
+            @calculator.store(variable,@memory[variable])
+          end
+        else
+          @calculator.store(variable,value[variable])
+        end
+      end
       if first
         @store = compute(nil)
         first = false
@@ -118,14 +142,14 @@ class Agregate < Compute
         @store = cumul(@operation,@store,compute(nil))
       end
 
-      #print @store
-      #print "\n"
-
     end
 
   end
 
   def cumul(oper,value_a,value_b)
+    value_a = 0 if value_a.nil?
+    value_b = 0 if value_b.nil?
+
     out = case oper
             when "+"
               value_a + value_b
@@ -138,6 +162,7 @@ class Agregate < Compute
             when "%"
               value_a % value_b
             else
+              oper = "+" if oper.nil?
               eval("value_a " + oper + " value_b")
           end
     out
