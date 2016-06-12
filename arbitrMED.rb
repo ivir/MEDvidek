@@ -41,7 +41,7 @@ class ArbitrMED
           emodule.execute(@memory)
           execModule(emodule.postprocessing(@memory))
         end
-        
+
       else
         #neznamy modul -> nic nedelame
       end
