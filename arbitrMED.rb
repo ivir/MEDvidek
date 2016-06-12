@@ -14,7 +14,10 @@ class ArbitrMED
   #nacteni veskerych dostupnych modulu
   def loadModules()
     Dir[(__dir__) + '/modules/*.rb'].each {|file| require file }
-    self..constants.select {|c| Foo.const_get(c).is_a? Class}
+
+    @moduly = Module.constants.map() {
+
+    }
   end
 
   def loadModule(mod)
@@ -29,11 +32,19 @@ class ArbitrMED
     return if mod.nil?
 
     mod.each { |modu,value|
-      emodule = eval(modu + ".new") # TODO - osetrit vstup, ze obsahuje pouze nazev modulu
-      emodule.properties(@memory,value)
-      execModule(emodule.preprocessing(@memory))
-      emodule.execute(@memory)
-      execModule(emodule.postprocessing(@memory))
+      if Object.const_defined?(modu)
+        #emodule = eval(modu + ".new")
+        emodule = Object.const_get(modu).new
+        if emodule.is_a?(ModuleMED)
+          emodule.properties(@memory,value)
+          execModule(emodule.preprocessing(@memory))
+          emodule.execute(@memory)
+          execModule(emodule.postprocessing(@memory))
+        end
+        
+      else
+        #neznamy modul -> nic nedelame
+      end
     }
 
 
