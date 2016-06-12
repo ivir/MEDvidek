@@ -62,6 +62,14 @@
    #minimum: 0
    precision: 2
 
+- Agregate:
+   source: "o2data"
+   store: "CELKOVACASTKA"
+   calculate: "(uctovano) + treti_strana"
+   operation: "-"
+   #minimum: 0
+   precision: 2
+
 - Compute:
    source: "o2data"
    store: "zaplatit_zaokr"
