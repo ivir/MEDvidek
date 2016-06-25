@@ -1,7 +1,7 @@
 <div class="module">
     <div data-module="LoadO2">
         <label>Store:</label><input type="text" name="store" /><br />
-        <input type="hidden" name="file" value="o2"/>
+        <label>Source:</label><input type="text" name="file" /><br />
         <ul>
             <li><input type="checkbox" name="information" value="mobil" />Mobilní číslo</li>
             <li><input type="checkbox" name="information" value="uctovano" />Účtováno</li>
@@ -18,7 +18,6 @@
         </ul>
     </div>
     <div class="cverify">
-        <input type="file" id="fileinput" name="file[]" onChange="prepareUpload(event,'LoadO2','file')"><button>Nahrát data</button>
         <button name="verify" onClick="verify(event,'LoadO2',function (data){$('.outO2').text(data);})">Ověřit</button>
         <div class="outO2"></div>
     </div>
