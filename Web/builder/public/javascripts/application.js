@@ -202,10 +202,21 @@ function upload(evt,from,module,parameter){
 
 }
 
+function addCol(name, evt){
+    var place = $(evt.target).parent();
+    var cols = $(place).find("ul");
+    var col = $(place).find("[name='scolumn']").val();
+    var val = $(place).find("[name='srename']").val();
+    var rs = col;
+    if(val != ""){
+        rs = col + "->" + val;
+    }
+    var result = "<li><input type=\"checkbox\" name='"+ name + "' value='" + rs +"' checked />"+ rs + "</li>";
+    cols.append(result);
+}
 
 function showOutput(data){
     var result = JSON.parse(data).result;
-    alert(typeof(result));
     var objectType = typeof(result);
     if ( objectType == 'object') {
         var resu = ConvertJsonToTable(result,"result",null,null);
