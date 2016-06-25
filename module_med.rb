@@ -38,6 +38,10 @@ class ModuleMED
     # spusteni zpracovani
   end
 
+  def test(fdata)
+    # navraci výsledek interniho testu, 0 - OK, >0 - chyba
+    return 0
+  end
   private
 
     def format(input)
