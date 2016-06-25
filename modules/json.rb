@@ -101,6 +101,8 @@ class ImportJson < ModuleMED
     @ping = fdata["ping"]
     # @memory["output"]
 
+    @file = @memory[@file] unless @memory[@file].nil?
+
   end
 
   def preprocessing(fdata)
