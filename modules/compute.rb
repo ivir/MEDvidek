@@ -58,10 +58,11 @@ class Compute < ModuleMED
     #vysledkem bude dataset -> navracime dataset
     @memory["output"] = @source
 
+    depend = @calculator.dependencies(@calculate)
+
     @what.each do |value|
       #print value
       @calculator.clear()
-      depend = @calculator.dependencies(@calculate)
       depend.each do |variable|
         if value[variable].nil?
           if @memory[variable].nil?
