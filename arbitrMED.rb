@@ -58,6 +58,10 @@ class ArbitrMED
     @data = YAML.load(recipe)
   end
 
+  def loadRecipeYAML(recipe)
+    @data = recipe.clone
+  end
+
   def cook()
     @data.each { |execMod|
       #puts execMod
