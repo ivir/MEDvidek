@@ -17,6 +17,7 @@ function loadModule(file){
         I= I + 1;
         var sr = $(data);
         $(tg).appendTo(sr);
+        moduleToolbox(sr);
         var t = $(sr).wrap("<div class='module'></div>")
         t.appendTo($(".recipe"));
         return false;
@@ -224,6 +225,78 @@ function showOutput(data){
     } else {
         $('.DemoView').text(result);
     }
+}
+
+function moduleToolbox(module){
+    $("<div class=\"toolbox\"><a href='#' onclick='UpModule(event)'><img src='./images/up.png' /></a><a href='#' onclick='DownModule(event)'><img src='./images/down.png' /></a><a href='#' onclick='DelModule(event)'><img src='./images/delete.png' /></a></div>").appendTo(module);
+}
+
+function UpModule(evt){
+    var modul = getModule(evt);
+    if(modul == undefined){
+        alert("Nedefinovano");
+    }
+
+    var dalsi = modul.previousElementSibling;
+
+    if(dalsi == undefined) return; //nemame dalsi prvek pro nahrazeni
+
+    var cislo = $(modul).find("[name='__i__']");
+    cislo.val(parseInt(cislo.val())-1);
+
+    cislo = $(dalsi).find("[name='__i__']");
+    cislo.val(parseInt(cislo.val())+1);
+
+    var tmp = $(modul).detach();
+    $(tmp).insertBefore(dalsi);
+}
+
+function DownModule(evt){
+    var modul = getModule(evt);
+    var dalsi = modul.nextElementSibling;
+
+    if(dalsi == undefined) return; //nemame dalsi prvek pro nahrazeni
+
+    var cislo = $(modul).find("[name='__i__']");
+    cislo.val(parseInt(cislo.val())+1);
+
+    cislo = $(dalsi).find("[name='__i__']");
+    cislo.val(parseInt(cislo.val())-1);
+
+    var tmp = $(modul).detach();
+    $(tmp).insertAfter(dalsi);
+}
+
+function DelModule(evt){
+    var modul = getModule(evt);
+    var cislo = $(modul).find("[name='__i__']").val(); //ziskame cislo odkud musime ostatni snizit
+    if(modul != undefined){
+        modul.remove();
+        var poradi = $.find("[name='__i__']");
+        $.each(poradi,function (k,value){
+           if(k >= cislo){
+               $(value).val((parseInt($(value).val())-1));
+           }
+        });
+        I = I - 1;
+    }
+}
+
+function getModule(evt){
+    var zacatek = evt.currentTarget.parentElement;
+    var modu = undefined;
+    while( (zacatek != undefined)){
+        if( $(zacatek).hasClass("module")){
+            modu = zacatek;
+            return modu;
+        }
+        if( zacatek.previousElementSibling != null){
+            zacatek = zacatek.previousElementSibling;
+        } else {
+            zacatek = zacatek.parentElement;
+        }
+    }
+    return modu;
 }
 //-------------
 
