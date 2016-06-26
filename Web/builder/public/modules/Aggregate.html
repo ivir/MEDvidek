@@ -1,0 +1,20 @@
+<div class="module">
+    <div data-module="Aggregate">
+    Výsledek se agreguje je do "uložit do" pomocí operátoru.<br />
+        <div><label>Načíst z:</label><input type="text" name="source" size="20" /></div>
+        <div><label>Uložit do:</label><input type="text" name="store" size="20" /></div>
+        <div><label>Výpočet:</label><input type="text" name="calculate" size="20" /></div>
+        <div><label>Agregace:</label>
+            <select name="operation">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+                <option value="%">%</option>
+            </select>
+        </div>
+    </div>
+    <div class="cverify">
+        <button name="verify" onClick="verify(event,'Compute',function (data){$('.demoView').text(data);})">Ověřit</button>
+    </div>
+</div>
