@@ -42,14 +42,22 @@ Builder::App.controllers :build do
 
     #osetreni cest
     data = YAML.load(recipe)
-    data.each { |modu, parameters|
-      unless (parameters["file"].nil?)
-        soubor = File.basename(parameters["file"])
-        parameters["file"] = File.join("temp", session[:session_id],soubor)
-      end
+    data.each { |modu|
+      modu.each { |modul,parameters|
+        parameters.each {|k, val|
+          next unless val.is_a?(String)
+          soubor = File.basename(val)
+          uplna_cesta = File.join("temp", session[:session_id],soubor)
+          parameters[k] = uplna_cesta if File.exist?(uplna_cesta)
+          p modul
+          if( (k == "file") && (modul.include?("Export")))
+            parameters[k] = uplna_cesta
+            p "Nastavuji parametr #{k} na #{uplna_cesta}"
+          end
+        }
+      }
     }
 
-    p data
     app = ArbitrMED.new
     app.loadRecipeYAML(data)
     app.cook() #provedeme predany recept
@@ -77,13 +85,16 @@ Builder::App.controllers :build do
     return ""
   end
 
-  get :session, :map => "/session/*" do
-    p params
-    return ""
+  get :download_file, :map => "/download/:file" do
+    uplna_cesta = File.join("temp", session[:session_id],params[:file])
+    send_file(uplna_cesta,:filename => File.basename(uplna_cesta), :disposition => 'attachment') if File.exist?(uplna_cesta)
   end
 
   get :download, :map => "/download" do
     userdir = File.join("temp", session[:session_id])
+    @files = Dir.entries(userdir)
+    @files.delete_if{|val| (val == ".") || (val == "..")}
+    render 'download'
     #vypiseme ulozene soubory
   end
 

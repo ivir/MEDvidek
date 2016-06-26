@@ -1,0 +1,11 @@
+<div class="module">
+    <div data-module="SetValue">
+    Nastavit proměnnou.<br />
+        <span><label>Proměnná:</label><input type="text" name="variable" size="20" /></span>
+        &nbsp;<span><label>Hodnota:</label><input type="text" name="value" size="20" /></span>
+        <div><label>Soubor:</label><input type="file" name="files[]" size="20" /></div>
+    </div>
+    <div class="cverify">
+        <button name="verify" onClick="verify(event,'SetValue',function (data){$('.demoView').text(data);})">Ověřit</button>
+    </div>
+</div>

@@ -52,6 +52,7 @@ function createRecipe(){
                     }
                     if (parametr.checked) recept += "        - " + parametr.value + "\n";
                 } else {
+                    if ((parametr.type == "file") || (parametr.type == "FILE")) return;
                     //if ((parametr.type == "text") || (parametr.type == "TEXT"))
                     recept += "    " + parametr.name + ": \"" + parametr.value + "\"\n";
                 }
@@ -137,6 +138,40 @@ function verify(evt,module,fce){
     });
 }
 
+function loadFiles(){
+    var data = $.find("input[type='file']");
+
+    $.each(data,function(k,v){
+        var rodic = v.parentElement.parentElement;
+        var hodnota = $(rodic).find("input[name='value']");
+        $(hodnota).val("Nastavuji ...");
+        var sformData = new FormData();
+        var prvek = v.files;
+        $.each(prvek, function (key,value){
+            sformData.append(key,value);
+        });
+        sformData.append("authenticity_token",CSRF_TOKEN);
+        //zdroj: https://www.w3.org/TR/file-upload/
+        var reader = new FileReader();
+
+        // Read file into memory as UTF-16
+        /*reader.readAsText(prvek,'UTF-8');
+         reader.onload = function (evt){*/
+        //var data = evt.target.result;
+        $.ajax({
+            type: "POST",
+            url: "/upload",
+            enctype: 'multipart/form-data',
+            data: sformData,
+            processData: false, // Don't process the files
+            contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
+            success: function (data) {
+                hodnota.val(data);
+                //findSet(evt.target,module,parameter,data);
+            }
+        });
+    });
+}
 
 function prepareUpload(evt, module,parameter){
     var kam = evt.target;
@@ -213,7 +248,7 @@ function addCol(name, evt){
     var val = $(place).find("[name='srename']").val();
     var rs = col;
     if(val != ""){
-        rs = col + "->" + val;
+        rs = col + ": " + val;
     }
     var result = "<li><input type=\"checkbox\" name='"+ name + "' value='" + rs +"' checked />"+ rs + "</li>";
     cols.append(result);

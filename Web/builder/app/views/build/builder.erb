@@ -7,7 +7,7 @@
   </head>
   <body>
   <nav class="main">
-    <a href="#" onClick="loadModule('Set')">Nahrát/Nastavit</a>
+    <a href="#" onClick="loadModule('SetValue')">Nahrát/Nastavit</a>
     <a href="#" onClick="loadModule('LoadCSV')">Import CSV</a>
     <a href="#" onClick="loadModule('LoadO2')">Import od O2</a>
     <a href="#" onClick="loadModule('Compute')">Výpočet</a>
@@ -23,6 +23,7 @@
   <div class="recipe">
 
   </div>
+  <button onClick="loadFiles()">Nahrát data</button>
   <button onClick="createRecipe()">Vytvořit recept</button><button onClick="downloadRecipes()">Stáhnout recept</button>
   <div class="DemoView">
     Výstup
