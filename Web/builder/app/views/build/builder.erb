@@ -2,23 +2,28 @@
   <head>
     <title>Builder - tvorba receptu</title>
     <meta content="">
-    <style></style>
+    <%= stylesheet_link_tag 'main' %>
     <%= javascript_include_tag 'jquery', 'jquery-ujs', 'application', 'json-to-table.js' %>
   </head>
   <body>
-  <nav>
-    <a href="#" onClick="loadModule('LoadCSV')">LoadCSV</a>
-    <a href="#" onClick="loadModule('LoadO2')">LoadO2</a>
+  <nav class="main">
+    <a href="#" onClick="loadModule('Set')">Nahrát/Nastavit</a>
+    <a href="#" onClick="loadModule('LoadCSV')">Import CSV</a>
+    <a href="#" onClick="loadModule('LoadO2')">Import od O2</a>
     <a href="#" onClick="loadModule('Compute')">Výpočet</a>
+    <a href="#" onClick="loadModule('Compute')">Agregace</a>
     <a href="#" onClick="loadModule('ExportCSV')">Export CSV</a>
     <a href="#" onClick="loadModule('ExportJSON')">Export JSON</a>
     <a href="#" onClick="loadModule('Filter')">Filtr</a>
+    <a href="#" onClick="loadModule('DBSort')">Seřadit</a>
     <a href="#" onClick="loadModule('DBJoin')">Spojit tabulku</a>
+    <a href="#" onClick="loadModule('Report')">Report</a> ||
+    <a href="/download" >Ke stažení</a>
   </nav>
   <div class="recipe">
 
   </div>
-  <button onClick="createRecipe()">Vytvořit recept</button>
+  <button onClick="createRecipe()">Vytvořit recept</button><button onClick="downloadRecipes()">Stáhnout recept</button>
   <div class="DemoView">
     Výstup
   </div>
