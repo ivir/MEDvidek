@@ -39,8 +39,19 @@ Builder::App.controllers :build do
     #ulozeni receptu
     logger.debug params.to_s
     recipe = params["recipe"]
+
+    #osetreni cest
+    data = YAML.load(recipe)
+    data.each { |modu, parameters|
+      unless (parameters["file"].nil?)
+        soubor = File.basename(parameters["file"])
+        parameters["file"] = File.join("temp", session[:session_id],soubor)
+      end
+    }
+
+    p data
     app = ArbitrMED.new
-    app.loadRecipeText(recipe)
+    app.loadRecipeYAML(data)
     app.cook() #provedeme predany recept
     out = app.getOutput()
     return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
@@ -51,13 +62,33 @@ Builder::App.controllers :build do
     #nahravani souboru
     #vezmeme soubor, ulozime do tempu a navratime cestu
     logger.debug params.to_s
-    userdir = File.join("public", "upload")
+    userdir = File.join("temp", session[:session_id])
     FileUtils.mkdir_p(userdir)
     path = File.join(userdir,params["0"][:filename])
 
     #zkopirujeme docasny soubor na spravne misto
     FileUtils.cp(params["0"][:tempfile].path,path)
-    return path
+    return params["0"][:filename]
+  end
+
+  get :session, :map => "/session" do
+    p params
+    p session
+    return ""
+  end
+
+  get :session, :map => "/session/*" do
+    p params
+    return ""
+  end
+
+  get :download, :map => "/download" do
+    userdir = File.join("temp", session[:session_id])
+    #vypiseme ulozene soubory
+  end
+
+  delete :dowload_del, :map => "/download" do
+    #smazeme zvoleny soubor
   end
 
 end
