@@ -14,11 +14,14 @@ function loadModule(file){
     fsource = "/modules/" + file + ".html";
     $.get(fsource, function( data ) {
         var tg = "<input type=\"hidden\" name=\"__i__\" value=\""+ I + "\" />";
+        var head = "<div class='head'>"+ file + "</div>"
         I= I + 1;
         var sr = $(data);
         $(tg).appendTo(sr);
         moduleToolbox(sr);
+        $(head).prependTo(sr);
         var t = $(sr).wrap("<div class='module'></div>")
+
         t.appendTo($(".recipe"));
         return false;
     });
