@@ -13,11 +13,9 @@ class SetValue < ModuleMED
 
   def execute(fdata)
     # zpracuji se fdata
-    p fdata
     vari = fdata["variable"]
     valu = fdata["value"]
-    @memory[vari] = valu
-    p "Zapisuji do #{vari}=#{valu}"
+    @memory[vari] = valu unless vari.nil?
 
   end
 

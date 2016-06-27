@@ -10,6 +10,7 @@ class ArbitrMED
     @data = nil
     @memory = Hash.new()
     @output = nil
+    @memory["PATH"] = ""
   end
   #nacteni veskerych dostupnych modulu
   def loadModules()
@@ -67,6 +68,11 @@ class ArbitrMED
       #puts execMod
       execModule(execMod)
     }
+  end
+
+  def path(path)
+    @memory["PATH"] = path
+
   end
 
   def getOutput()

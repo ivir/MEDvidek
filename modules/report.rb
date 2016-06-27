@@ -38,7 +38,7 @@ class Report < ModuleMED
     vars = OpenStruct.new(@memory)
 
     template = "foo <%= bar %>"
-    erb = ERB.new(File.read("./templates/#{@template}"))
+    erb = ERB.new(File.read((__dir__) + "/../templates/#{@template}"))
 
     vars_binding = vars.send(:get_binding)
     vysledek = erb.result(vars.send(:binding))

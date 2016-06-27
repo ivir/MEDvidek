@@ -49,8 +49,7 @@ Builder::App.controllers :build do
           soubor = File.basename(val)
           uplna_cesta = File.join("temp", session[:session_id],soubor)
           parameters[k] = uplna_cesta if File.exist?(uplna_cesta)
-          p modul
-          if( (k == "file") && (modul.include?("Export")))
+          if( (k == "file") && (modul.include?("Export") || modul.include?("Report")))
             parameters[k] = uplna_cesta
             p "Nastavuji parametr #{k} na #{uplna_cesta}"
           end
