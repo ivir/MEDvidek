@@ -158,11 +158,7 @@
     sort: "zaplatit_zaokr"
     asceding: false
 
-- Report:
-    template: "vyuctovani.erb"
-    file: "vysledek.pdf"
-    source: "o2data"
-    format: "pdf"
+
 
 - ExportCSV:
    source: "o2data"
