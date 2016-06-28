@@ -2,5 +2,11 @@ require './arbitrMED.rb'
 
 app = ArbitrMED.new
 
-app.loadRecipe "./recipes/cook_numbers.yml"
+nacist = ARGV[0]
+if( File.exists?(nacist))
+  app.loadRecipe nacist
+else
+  app.loadRecipeText nacist
+end
+
 app.cook

@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Builder - tvorba receptu</title>
+    <meta content="">
+    <%= stylesheet_link_tag 'main' %>
+    <%= javascript_include_tag 'jquery', 'jquery-ujs', 'application', 'json-to-table.js' %>
+  </head>
+  <body>
+  <nav class="main">
+    <a href="/">Zpět</a>
+  </nav>
+  <div class="form">
+    <div>Data:<button onClick="appendFile(event)">Přidat</button><br /><input type="file" name="data[]" /></div>
+  </div>
+  <br />
+  <br />
+  <div class="recipe">
+    <div>Recept: <input type="file" name="recipe" /></div>
+    <br />
+    <button onClick="processRecipe(event)">Zpracovat</button>
+  </div>
+  <div class="data">
+    <ul>
+      <% for file in @files %>
+        <li><%= link_to file, "/download/#{file}" %></li>
+      <% end %>
+    </ul>
+  </div>
+  </body>
+</html>

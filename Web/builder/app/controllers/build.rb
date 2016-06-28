@@ -101,5 +101,38 @@ Builder::App.controllers :build do
     #smazeme zvoleny soubor
   end
 
+  get :process, :map => "/process" do
+    userdir = File.join("temp", session[:session_id])
+    @files = Dir.entries(userdir)
+    @files.delete_if{|val| (val == ".") || (val == "..")}
+    render "process"
+  end
+  get :process_file, :map => "/process/:file" do
+    nazev = File.basename(params[:file])
+    uplna_cesta = File.join("temp", session[:session_id],nazev)
+    data = YAML.load_file(uplna_cesta)
+    data.each { |modu|
+      modu.each { |modul,parameters|
+        parameters.each {|k, val|
+          next unless val.is_a?(String)
+          soubor = File.basename(val)
+          uplna_cesta = File.join("temp", session[:session_id],soubor)
+          parameters[k] = uplna_cesta if File.exist?(uplna_cesta)
+          if( (k == "file") && (modul.include?("Export") || modul.include?("Report")))
+            parameters[k] = uplna_cesta
+            p "Nastavuji parametr #{k} na #{uplna_cesta}"
+          end
+        }
+      }
+    }
+
+    app = ArbitrMED.new
+    app.loadRecipeYAML(data)
+    app.cook() #provedeme predany recept
+    out = app.getOutput()
+    return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
+    return JSON.generate({:result => out})
+  end
+
 end
 

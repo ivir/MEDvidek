@@ -144,7 +144,6 @@ function loadFiles(){
     $.each(data,function(k,v){
         var rodic = v.parentElement.parentElement;
         var hodnota = $(rodic).find("input[name='value']");
-        $(hodnota).val("Nastavuji ...");
         var sformData = new FormData();
         var prvek = v.files;
         $.each(prvek, function (key,value){
@@ -166,7 +165,7 @@ function loadFiles(){
             processData: false, // Don't process the files
             contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
             success: function (data) {
-                hodnota.val(data);
+                if(hodnota != undefined) hodnota.val(data);
                 //findSet(evt.target,module,parameter,data);
             }
         });
@@ -336,6 +335,56 @@ function getModule(evt){
     }
     return modu;
 }
+
+//------ Zpracovani process -----
+function processRecipe(evt){
+    var data = $.find("input[type='file']");
+
+    $.each(data,function(k,v){
+        var rodic = v.parentElement.parentElement;
+        var hodnota = $(rodic).find("input[name='value']");
+        var sformData = new FormData();
+        var prvek = v.files;
+        $.each(prvek, function (key,value){
+            sformData.append(key,value);
+        });
+        sformData.append("authenticity_token",CSRF_TOKEN);
+        //zdroj: https://www.w3.org/TR/file-upload/
+        var reader = new FileReader();
+
+        // Read file into memory as UTF-16
+        /*reader.readAsText(prvek,'UTF-8');
+         reader.onload = function (evt){*/
+        //var data = evt.target.result;
+        $.ajax({
+            type: "POST",
+            url: "/upload",
+            enctype: 'multipart/form-data',
+            data: sformData,
+            processData: false, // Don't process the files
+            contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
+            success: function (data) {
+                var fl = $.find("input[name='recipe']");
+                var nms = ($(fl).val()).split("\\");
+                if(nms.length == 0){
+                    return
+                } else {
+                    nms = nms[nms.length-1];
+                }
+                alert(nms);
+                $.get("/process/" + nms, function (data){location.reload(true)});
+                //findSet(evt.target,module,parameter,data);
+            }
+        });
+    });
+}
+
+function appendFile(evt){
+    var div = $.find(".form");
+    $("<div><input type=\"file\" name=\"data[]\" /></div>").appendTo(div);
+}
+
+
 //-------------
 
 //download.js v4.1, by dandavis; 2008-2015. [CCBY2] see http://danml.com/download.html for tests/usage
