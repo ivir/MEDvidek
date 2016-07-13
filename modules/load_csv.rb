@@ -15,6 +15,7 @@ class LoadCSV < ModuleMED
     #@store = Dataset.new if @store.nil?
     @type = fdata["type"]
     @file = fdata["file"]
+    @rename = fdata["rename"]
 
     @file = @memory[@file] unless @memory[@file].nil?
 
@@ -54,7 +55,7 @@ class LoadCSV < ModuleMED
       if(i <= 0)
         values.each { |column|
           # prevadi se na mala pismena kvuli vypoctum
-          @db.add_column(column.downcase(),nil)
+            @db.add_column(column.downcase(),nil)
         }
         i = i + 1
         next

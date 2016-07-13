@@ -8,7 +8,7 @@
 
 - LoadO2:
    store: "o2data"
-   file: "./Data/2016-05-3606068384-4_2251_11_00_100001-01-s-mob.xml"
+   file: "./Data/2016-06-3606068384-4_2251_11_00_100001-01-s-mob.xml"
    information:
     - mobil
     - uctovano
@@ -23,6 +23,8 @@
    store: "users"
    file: "./Data/mobily_tarify.csv"
    type: "ssv"
+   rename:
+    - TARIF: tarif
 
 #- Print:
 #   source: "users"
@@ -37,7 +39,7 @@
 - Compute:
    source: "o2data"
    store: "zaplatit"
-   calculate: "MAX(uctovano*1.21 - limit_Kc,0) + treti_strana"
+   calculate: "MAX(uctovano*1.21 - tarif,0) + treti_strana"
    #minimum: 0
    precision: 2
 
@@ -58,7 +60,7 @@
 - Compute:
    source: "o2data"
    store: "uctovano_bez_limitu"
-   calculate: "MAX(uctovano*1.21 - limit_Kc,0)"
+   calculate: "MAX(uctovano*1.21 - tarif,0)"
    #minimum: 0
    precision: 2
 
@@ -88,7 +90,7 @@
     - data_castka
     - data_objem : Staženo
     - data_jednotka
-    - limit_Kc : limit
+    - tarif : limit
     - zaplatit
     - zaplatit_zaokr
    type: "ssv"
@@ -164,11 +166,11 @@
    source: "o2data"
    file: "./nums.csv"
    columns:
-    - PlneJmeno
+    - jméno a příjmení
     - mobil
     - celkem
     - treti_strana
-    - limit_Kc: limit
+    - TARIF: limit
     - uctovano_bez_limitu
     - zaplatit
     - zaplatit_zaokr
@@ -177,9 +179,9 @@
 
 - Report:
     template: "vyuctovani.erb"
-    file: "vysledek.pdf"
+    file: "vysledek.html"
     source: "o2data"
-    format: "pdf"
+    format: "html"
     
 #- ExportJSON:
 #   source: "o2data"
