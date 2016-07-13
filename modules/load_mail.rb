@@ -3,7 +3,7 @@ require 'net/imap'
 require 'mail'
 
 class LoadMail < ModuleMED
-
+#trida se pripojuje pomoci IMAP k mail serveru a dohledava e-mail
   def properties(memory,fdata)
     @memory = memory
     @server = fdata["server"]
@@ -24,9 +24,13 @@ class LoadMail < ModuleMED
     imap.authenticate('LOGIN',@username, @password)
     imap.examine(@directory)
     imap.search(["SUBJECT",@subject_filter]).reverse.each do |message_id|
+      #mame e-maily, ktere splnuji podminku na obsah predmetu
+
       #envelope = imap.fetch(message_id, "ENVELOPE")[0].attr["ENVELOPE"]
       body = imap.fetch(message_id, "BODY[]")[0].attr["BODY[]"]
       mail = Mail.new(body)
+      #v tele e-mailu hledame prilohu, ktera obsahuje stanoveny vyraz, pokud nalezneme, tak ulozime do docasneho uloziste
+
       mail.attachments.each do |a|
         next unless a.filename.include?(@attachement_filter)
         path = "/tmp/#{a.filename}"

@@ -31,14 +31,15 @@ class Filter < ModuleMED
     #printf "Jdu pracovat s filtrem\n"
     res = @what.delete_if do |value|
       #print value
+      #ulozeni hodnot do pameti
       value.each_pair { |key,val|
         #print "K: #{key} V: #{val} #{val.class}\n"
         @calculator.store(key,val) unless val.nil?
       }
       #print "#{@condition} \n"
-      out = @calculator.evaluate(@condition)
+      out = @calculator.evaluate(@condition) #vyhodnoceni
 
-      !out
+      !out #navracime vysledek operace, tj. zdali se ma hodnota smazat nebo ne
 
     end
     res

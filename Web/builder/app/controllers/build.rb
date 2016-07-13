@@ -78,18 +78,14 @@ Builder::App.controllers :build do
     return params["0"][:filename]
   end
 
-  get :session, :map => "/session" do
-    p params
-    p session
-    return ""
-  end
-
   get :download_file, :map => "/download/:file" do
+    #fce pro osetreni moznosti stazeni dat
     uplna_cesta = File.join("temp", session[:session_id],params[:file])
     send_file(uplna_cesta,:filename => File.basename(uplna_cesta), :disposition => 'attachment') if File.exist?(uplna_cesta)
   end
 
   get :download, :map => "/download" do
+    #vypisovani vsech souboru v adresari s moznosti stazeni
     userdir = File.join("temp", session[:session_id])
     @files = Dir.entries(userdir)
     @files.delete_if{|val| (val == ".") || (val == "..")}
@@ -102,15 +98,23 @@ Builder::App.controllers :build do
   end
 
   get :process, :map => "/process" do
+    #zobrazi formular spolu s jiz nahranymi daty v ramci sance
     userdir = File.join("temp", session[:session_id])
     @files = Dir.entries(userdir)
     @files.delete_if{|val| (val == ".") || (val == "..")}
     render "process"
   end
   get :process_file, :map => "/process/:file" do
+
+    #fce prijala recept a zpracuje jej
+
     nazev = File.basename(params[:file])
     uplna_cesta = File.join("temp", session[:session_id],nazev)
     data = YAML.load_file(uplna_cesta)
+    # nahradime nazvy souboru za uplne cesty k nemu;
+    # nahrada se provede v okamziku, kdy soubor existuje;
+
+    # samostatne je osetrena situace, kdy se jedna o Export nebo Report dat, pak se u parametru file provede nahrada
     data.each { |modu|
       modu.each { |modul,parameters|
         parameters.each {|k, val|
@@ -125,7 +129,7 @@ Builder::App.controllers :build do
         }
       }
     }
-
+    #--------------
     app = ArbitrMED.new
     app.loadRecipeYAML(data)
     app.cook() #provedeme predany recept

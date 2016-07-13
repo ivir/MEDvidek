@@ -123,6 +123,7 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uuidtools (2.1.5)
+    wkhtmltopdf (0.1.2)
 
 PLATFORMS
   ruby
@@ -147,6 +148,7 @@ DEPENDENCIES
   riot
   slim
   sqlite3
+  wkhtmltopdf
 
 BUNDLED WITH
    1.11.2

@@ -8,7 +8,7 @@ function pripraven(){
     configureCSRF(); //ziskame token pro komunikaci
 }
 
-function loadModule(file){
+function loadModule(file){ //nacte do stranky formular modulu
     var formular,fsource;
 
     fsource = "/modules/" + file + ".html";
@@ -28,7 +28,7 @@ function loadModule(file){
     return false;
 }
 
-function createRecipe(){
+function createRecipe(){ //vygeneruje uplny recept
     var instrukce = $(".recipe");
     var moduly = instrukce.find("div[data-module]");
     var recept = "", checkboxes = "";
@@ -68,11 +68,11 @@ function createRecipe(){
     });
 }
 
-function downloadRecipes(){
+function downloadRecipes(){ //umoznuje stazeni vytvareneho receptu
     download(recipes,"recipe.yml","text/plain");
 }
 
-function createStep(part){
+function createStep(part){ // vytvori YAML strukturu pro jeden modul
     var moduly = $("div[data-module=\"" + part +"\"]");
     var recept = "", checkboxes = "";
     $.each(moduly,function (index, modul){
@@ -104,7 +104,7 @@ function createStep(part){
     return recept;
 }
 
-function verify(evt,module,fce){
+function verify(evt,module,fce){ //odesle recept na server k overeni vysledku
 
     createRecipe(); //vygenerujeme aktualni recept (pro snizeni nutnosti neustaleho klikani na "Vytvorit recept" v pripade zmeny)
     var recip = "";
@@ -138,7 +138,8 @@ function verify(evt,module,fce){
     });
 }
 
-function loadFiles(){
+function loadFiles(){ //vyhledani vsech input[type=file] tagu a nahrani souboru na server;
+// pote postupne nastavuje nazvy souboru do pole value pro moznost vygenerovani receptu a opetovneho pouziti.
     var data = $.find("input[type='file']");
 
     $.each(data,function(k,v){
@@ -172,7 +173,7 @@ function loadFiles(){
     });
 }
 
-function prepareUpload(evt, module,parameter){
+function prepareUpload(evt, module,parameter){ //fce se jiz nevyuziva
     var kam = evt.target;
     var tlacitko = kam.nextElementSibling;
 
@@ -205,7 +206,7 @@ function findSet(start,module,parameter,value){
     hodnota.val(value);
 }
 
-function upload(evt,from,module,parameter){
+function upload(evt,from,module,parameter){ // fce pro nahravani dat
     var sformData = new FormData();
     var prvek = from.files;
     $.each(prvek, function (key,value){
@@ -240,7 +241,7 @@ function upload(evt,from,module,parameter){
 
 }
 
-function addCol(name, evt){
+function addCol(name, evt){ //pridani polozky typu checkbox ve spravnem tvaru pro YAML
     var place = $(evt.target).parent();
     var cols = $(place).find("ul");
     var col = $(place).find("[name='scolumn']").val();
@@ -253,7 +254,7 @@ function addCol(name, evt){
     cols.append(result);
 }
 
-function showOutput(data){
+function showOutput(data){ //zobrazeni dat
     var result = JSON.parse(data).result;
     var objectType = typeof(result);
     if ( objectType == 'object') {
@@ -264,11 +265,11 @@ function showOutput(data){
     }
 }
 
-function moduleToolbox(module){
+function moduleToolbox(module){ //vlozeni menu pro manipulaci
     $("<div class=\"toolbox\"><a href='#' onclick='UpModule(event)'><img src='./images/up.png' /></a><a href='#' onclick='DownModule(event)'><img src='./images/down.png' /></a><a href='#' onclick='DelModule(event)'><img src='./images/delete.png' /></a></div>").appendTo(module);
 }
 
-function UpModule(evt){
+function UpModule(evt){ //posunuti prvki vzhuru
     var modul = getModule(evt);
     if(modul == undefined){
         alert("Nedefinovano");
@@ -288,7 +289,7 @@ function UpModule(evt){
     $(tmp).insertBefore(dalsi);
 }
 
-function DownModule(evt){
+function DownModule(evt){ //posun modulu dolu
     var modul = getModule(evt);
     var dalsi = modul.nextElementSibling;
 
@@ -304,7 +305,7 @@ function DownModule(evt){
     $(tmp).insertAfter(dalsi);
 }
 
-function DelModule(evt){
+function DelModule(evt){ //smazani modulu
     var modul = getModule(evt);
     var cislo = $(modul).find("[name='__i__']").val(); //ziskame cislo odkud musime ostatni snizit
     if(modul != undefined){
@@ -319,7 +320,7 @@ function DelModule(evt){
     }
 }
 
-function getModule(evt){
+function getModule(evt){ //vyhledani zakladniho tagu obalujici veskera data modulu
     var zacatek = evt.currentTarget.parentElement;
     var modu = undefined;
     while( (zacatek != undefined)){

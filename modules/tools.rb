@@ -30,6 +30,7 @@ end
 
 module Format
   def convert(data)
+      #provede konverzi retezce na spravny typ vcetne podpory desetinne carky
       return nil if data.nil?
       data.gsub!(/^".*"$/,'')
 

@@ -15,7 +15,7 @@ end
 
 #-----------
 class Report < ModuleMED
-
+# trida pro generovani dat do stanovene HTML sablony s moznosti exportu do PDF
   def properties(memory,fdata)
     #printf "Spusten\n"
     #print fdata

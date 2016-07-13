@@ -58,11 +58,13 @@ class Compute < ModuleMED
     #vysledkem bude dataset -> navracime dataset
     @memory["output"] = @source
 
-    depend = @calculator.dependencies(@calculate)
+
+    depend = @calculator.dependencies(@calculate) #zjisteni zavislosti
 
     @what.each do |value|
       #print value
       @calculator.clear()
+      #nahrajeme do pameti kalkulatoru pouze pozadovane promenne
       depend.each do |variable|
         if value[variable].nil?
           if @memory[variable].nil?
@@ -74,7 +76,7 @@ class Compute < ModuleMED
           @calculator.store(variable,value[variable])
         end
       end
-
+    #-----
       hodnota = compute(nil)
       if hodnota
         hodnota = hodnota.round(@precision) unless @precision.nil?
@@ -124,6 +126,7 @@ class Agregate < Compute
     @what.each do |value|
       #print value
       @calculator.clear()
+      #nahrajeme do pameti kalkulatoru pouze pozadovane promenne
       depend = @calculator.dependencies(@calculate)
       depend.each do |variable|
         if value[variable].nil?
@@ -136,11 +139,12 @@ class Agregate < Compute
           @calculator.store(variable,value[variable])
         end
       end
+      #----
       if first
         @store = compute(nil)
         first = false
       else
-        @store = cumul(@operation,@store,compute(nil))
+        @store = cumul(@operation,@store,compute(nil)) #pripocteme hodnotu
       end
 
     end
