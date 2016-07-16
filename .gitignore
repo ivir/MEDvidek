@@ -1,0 +1,7 @@
+/Data/*
+/*.csv
+/*.html
+/*.pdf
+/.idea/*
+/Web/builder/temp/*
+.directory
