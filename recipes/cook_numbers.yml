@@ -8,7 +8,7 @@
 
 - LoadO2:
    store: "o2data"
-   file: "./Data/2016-06-3606068384-4_2251_11_00_100001-01-s-mob.xml"
+   file: "./Data/mobily_vyuctovani.xml"
    information:
     - mobil
     - uctovano

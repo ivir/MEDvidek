@@ -1,12 +1,14 @@
+source 'https://rubygems.org'
+
 # Zavislosti
 gem 'dentaku'
 gem 'nokogiri'
 
 #arbitr
-gem 'yaml'
+#gem 'yaml'
 
 #LoadMail
-gem 'net/mail'
+#gem 'net/mail'
 
 #Report
 gem 'pdfkit'

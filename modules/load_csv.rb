@@ -92,7 +92,12 @@ class LoadCSV < ModuleMED
             #pouzita ceska forma zapisu
             tval.gsub!(/[^+\-0-9,e]/,'')
             tval.tr!(",",".")
-            td.push(Float(tval));
+            begin # pokud regularni vyraz zachyti retezec tvoreny cislem a pomlckou, pak to ulozi jako retezec
+              val = Float(tval)
+            rescue
+              val = String(tval)
+            end
+            td.push(val)
             next
           end
           if tval.nil?

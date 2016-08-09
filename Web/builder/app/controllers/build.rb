@@ -87,6 +87,7 @@ Builder::App.controllers :build do
   get :download, :map => "/download" do
     #vypisovani vsech souboru v adresari s moznosti stazeni
     userdir = File.join("temp", session[:session_id])
+    FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
     @files = Dir.entries(userdir)
     @files.delete_if{|val| (val == ".") || (val == "..")}
     render 'download'
@@ -100,6 +101,7 @@ Builder::App.controllers :build do
   get :process, :map => "/process" do
     #zobrazi formular spolu s jiz nahranymi daty v ramci sance
     userdir = File.join("temp", session[:session_id])
+    FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou adresar jiz neexistuje
     @files = Dir.entries(userdir)
     @files.delete_if{|val| (val == ".") || (val == "..")}
     render "process"
