@@ -39,4 +39,6 @@ Padrino.mount("Portal::Admin", :app_file => Padrino.root('admin/app.rb')).to("/a
 Padrino.mount('Portal::Report', :app_file => Padrino.root('report/app.rb')).to('/report')
 
 Padrino.mount('Portal::Storage', :app_file => Padrino.root('storage/app.rb')).to('/storage')
+
+Padrino.mount('Portal::Build', :app_file => Padrino.root('build/app.rb')).to('/build')
 Padrino.mount('Portal::App', :app_file => Padrino.root('app/app.rb')).to('/')
