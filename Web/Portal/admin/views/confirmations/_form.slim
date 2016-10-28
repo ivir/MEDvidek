@@ -1,0 +1,55 @@
+- error = @confirmation.errors.include?(:user)
+fieldset class='control-group#{error ? ' has-error' : ''}'
+  = f.label :user, :class => 'control-label'
+  div class='controls'
+    = f.text_field :user, :class => 'form-control input-large input-with-feedback', :autofocus => true
+    span class='help-inline' = error ? f.error_message_on(:user, :class => 'text-error') : pat(:example)
+- error = @confirmation.errors.include?(:mail)
+fieldset class='control-group#{error ? ' has-error' : ''}'
+  = f.label :mail, :class => 'control-label'
+  div class='controls'
+    = f.text_field :mail, :class => 'form-control input-large input-with-feedback'
+    span class='help-inline' = error ? f.error_message_on(:mail, :class => 'text-error') : pat(:example)
+- error = @confirmation.errors.include?(:sent)
+fieldset class='control-group#{error ? ' has-error' : ''}'
+  = f.label :sent, :class => 'control-label'
+  div class='controls'
+    = f.text_field :sent, :class => 'form-control input-large input-with-feedback'
+    span class='help-inline' = error ? f.error_message_on(:sent, :class => 'text-error') : pat(:example)
+- error = @confirmation.errors.include?(:ack)
+fieldset class='control-group#{error ? ' has-error' : ''}'
+  = f.label :ack, :class => 'control-label'
+  div class='controls'
+    = f.text_field :ack, :class => 'form-control input-large input-with-feedback'
+    span class='help-inline' = error ? f.error_message_on(:ack, :class => 'text-error') : pat(:example)
+- error = @confirmation.errors.include?(:dec)
+fieldset class='control-group#{error ? ' has-error' : ''}'
+  = f.label :dec, :class => 'control-label'
+  div class='controls'
+    = f.text_field :dec, :class => 'form-control input-large input-with-feedback'
+    span class='help-inline' = error ? f.error_message_on(:dec, :class => 'text-error') : pat(:example)
+- error = @confirmation.errors.include?(:reason)
+fieldset class='control-group#{error ? ' has-error' : ''}'
+  = f.label :reason, :class => 'control-label'
+  div class='controls'
+    = f.text_field :reason, :class => 'form-control input-large input-with-feedback'
+    span class='help-inline' = error ? f.error_message_on(:reason, :class => 'text-error') : pat(:example)
+- error = @confirmation.errors.include?(:information)
+fieldset class='control-group#{error ? ' has-error' : ''}'
+  = f.label :information, :class => 'control-label'
+  div class='controls'
+    = f.text_area :information, :class => 'form-control input-large input-with-feedback'
+    span class='help-inline' = error ? f.error_message_on(:information, :class => 'text-error') : pat(:example)
+- error = @confirmation.errors.include?(:reference)
+fieldset class='control-group#{error ? ' has-error' : ''}'
+  = f.label :reference, :class => 'control-label'
+  div class='controls'
+    = f.text_area :reference, :class => 'form-control input-large input-with-feedback'
+    span class='help-inline' = error ? f.error_message_on(:reference, :class => 'text-error') : pat(:example)
+
+div class="form-actions"
+  = f.submit pat(:save), :class => 'btn btn-primary'
+  |&nbsp;
+  = f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
+  |&nbsp;
+  = link_to pat(:cancel), url(:confirmations, :index), :class => 'btn btn-default'

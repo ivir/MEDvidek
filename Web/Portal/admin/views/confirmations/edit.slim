@@ -1,0 +1,8 @@
+ul class="nav nav-tabs"
+  li = link_to tag_icon(:list, pat(:list)), url(:confirmations, :index)
+  li = link_to tag_icon(:plus, pat(:new)), url(:confirmations, :new)
+  li class="active" = link_to tag_icon(:edit, pat(:edit)), url(:confirmations, :edit, :id => @confirmation.id)
+
+div class="tabs-content"
+  = form_for :confirmation, url(:confirmations, :update, :id => @confirmation.id), :method => :put, :class => 'form-horizontal' do |f|
+    = partial 'confirmations/form', :locals => { :f => f }

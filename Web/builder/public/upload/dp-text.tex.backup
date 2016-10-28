@@ -1,0 +1,2440 @@
+% This file was converted to LaTeX by Writer2LaTeX ver. 1.4
+% see http://writer2latex.sourceforge.net for more info
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,czech]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+\usepackage{color}
+\usepackage{array}
+\usepackage{supertabular}
+\usepackage{hhline}
+\usepackage{hyperref}
+\hypersetup{pdftex, colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue, pdftitle=, pdfauthor=, pdfsubject=, pdfkeywords=}
+\usepackage[pdftex]{graphicx}
+\makeatletter
+\newcommand\arraybslash{\let\\\@arraycr}
+\makeatother
+% List styles
+\newcommand\liststyleLi{%
+\renewcommand\labelitemi{•}
+\renewcommand\labelitemii{◦}
+\renewcommand\labelitemiii{${\blacksquare}$}
+\renewcommand\labelitemiv{•}
+}
+\newcommand\liststyleLii{%
+\renewcommand\labelitemi{•}
+\renewcommand\labelitemii{◦}
+\renewcommand\labelitemiii{${\blacksquare}$}
+\renewcommand\labelitemiv{•}
+}
+\newcommand\liststyleLiii{%
+\renewcommand\labelitemi{•}
+\renewcommand\labelitemii{◦}
+\renewcommand\labelitemiii{${\blacksquare}$}
+\renewcommand\labelitemiv{•}
+}
+\newcommand\liststyleLiv{%
+\renewcommand\theenumi{\arabic{enumi}}
+\renewcommand\theenumii{\arabic{enumii}}
+\renewcommand\theenumiii{\arabic{enumiii}}
+\renewcommand\theenumiv{\arabic{enumiv}}
+\renewcommand\labelenumi{\theenumi)}
+\renewcommand\labelenumii{\theenumii)}
+\renewcommand\labelenumiii{\theenumiii)}
+\renewcommand\labelenumiv{\theenumiv)}
+}
+% Page layout (geometry)
+\setlength\voffset{-1in}
+\setlength\hoffset{-1in}
+\setlength\topmargin{2cm}
+\setlength\oddsidemargin{2cm}
+\setlength\textheight{23.94cm}
+\setlength\textwidth{17.59cm}
+\setlength\footskip{0.0cm}
+\setlength\headheight{0cm}
+\setlength\headsep{0cm}
+% Footnote rule
+\setlength{\skip\footins}{0.119cm}
+\renewcommand\footnoterule{\vspace*{-0.018cm}\setlength\leftskip{0pt}\setlength\rightskip{0pt plus 1fil}\noindent\textcolor{black}{\rule{0.25\columnwidth}{0.018cm}}\vspace*{0.101cm}}
+% Pages styles
+\makeatletter
+\newcommand\ps@Standard{
+  \renewcommand\@oddhead{}
+  \renewcommand\@evenhead{}
+  \renewcommand\@oddfoot{}
+  \renewcommand\@evenfoot{}
+  \renewcommand\thepage{\arabic{page}}
+}
+\makeatother
+\pagestyle{Standard}
+\setlength\tabcolsep{1mm}
+\renewcommand\arraystretch{1.3}
+\title{}
+\author{}
+\date{2016-06-19}
+\begin{document}
+{\bfseries
+Cíl práce}
+
+
+\bigskip
+
+V současnosti je od zaměstnavatelů kladen důraz na mobilitu zaměstnanců a zároveň jejich dostupnost. V rámci Nejvyššího kontrolního úřadu (dále jen „NKÚ“) je tato koncepce na úrovni ICT prosazována přibližně od roku 1999, kdy se zaměstnanci připojují ke vzdálenému terminálu za pomoci modemu. V roce 2013 bylo na popud dodavatele telefonní ústředny přistoupeno k její náhradě za softwarové řešení. S ohledem na vývoj na mobilním trhu, kdy i pro běžné občany jsou dostupné neomezené tarify, bylo rozhodnuto, že všichni zaměstnanci úřadu budou vybaveni mobilním telefonem nahrazující datový modem a zároveň pevnou linku. Doposud byly mobilními telefony vybaveni pouze vybraní zaměstnanci v celkovém počtu 100 zaměstnanců, kteří u minutového tarifu měli nastavený různé výše limitů pro volání a data, které v naprosté většině dostačovala. 
+
+
+\bigskip
+
+S ohledem na stanovenou koncepci byla na přelomu let 2015 a 2016 na realizovaná výběrová řízení na pořízení mobilních telefonů, jejich správu a nového operátora. Nový operátor byl vybrán formou aukce kde byly poptávány, neomezené tarify v oblasti hlasu i dat. Tyto tarify byly rozšířeny na zbývajících cca 380 zaměstnanců a s ohledem na neomezené tarify tomu byly přizpůsobené limity, aby odpovídali přesné paušální částce za neomezený hlas a stanovená data. S tím vzrostlo množství administrativy, kdy je nutné provádět kontrolu účtovaných částek z hlediska doúčtování plateb zaměstnanci za služby třetích stran, roaming, MHD, apod. 
+
+
+\bigskip
+
+Současná administrativa spojená s vyúčtováváním telefonních služeb spočívá v přepsání částek u jednotlivých telefonních čísel do excelovské tabulky, kontrolu celkových částek, účtovaných položek a následnou úpravu tabulky se seznamem zaměstnanců, kteří překročili stanovený limit. Poté je nutné provést import dat do systému SAP. Zpracování těchto dat u 100 čísel většinou trvalo 3 dny a vyžadovalo to opakovanou kontrolu zadaných \ dat.
+
+
+\bigskip
+
+Cílem práce je maximální možné snížení administrativy pomocí automatizovaného nástroje, který by poskytl rozhraní pro výpočty, kontrolu a předání informací do jiných systémů.
+
+\clearpage{\bfseries
+Analýza a návrh}
+
+Kapitola nejdříve pojednává o podmínkách a prostředí v němž se bude cíl práce používat a jaké jsou na něj kladeny požadavky z hlediska konečného začlenění do prostředí. Následně podle provedené analýzy byl proveden návrh řešení a jakým způsobem budou vypořádány požadavky.
+
+
+\bigskip
+
+{\bfseries
+Analýza}
+
+
+\bigskip
+
+{\bfseries
+Jednání s mobilními operátory}
+
+Během léta 2015 probíhala jednání s jednotlivými mobilními operátory v rámci niž se diskutovalo o technických možnostech operátorů a poskytovaných služeb. Ačkoliv se uskutečnilo několik jednání, tak ze strany operátorů byly poskytovány rozporuplné informace, které bylo nutné opakovaně ověřovat včetně kontroly informačních systémů jaké možnosti nabízí. Přes ujištění operátorů, žádný z nich neposkytuje API pro automatizovaný přístup k datům.
+
+
+\bigskip
+
+{\bfseries
+O2}
+
+Operátor poskytuje v rámci informačního systému možnost stáhnout kumulativní informace ve formátech PDF, XLS, CSV a XML splňující požadavky ISDOC (Information System Document).
+
+
+\bigskip
+
+U formátu XLS i CSV jsou data nestrukturalizovaná, kdy informace o vyúčtování telefonního čísla jsou rozděleny na více řádků bez zřetelně stanovených pravidel. Navíc v informačním systému jsou tyto výstupy označené za zastaralé a budou odstraněny.
+
+
+\bigskip
+
+V rámci formátu XML jsou data strukturovaná a je k dispozici i popis struktury. Struktura vychází z ISDOC, avšak jen v povinných položkách a zbývající jsou samostatně definované v XSD schématu.
+
+
+\bigskip
+
+Informační systém neposkytuje API pro automatizovaný přístup, takže je nutná lidská interakce. Samotné rozhraní je postavené na asynchronní komunikaci na pozadí, přičemž odezva systému je v řádu několika desítek vteřin a v některých situacích se systém chová nedeterministicky, kdy jsou data různě prezentována v závislosti na již přijatých datech. V současnosti ze strany O2 je tento systém označen za zastaralý a nebude již dále rozvíjen. Náhrada by měla být představena do konce roku 2016, avšak zatím nebyla naznačena možná zlepšení kromě celkového zrychlení systému a vyšší konfiguratelnosti.
+
+
+\bigskip
+
+Tento operátor zvítězil v rámci výběrového řízení na nového operátora, kde byl stanoven požadavek na možnost automatizovaného přístupu k vyúčtováním. Tento požadavek je schopen operátor splnit za pomoci řešení postavené na technologii Microsoft SharePoint v rozmezí minimálně půl roku od vzniku požadavku. S ohledem na nový systém nebyl, prozatím, tento požadavek vznesen pro minimalizaci změn prostředí v rámci vývoje.
+
+
+\bigskip
+
+{\bfseries
+T-Mobile}
+
+Operátor nabízí pouze možnost stažení souboru ve formátu CSV a PDF bez výhledu na poskytnutí jiného formátu. V současnosti již formát CSV není poskytován v rámci webového rozhraní informačního systému. 
+
+
+\bigskip
+
+Pro automatizaci jsou schopni zasílat formát CSV pouze prostřednictvím e-mailu. Jiné \ možnosti nebyly nabídnuty.
+
+
+\bigskip
+
+{\bfseries
+Vodafone}
+
+Operátor byl schopen poskytnout data ve formátu CSV s tím, že pro automatizaci byl schopen data posílat přes e-mail.
+
+
+\bigskip
+
+V rámci jednání byl operátor nejotevřenější, ale oproti předchozím operátorům nebyla provedena kontrola webového informačního systému s ohledem na nevyužívání služeb operátora.
+
+
+\bigskip
+
+{\bfseries
+Shrnutí}
+
+Strojově zpracovatelná data poskytují všichni hlavní operátoři, avšak hlavně v nestrukturovaném formátu (CSV). Pouze u operátora O2 Czech Republic a.s. lze získat data ve strukturovaném formátu XML podle standardu ISDOC určeného pro účetnictví. \ U všech operátorů je ještě možné získat data přímo z ERP systému, konkrétně řešené od SAPu, avšak tomu se obchodníci velice brání s ohledem na problematickou strukturu společnosti vyžadující ruční zásahy. Tato možnost je tedy výhradně určena pro virtuální operátory, případně velké zákazníky s několika tisíci SIM karet, kterým NKÚ není. 
+
+\clearpage{\bfseries
+Prostředí zadavatele}
+
+Informační systém NKÚ (dále jen „IS NKÚ“) je postaven výhradně na technologiích od společnosti VMware, kdy u serverové infrastruktury se jedná o vSphere a pro vzdálenou práci v podobě virtuálních desktopů na produktu Horizon. Zaměstnanci zpracovávají na virtuálních desktopech většinou neveřejná data od kontrolovaných subjektů, které ukládají na sdílené disky realizované na technologii Windows File services.
+
+
+\bigskip
+
+Správa přístupu k jednotlivým diskům a složkám je řízena pomocí distribučních skupin spravované na řešení Microsoft Active Directory. Toto řešení je dále využíváno pro ověřování přístupových údajů za pomoci RADIUS, případně LDAP na dalších zařízení nepodporující přímé napojení (např. SSL VPN, síťové prkvy, SAN, …). Pro zajištění správného přiřazení práv dle pracovní pozice je využíván nástroj Microsoft Forefront Identity Manager, který jednosměrně synchronizuje data z ERP systému SAP. V prostředí SAP jsou evidovány veškeré údaje spojené s personalistikou (modul HR), účetních a ekonomických činností spolu s e-learningem. V případě nutnosti interakce je kromě přímého využití nativního výměnného formátu isDOC k dispozici middleware tvořený produktem Microsoft BizTalk 2013, který provádí potřebné transformace do ostatních systémů.
+
+
+\bigskip
+
+Uživatelé IS NKÚ se do jednotlivých systémů přihlašují pomocí jednorázového hesla (OTP), případně se využívá již získané identity (SSO). Kromě administrátorů, nikdo nezná své heslo a pro zvýšení bezpečnosti dochází k pravidelnému přegenerování nových hesel jednotlivým uživatelům.
+
+
+\bigskip
+
+V rámci vyhlášky 317/2014 Sb. k zákonu č. 181/2014 Sb. o kybernetické bezpečnosti a navazující předpisy, která stanovuje systém KIS (Kontrolní informační systém) za významný informační systém. Z toho plynou zákonné požadavky i na zbývající informační systémy včetně nástroje vytvořený v rámci diplomové práce.
+
+
+\bigskip
+
+{\bfseries
+Zákonné požadavky na řešení}
+
+Vytvářený nástroj z hlediska zákona nikterak neovlivní významný informační systém, jeho nefunkčností nevzniknou škody. Nástroj z hlediska vlivu na okolní systémy lze označit pouze za konzumenta a lze jej zařadit do nejnižší kategorie za předpokladu, že v případě chyby či průniku nedojde k úniku osobních údajů.
+
+Dle vyhlášky č. 316/2014 Sb. \ a schválené bezpečnostní dokumentaci je nutné, aby nástroj splňoval následující podmínky:
+
+\liststyleLi
+\begin{itemize}
+\item zaznamenával přístupy administrátorů
+\item chránil citlivá data během přenosu a zpracování
+\item záznam prováděných změn v systému
+\end{itemize}
+
+\bigskip
+
+{\bfseries
+Analýza postupu zpracování dat}
+
+Pro stanovení základních požadavků na aplikaci a případně možná rozšíření pro maximalizaci automatizace, je nutné zachytit aktuální procesy spojené s vyúčtováním . Procesy lze rozlišit na úrovni ekonomického zpracování a následně proces přeúčtování stanovený \textit{interní směrnicí o mobilní komunikaci}.
+
+
+\bigskip
+
+U ekonomického zpracování jde zejména o rozdělení celkového vyúčtování na jednotlivé zaměstnance a následně připravení podkladů pro controlling a účetní oddělení. Zpracování je tvořeno následujícími kroky:
+
+\liststyleLii
+\begin{itemize}
+\item Přijetí vyúčtování a podání pokynu k proplacení
+
+\begin{itemize}
+\item Do podatelny je přijata faktura včetně podrobného vyúčtováním.
+\item V systému SAP je vytvořena rezervace prostředků pro uhrazení.
+\item Vytvoření „košilky“ k rezervaci
+\item Předání košilky k podpisu zodpovědné osobě, že souhlasí s proplacením
+\item Předání košilky k podpisu vedoucí oddělení, že také souhlasí s proplacením
+\item Po podepsání je košilka s rezervací předána finančnímu oddělení \ k uhrazení
+\end{itemize}
+\item Vyplnění předpřipravené tabulky v tabulkovém procesoru
+
+\begin{itemize}
+\item Zkopíruje se tabulka z předchozího měsíce
+\item Dle změnového listu se provede úprava hodnot (přidání a odebrání telefonních čísel, jejich změna včetně limitů)
+\item Vyplnění částky za služby poskytnuté operátorem
+\item Vyplnění částky za služby třetích stran
+\item Provedení kontroly zdali souhlasí operátorem uvedená souhrnná částka vyúčtování
+\end{itemize}
+\item Provedení kontroly nestandardních hodnot
+
+\begin{itemize}
+\item Kontrola zdali hrazená částka u jednotlivých zaměstnanců nevybočuje ze standardních hodnot
+\item Provedení korekcí způsobené dobropisem dříve reklamovaných položek
+\item Provedení korekcí u reklamovaných položek
+\end{itemize}
+\item Vygenerování seznamu zaměstnanců mající doplácet služby
+
+\begin{itemize}
+\item V seznamu jsou zaměstnanci, kteří překročili stanovený limit nebo jim byla naúčtována částka za službu třetích stran (např. MHD jízdenka).
+\end{itemize}
+\item Vyexportovat seznam do samostatných souborů dle odborů
+
+\begin{itemize}
+\item Pro předání k podpisu jednotlivým ředitelům odborů, že byli seznámeni
+\end{itemize}
+\item Vyexportovat seznam pro účetní oddělení
+
+\begin{itemize}
+\item Jedná se o podklad k výběru částek od zaměstnanců a jejich spárování
+\end{itemize}
+\item Vytvořit novou zakázku v SAPu
+\item Provést import dat SAPu
+
+\begin{itemize}
+\item Importují se informace o telefonním čísle a účtované částce
+\item Určeno pro controlling využívání prostředků v rámci interních auditů
+\end{itemize}
+\end{itemize}
+
+\bigskip
+
+
+\bigskip
+
+Po provedení ekonomického zpracování dat se přistupuje k informování dotčených subjektů a jejich nadřízené v rámci přeúčtovacího procesu. Nadřízení jsou informování z důvodu ošetření nestandardních stavů, kdy překročení stanovených limitů došlo z příkazu nadřízeného (např. volání do zahraničí). Postup kroků je následující:
+
+\liststyleLiii
+\begin{itemize}
+\item Zaslání přehledu jednotlivým ředitelům odboru k podpisu
+
+\begin{itemize}
+\item Přehled je zasílán pouze v situaci, kdy u některého ze zaměstnanců došlo k překročení limitu
+\item Účelem je zachycení situace, kdy k překročení limitu došlo na příkaz nadřízeného, což znamená korekci dat
+\end{itemize}
+\item Zaslání informace zaměstnanci o vzniku nedoplatku
+
+\begin{itemize}
+\item Zaměstnanec je informován o částce včetně základní informace, kde doplatek vznikl
+\item Zaměstnanec musí do 3 dnů vyjádřit svůj souhlas či nesouhlas s vyúčtováním
+\item Na žádost je mu poskytnut podrobný výpis
+\end{itemize}
+\item Po odsouhlasení zaměstnanci jsou předány podklady účetnímu oddělení pro výběr v hotovosti nebo převodem
+\item Připomenutí uhrazení částky
+
+\begin{itemize}
+\item Ve zhruba 14-denních intervalech účetní oddělení informuje o stavu uhrazení nedoplatků
+\item Zaměstnancům, kteří částku neuhradili, je připomenuto pomocí e-mailu, že doposud neuhradili částku a mají tak učinit
+\end{itemize}
+\item V okamžiku uhrazení veškerých nedoplatků, proces končí
+\end{itemize}
+
+\bigskip
+
+{\bfseries
+Požadavky managementu}
+
+Pro stanovení požadavků na vytvářený nástroj byla realizována interní jednání na úrovni jednotlivých dotčených subjektů (ekonomka, vedoucí oddělení majetku, ředitel odboru) či systémů (správce systému SAP, telefonního subsystému, ...). Výsledkem byly obecné požadavky fungování systémů bez ohledu na jejich splnitelnost při základních znalostí dostupných informací.
+
+
+\bigskip
+
+Z jednání vyplynulo následující chování systému:
+
+\liststyleLiv
+\begin{enumerate}
+\item Nástroj provede stažení podrobného strojově čitelného vyúčtování ze systému operátora
+\item Provede spárování telefonního čísla s uživatelem a nastaveným limitem
+\item Provedou se stanovené operace nad hodnotami
+\item Na základě výsledků dojde k filtraci výsledků
+\item Vygeneruje PDF přehled zaměstnanců překračující limit a dovolí jej stáhnout
+\item Tento přehled dále po potvrzení zašle na účetní oddělení
+\item Provede export dat do SAPu
+\item Jednotlivým ředitelům odboru zašle přehledy zaměstnanců překračující limit
+\item Odešle e-mail zaměstnancům informující o nedoplatku obsahující tlačítka pro okamžité vyjádření svého souhlasu či nesouhlasu spolu s odkazem na podrobný výpis svého telefonního čísla
+
+\begin{enumerate}
+\item Podrobný výpis hovorů se bude vždy stahovat přes aplikaci přímo ze stránek operátora (v aplikaci se nebude z důvodu soukromí uchovávat)
+\item Vyjádření souhlasu bude auditováno, bude generován přehled a informace o vyjádření bude přehledně viditelné
+\end{enumerate}
+\item Data budou uložena v databázi pro možnost jejich dodatečné zpracování a nebo využití v rámci datového skladu
+\end{enumerate}
+
+\bigskip
+
+S ohledem na množství požadovaných výstupů je nutné klást důraz na modularitu, aby nebylo nutné v případě změny dílčí externí komponenty přepracovávat celý nástroj.
+
+
+\bigskip
+
+{\bfseries
+Vypořádání se s požadavky}
+
+
+\bigskip
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{0.7cm}|m{5.9350004cm}|m{2.2089999cm}|m{2.361cm}|m{5.3900003cm}|}
+\hline
+~
+ &
+Požadavek &
+Realizovatelné &
+Výsledek &
+Poznámka\\\hline
+1. &
+Nástroj provede stažení podrobného strojově čitelného vyúčtování ze systému operátora &
+Ne &
+{\bfseries nástroj bude reagovat na vstup dat} &
+Současný operátor poskytuje data v CSV a XML,
+
+Neposkytuje API pro přístup a webové prostředí, neposkytuje dostatečné záchytné body pro zautomatizování úkonu \\\hline
+2. &
+Provede spárování telefonního čísla s uživatelem a nastaveným limitem &
+Ano &
+{\bfseries z počátku bude využito jako zdroj dat Excel, resp. CSV soubor pro spárování; v případě přesunu dat do externích systémů bude vytvořen příslušný modul pro načítání} &
+Telefonní číslo a uživatel jsou k dispozici v Active Directory (LDAP) nebo FIM,
+
+Evidence telefonní číslo, uživatel, odbor, stanovený limit a datový tarif jsou evidovány v Excelu\\\hline
+3. &
+Provedou se stanovené operace nad hodnotami &
+Ano &
+\textbf{Nejspíše externí knihovnou} &
+Realizace závislá na použitém programovacím jazyce a návrhu\\\hline
+4. &
+Na základě výsledků dojde k filtraci výsledků &
+Ano &
+~
+ &
+Realizace závislá na návrhu, na úrovni SQL lze\\\hline
+5. &
+Vygeneruje PDF přehled zaměstnanců překračující limit a dovolí jej stáhnout &
+Ano &
+{\bfseries Nejspíše externí knihovnou} &
+Nezávisle na jazyce jsou dostupné externí knihovny poskytující možnost exportu do PDF\\\hline
+6. &
+Tento přehled dále po potvrzení zašle na účetní oddělení &
+Ano &
+{\bfseries Nejspíše externí knihovnou} &
+nutný poštovní server, pomocí externích knihoven lze realizovat \\\hline
+7. &
+Provede export dat do SAPu &
+Ano &
+{\bfseries využije se stávajícího rozhraní, tj. varianta CSV} &
+Standardní formát pro výměnu dat se využívá isDOC (definovaný SAPem), ale v prostředí NKÚ lze využít možnosti importu ve formátu XLS/XLSX a CSV. Případně jiný za pomoci upravení modulu konzultantem
+
+Hodinová sazba konzultanta je však vysoká\\\hline
+8. &
+Jednotlivým ředitelům odboru zašle přehledy zaměstnanců překračující limit &
+Ano &
+~
+ &
+Souvisí s bodem 6)\\\hline
+9. &
+Odešle e-mail zaměstnancům informující o nedoplatku obsahující tlačítka pro okamžité vyjádření svého souhlasu či nesouhlasu spolu s odkazem na podrobný výpis svého telefonního čísla &
+Ano &
+~
+ &
+Jedná se spíše o nadstavbu mající vlastní logiku a z hlediska návrhu je možno oddělit\\\hline
+10. &
+Data budou uložena v databázi pro možnost jejich dodatečné zpracování a nebo využití v rámci datového skladu &
+Ano &
+~
+ &
+Nerozlišuje se zda se jedná o vstupní nebo výstupní a tak je vhodné toto řešit později\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+Stanovené požadavky na fungování aplikace jsou reálně splnitelné. Řešení bodů 9. a 10. lze řešit samostatně a může u nich vzniknout ještě další specifické požadavky, které neovlivňují zbytek řešení.
+
+
+\bigskip
+
+{\bfseries
+Existující řešení}
+
+Přeúčtovávání telekomunikačních služeb se většinou provádí pouze v rámci ekonomického software, kde se provádí základní přeúčtovávání formou importu dat od operátora a následná „ruční úprava“ na základě kreditů, případně specifická automatizace, která není veřejně dostupná. Lze se tak domnívat, že podobné požadavky si klady virtuální operátoři nebo velké společnosti a využívají podobného nástroje realizovaný touto diplomovou prací. 
+
+
+\bigskip
+
+\clearpage{\bfseries
+Návrh}
+
+Základní myšlenky návrhu se pokouší vycházet ze současných trendů v oblasti správy serverů a vývoje software, kdy je systém tvořen kombinací jednotlivých specializovaných modulů. Tyto moduly bývají bezstavové a pomocí automatizovaných nástrojů se provádí jejich konfigurace. Díky této konstrukci lze celý systém ovlivňovat kromě metody Scale-Up také metodou Scale-Out umožňující lépe reagovat na dočasné výkyvy v přicházejících požadavcích.
+
+
+\bigskip
+
+Návrh probíhal formou inkrementálního vývoje, kdy po realizaci základního návrhu je realizován prototyp ověřující správnost návrhu a poté dochází k dalšímu rozvoji.
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Architektura}
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Základní návrh je postaven na myšlence arbitra, který v návaznosti na předaný postup (dále jen „recept“) předává postupně parametry a hodnoty jednotlivým modulům uvedených v receptu. Tyto moduly provedou dle předaných parametrů dané úkony a ukončí se. Jedná se tak sériový postup, aby byla zajištěna konzistence dat v každém kroku. }
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Plným oddělením jednotlivých modulů s jednotným rozhraním od arbitra umožňuje nezávislý vývoj jednotlivých částí. Také to dovoluje inkrementální vývoj, kdy jednotlivé části obsahují pouze základní funkcionalitu pro ověření funkčního řešení a poté dochází k doplnění nových funkcionalit.}
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=17.59cm,height=6.466cm]{dptext-img001.png}
+\end{figure}
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{V úvodním návrhu [obr. 1] byl předpoklad průchodu přes sérii pevně daných částí, které provedou úkony dle receptu a v případě nutnosti dalšího zpracování je výstup opět předán na začátek. U pevně dané struktury vzniká problém s rozšiřováním funkcionality a návazností. Bylo by nutné opakovaně procházet celým blokem a zajistit provedení pouze konkrétních navazujících částí. Původní předpoklad byl v implementaci vyšší inteligence na úrovni jednotlivých modulů, což však vyžaduje vyšší nároky na údržbu a vyšší pravděpodobnost výskytu chyb. Případně by tato funkcionalita byla přenechána externímu systému. Přesto byl tento návrh ještě dále rozpracován, pro zjištění jak by se měly jednotlivé části chovat a jaké potřeby vznikají.}
+
+
+\bigskip
+
+
+\bigskip
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=11.841cm,height=6.773cm]{dptext-img002.png}
+\end{figure}
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Během rozpracování původního návrhu vznikl blok úkonů \ („Výpočetní blok“), který prováděl veškeré úkony spojené s výpočtem a jeho výstupem. Pro zrychlení celého řešení byla uvažována možnost využití globální cache, která pro hash receptu ukládá výsledek. Tímto způsobem bylo možné realizovat dodatečné výpočty, kdy byl výsledek poslední operace předán opět na začátek. Práce s externími systémy byl stále ponechán jednotlivým modulům. Výhoda pevně daného průchodu je přesná znalost jaké informace budou k dispozici bez ohledu na recept, kdy vůči vnějšímu systému se chová jako jeden uzavřený modul. Problém vzniká v situaci získání mezivýsledku, kdy je nutné tomu přizpůsobit recept, který nějaké části výpočetního bloku nevyužije. Což může mít za následek horší čitelnost receptu.}
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=10.315cm,height=7.438cm]{dptext-img003.png}
+\end{figure}
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Po provedené analýze, zejména předávání dat, byl návrh architektury zjednodušen, kdy byla úvaha o výpočetním bloku zamítnuta. Arbitr tak bude komunikovat s jednotlivými moduly podle pořadí uvedené v receptu. Takto lze docílit variability bez vysokých režijních nákladů spojené s vynecháním některých částí výpočetního bloku. S ohledem na neznámé pořadí jednotlivých modulů je nutné klást zvýšené nároky na chyby s chybějícími daty na vstupu (např. název proměnné).}
+
+
+\bigskip
+
+
+\bigskip
+
+\clearpage{\bfseries
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Arbitr}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Úkolem arbitra je provést načtení konfigurace a následně podle ni postupně vyvolávat jednotlivé moduly a předávat jim získanou konfiguraci.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Pokud zanedbáme vložení neautorizovaného modulu, pak největší riziko zneužití oprávnění, resp. Spuštění neautorizovaného kódu je v této části, kdy je nutné pro správnou funkčnost načíst konkrétní modul a předat mu informace. Nejjednodušeji se to provede pomocí funkce eval() či její ekvivalent mající za úkol provedení operací předaných v řetězci. Obecně je doporučováno minimalizovat užití, případně zajistit maximální možné ošetření, aby se spouštěl pouze požadovaný kód.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Arbitr přijímá recept buď cestou k souboru nebo v řetězci, které následně předá k načtení knihovně YAML, která provede transformaci do hash tabulky pro následné operace. V okamžiku připravených dat arbitr prochází tuto tabulku a postupně vytváří nové objekty, kterým předává parametry a spouští jejich vykonání. }
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Scénáře užití}
+
+\begin{figure}
+\centering
+\includegraphics[width=10.398cm,height=10.151cm]{dptext-img004.png}
+\end{figure}
+
+\bigskip
+
+{\bfseries
+Konfigurace / recept}
+
+Vzhledem k předpokládanému zautomatizování celého procesu zpracování bylo nutné přistupovat ke konfiguraci, tak aby ji šlo upravovat přímou editací souboru a zároveň nebyla potřeba hluboká znalost formátu zápisu parametrů jednotlivých modulů.
+
+
+\bigskip
+
+Již několik let je k dispozici formát YAML (YAML Ain't Markup Language (zkráceně YAML /jæml/) je formát pro serializaci strukturovaných dat.), který je v\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{yužíván pro automatizované konfigurační nástroje jako jsou Puppet nebo Ansible, případně nástroj Docker pro kontejnerovou virtualizaci a taktéž je použit ve frameworku Ruby on Rails. Hlavní výhodou tohoto formátu je zachování čitelnosti bez ohledu na vkládané struktury spolu s možností strojového zpracování. Lze tak provádět ruční úpravy kódu bez podrobných znalostí.}
+
+
+\bigskip
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+{}- Compute:}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ source: {\textquotedbl}o2data{\textquotedbl}}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ store: {\textquotedbl}zaplatit{\textquotedbl}}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ calculate: {\textquotedbl}MAX(uctovano - limit\_Kc,0) + treti\_strana{\textquotedbl}}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \#minimum: 0}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ precision: 2}
+
+
+\bigskip
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+{}- ExportCSV:}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ source: {\textquotedbl}o2data{\textquotedbl}}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ file: {\textquotedbl}./nums.csv{\textquotedbl}}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ columns:}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- ODB}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- Jmeno}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- mobil}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- uctovano}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- treti\_strana}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- data\_castka}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- data\_objem : Staženo}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- data\_jednotka}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- limit\_Kc : limit}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ \ \ {}- zaplatit}
+
+{\sffamily\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ \ \ type: {\textquotedbl}ssv{\textquotedbl}}
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Na útržku z konfigurace je patrný způsob zápisu, kdy například objekt }\textit{\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{ExportCSV}}\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{ má parametry }\textit{\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{file}}\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{,}\textit{\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{type}}\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{ a }\textit{\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{source}}\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{ typu řetězec (String) a parametr }\textit{\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{columns}}\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{ typu pole (Array) objektů.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci návrhu se nepočítá s využitím přímé deserializace objektů z důvodu zachování co nejjednodušší formy zápisu. Výsledkem by mělo být, že uživatel se základními znalostmi tabulkového procesoru (Excel, Base, …) dokáže upravovat hodnoty v konfiguračním souboru se základním návodem s přehledem parametrů a funkcí.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Data a manipulace s daty}
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Bez ohledu na formát vstupních dat většina uživatelů zpracovává data v tabulkové podobě, kdy pro definované sloupce reprezentuje jeden řádek konkrétní získanou hodnotu. Nevýhodou tohoto pohledu je nutnost strukturovaná data přetransformovat a při tom může dojít ke ztrátě metadat či infomací. Nicméně u předpokládaných vstupních datech (vyúčtování mobilních služeb) toto zjednodušení nevadí.}
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Při původním předpokladu, že bude prováděno automatické získávání dat od operátora se pracovalo s předpokladem, že veškerá vstupní data se uloží v původním formátu do NoSQL databáze. Důvodem volby nerelační databáze byla snaha o odolnost úložiště dat vůči změnám ve vstupních datech a zároveň rychlá možnost prohledávání. Konkrétně u operátora O2 se nabízela možnost XML formátu se specifikací ISDOC. V rámci hledání vhodného řešení se jevilo nejlépe použít XML databázi Sedna (sedna.org). Ostatní databáze jako eXist, MongoDB, Cassandra se jevili z hlediska účelu užití nevhodné buď svoji robustností nebo nutnou transformací.}
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{V rámci požadavků kladených na co nejjednodušší zápis bylo stanoveno, že datový model vůči jednotlivým modulům se bude chovat v podobě „dynamické“ tabulky, kdy v rámci řádky budou hodnoty k dispozici přes název sloupce. Označení dynamické tabulky je bráno z důvodu možnosti manipulace s jednotlivými sloupci. Nabízela se dvě řešení jak data ukládat. Veškeré zvažované úkony se provádí vždy na celku a z toho důvodu jsou veškeré operace rozhraní takto přizpůsobeny a neumožňují přímý přístup k jednotlivým řádkům.}
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{První zvažovanou variantou bylo využití databáze, nejdříve relační a poté i NoSQL. Bez ohledu na typ databáze se na prototypech jevila bezproblémové čtení s případným postupným nahráváním dat. Komplikace však vznikají při manipulaci s daty a sloupci, tak aby byla zachována konzistence dat bez vysoké penalizace.}
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Konkrétněji u zvažované relační databáze SQLite v paměti není možné modifikovat tabulku a doporučeným postupem je vytvoření nové tabulky s novým sloupcem a data překopírovat. Kopírování by šlo vyhnout využitím samostatných tabulek pro jednotlivé přidané sloupce, ale s množstvím operací by docházelo k pomalejšímu čtení hodnot způsobené spojováním tabulek. S ohledem na využití cizích klíčů je případná manipulace s daty zatížena zajištěním kontroly konzistence veškerých používaných tabulek.}
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{U databáze MongoDB je možné provádět pomocí modifikátoru \$set hromadné úpravy nad daty a přidat tak položku reprezentující hodnotu sloupce. Problém se jeví ve způsobu dotazování postavený na modifikátorech a \ jejich speciálním zápisu, což komplikuje jejich přímé použití a je nutné aplikovat mezivrstvu pro provedení překladu.}
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Druhou zvažovanou variantou bylo pro uložení dat využít hashovací tabulky v paměti, kdy je každý řádek touto tabulkou reprezentován a jednotlivé hodnoty jsou dostupné pomocí názvu sloupce. Nevýhodou tohoto řešení je absence funkcí běžně dostupných u databáze jako je agregace, filtrace a spojování. Naproti tomu lze s hodnotami pracovat přímo bez nutnosti překladu.}
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{S ohledem na předpokládané množství dat, které se pohybovalo kolem 500 položek bez potřeby jejich ukládání, se využití databáze zdálo nevhodné a zvyšující celkové nároky na řešení. Z toho důvodu byla zvolena druhá varianta.}
+
+
+\bigskip
+
+{\bfseries
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Modul}}
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Každému modulu jsou předávány reference na paměť s daty a konfigurační nastavení. Pro sjednocení je definováno rozhraní, které je využíváno ze strany Arbitra. Vychází ze základního modulu definující základní rozhraní, které arbitr vyvolává. Povinná deklarace je pouze u metod properties a execute.}
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Informace o akceptovatelných parametrech modulu zůstává uvnitř a musí se tak ošetřit veškeré možnosti v rámci tohoto modulu. V případě, že nastane chyba v modulu mající vliv na ostatní části, pak \ při návratové hodnotě -1 Arbitr ukončí vykonávaní receptu a navrátí informaci z metody status().}
+
+
+\bigskip
+
+\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{Metoda }\textit{\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{properties}}\textcolor[rgb]{0.14509805,0.14509805,0.14509805}{ je určena pro nastavení parametrů modulu, která jsou získaná z receptu.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Metoda \textit{execute} provádí samotnou výkonnou část operující nad daty. Pro případ potřeby jsou metodě předávány konfigurační parametry. Metody \textit{preprocessing} a \textit{postprocessing} jsou určeny pro ošetření situace, kdy je nutné data připravit před zahájením operace, případně upravit po skončení než jsou předány dalšímu modulu. }
+
+
+\bigskip
+
+
+\bigskip
+
+{\ttfamily\color{black}
+\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{class }}}\textrm{\textbf{\textit{\textcolor[rgb]{0.4,0.05490196,0.47843137}{ModuleMED}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{def }}}\textrm{\textit{\textcolor{blue}{properties}}}\textrm{(}\textrm{\textit{\textcolor[rgb]{0.7647059,0.45882353,0.13333334}{memory}}}\textrm{,}\textrm{\textit{\textcolor[rgb]{0.7647059,0.45882353,0.13333334}{fdata}}}\textrm{)}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\# navraci seznam podporovanych vstupu a vystupu}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\ \ \ \ }\textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\#povinne musi byt definovana polozka memory[}}}\textrm{\textbf{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{{\textquotedbl}output{\textquotedbl}}}}}\textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{]uvadejici kde je ulozen vystup}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\ \ \ \ }\textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\#memory[}}}\textrm{\textbf{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{{\textquotedbl}output{\textquotedbl}}}}}\textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{] = nil}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{end}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{def }}}\textrm{\textit{\textcolor{blue}{preprocessing}}}\textrm{(}\textrm{\textit{\textcolor[rgb]{0.7647059,0.45882353,0.13333334}{fdata}}}\textrm{)}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\# navraci recept, ktery se ma pouzit na data pred vstupem}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{end}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{def }}}\textrm{\textit{\textcolor{blue}{postprocessing}}}\textrm{(}\textrm{\textit{\textcolor[rgb]{0.7647059,0.45882353,0.13333334}{fdata}}}\textrm{)}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\# navraci recept, ktery se ma pouzit na data po zpracovani timto modulem}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{end}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{def }}}\textrm{\textit{\textcolor{blue}{execute}}}\textrm{(}\textrm{\textit{\textcolor[rgb]{0.7647059,0.45882353,0.13333334}{fdata}}}\textrm{)}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\# spusteni zpracovani}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{end}}}}
+
+{\bfseries\color[rgb]{0.0,0.0,0.5019608}
+end}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci úvodní implementace byly navrženy základní moduly:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{4.1920004cm}|m{13.003cm}|}
+\hline
+Název modulu &
+Popis\\\hline
+Load O2 &
+Načtení hodnot z XML souboru poskytovaný operátorem O2\\\hline
+Load CSV &
+Načtení hodnot ve formátu CSV/SSV\\\hline
+Load Mail &
+Načtení přílohy z e-mailu\\\hline
+Compute &
+Provádění výpočtu hodnot\\\hline
+Aggregate &
+Výpočet souhrnných hodnot\\\hline
+Filtr &
+Odstranění hodnot neodpovídající filtru\\\hline
+DB Join &
+Spojení hodnot dvou tabulek\\\hline
+Export CSV &
+Export hodnot do formátu CSV/SSV\\\hline
+Export JSON &
+Export hodnot do formátu JSON\\\hline
+Report &
+Export hodnot do formátu HTML nebo PDF dle stanovené šablony\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Load O2}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul načte hodnoty ze stromové struktury odpovídající ISDOC verze 6.0.1 z roku 26.5.2014. Tato struktura obsahuje úplné vyúčtování jednotlivých telefonních čísel. Ukázka vstupních dat je uvedena v příloze č. 1. S ohledem na množství dat se provede pouze selekce konkrétních hodnot, které budou v rámci požadavků a testování požadovány.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Hlavní logika spočívá ve zploštění struktury do jednorozměrného pole k níž se bude přistupovat. Základní algoritmus je znázorněn na obrázku.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Load CSV}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul načte hodnoty ve formátu CSV, případně SSV. Pracuje se s předpokladem, že první řádek odpovídá názvům jednotlivých sloupců a na dalších řádcích již následují oddělené hodnoty. U každé hodnoty se pomocí regulárních výrazů pokusí o identifikaci datového typu a provedení správné konverze.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci prototypování vznikl problém s národními specifiky, které je nutné ošetřit, aby bylo možné data korektně načíst (např. užití desetinné čárky namísto tečky).}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Load Mail}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Všichni čeští operátoři byli schopni v rámci své administrativy zasílat data přílohou v e-mailové zprávě. Tento modul se tuto možnost snaží pokrýt, alespoň pro částečnou možnost automatizace.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul se za pomoci předaných přihlašovacích údajů připojí k poštovnímu serveru, kde se pomocí klíčových slov pokusí o nalezení posledního příchozího e-mailu obsahující přílohu. Tuto přílohu vyzvedne a uloží ji na dočasné místo pro další zpracování.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Compute}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul provádí logické a matematické operace nad jednotlivými řádky. Před zahájením zpracování jednotlivých řádek se z paměti načtou hodnoty základní číselných typů pro případ využití jako konstanty. Poté u polí s daty se u každé řádky nejdříve načtou hodnoty jednotlivých sloupců a poté se výraz vyhodnocuje. Výsledek je poté připojen k řádku do specifikovaného sloupce.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Operace nad složitějšími strukturami (např. sčítání polí) byly zvažovány, ale nepovedlo se nalézt obecný způsob \ jejich zpracování a z toho důvodu je nutné tyto operace provést za pomoci dalších modulů, které data dle požadavků spojí a dále bude možné je zpracovat. }
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Aggregate}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul vychází z modulu Compute, který rozšiřuje o možnost agregace hodnot ve stanoveném sloupci. Výsledek je poté uložen do definované proměnné.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Filtr}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul provádí selekci hodnot splňující poskytnutou podmínku.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+DB Join}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul provádí párování dat ze dvou zdrojů. Výsledek je uložen do zdroje označený pro uložení. Toto zjednodušení bylo realizováno z důvodu optimalizace množství alokovaných paměťových zdrojů. V návaznosti na možnost vícenásobného užití zdroje je možné toto chování upravit, kdy se vytvoří kopie prvního zdroje do nové proměnné s níž se bude dále pracovat.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Export CSV}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul ukládá hodnoty ve formátu CSV, případně SSV. Umožňuje ovlivnit název jednotlivých sloupců a poskytuje možnost upravit formát zápisu čísel pro české prostředí (desetinná čárka) .}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Export JSON}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul provede export do formátu JSON a případně odešle HTTP GET požadavek na zadanou URL, aby bylo možné data dodatečně načíst.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Report}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul má za úkol vygenerovat výstup určený k tisku. Jde zejména o vkládání dat do předdefinovaných formulářů, kde je vyžadováno přesně umístění a formátování dat.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+S ohledem na maximalizaci možnosti ovlivňování vzhledu výstupu pomocí formuláře nelze u tohoto modulu zajistit jednoduchý způsob úprav šablon bez znalosti programovacího jazyka. Šablony musí být předpřipravené programátorem, případně lze tvořit podle dokumentace s ohledem na nutnost programového ošetření způsobu zobrazení dat.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Přímá tvorba PDF dokumentu se jeví problematická nutností přesného umístění jednotlivých prvků. Vhodnější i pro ladění se jeví vytvoření HTML stránky, která se poté převede na PDF dokument za pomoci externího nástroje (např. Wkhtmltopdf). Tím se sníží požadavky na znalosti pro tvorbu šablon a případně možnost dodatečné úpravy před samotným exportem.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Webový portál}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Základní teze webového portálu byla ve vytvoření webového rozhraní pouze pro tvorbu receptu, který by byl později uložen pro automatické zpracování. V návaznosti na nemožnost automatizace byla tato teze dále rozvíjena do komplexnější podoby, která kromě tvorby receptu umožní jeho testování a následně i spuštění zpracování.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Architektura}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Webový portál má tak za cíl poskytnout rozhraní pro zpracování dat od tvorby receptu po získávání dílčích výsledků nebo úplných s možností editací údajů. Primární snahou je co nejvíce úkonů provádět ve webovém prohlížeči a na serverové části ponechat pouze uložení dat, jejich zpracování a následně výsledky poskytnout. Minimalizuje se tak množství nutných úprav v případě doplňování nových modulů nebo jiných razantnějších úprav webového rozhraní.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Webový portál není navrhován jako integrální součástí nástroje, aby byla minimalizována možnost zneužití chyb.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Server}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Serverová část vůči webovému rozhraní poskytne služby v možnosti nahrání souboru a dále spuštění vykonávání předaného receptu. Po zavolání služby dojde k navrácení výsledku služby. Varianta asynchronního dotazování na výsledek byla zamítnutá, protože by bylo nutné se na pozadí neustále dotazovat na výsledek v pravidelných intervalech nebo využít technologie WebSocket, která realizuje trvalé spojení se serverem a lze jej využít pro rychlou obousměrnou komunikaci. S ohledem na snahu o jednoduchý server byla tech. WebSocket taktéž zamítnuta neboť pro stanovený účel by se jednalo o robustní řešení, které by kromě zvýšení složitosti nic nepřineslo.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Pro zamezení přístupu nepovolaných osob k přenášeným datům musí být přenášená cesta šifrována SSL a v rámci aplikace je využito dočasné úložiště, které není veřejně přístupné a v okamžiku ukončení seance jsou veškerá data vymazána.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Klient}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Jak již bylo zmíněno dříve, tak maximální množství úkonů se provede na klientském počítači ve webovém prohlížeči pomocí JavaScriptu. Jedná se zejména o interaktivní tvorbu receptu, možnost ladění receptu ve formě postupného dotazování a následně i spuštění receptu s dodanými podklady. V rámci webového prostředí se využívá pro přenos strukturovaných dat primárně formát JSON a tak je nutné ošetřit práci s recepty, který využívá formát YAML. Pro zjednodušení interaktivních operací bude využita knihovna jQuery poskytující zjednodušené API pro manipulaci s daty.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Tvorba receptu}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci návrhu jakým způsobem budou data jednotlivých modulů prezentována byla zvažována varianta zaintegrování do modulu pro zpracování, přičemž portál by tato data načítal. Avšak myšlenka byla zamítnuta s ohledem na míru komplexity v případě požadavku na multijazyčnou variantu. Z toho důvodu byla zvolena možnost deklarace v samostatném souboru, který umožňuje libovolné přizpůsobení formy prezentování dat s ohledem na jednotlivé moduly a požadavky. Pro vytvoření potřebné struktury ve formátu YAML lze využít vlastností DOM stromu, kdy jsou data částečně strukturovaná, takže požadavky na formu zápisu jsou minimální.}
+
+
+\bigskip
+
+{\color{black}
+{\textless}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{div }}class=\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}module{\textquotedbl}}}{\textgreater}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{div }}}\textrm{data-module=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}LoadO2{\textquotedbl}}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{label}}}\textrm{{\textgreater}Uložit do:{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{label}}}\textrm{{\textgreater}{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{input }}}\textrm{type=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}text{\textquotedbl} }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}store{\textquotedbl} }}}\textrm{/{\textgreater}{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{br }}}\textrm{/{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{input }}}\textrm{type=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}hidden{\textquotedbl} }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}file{\textquotedbl} }}}\textrm{value=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}o2{\textquotedbl}}}}\textrm{/{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ul}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{input }}}\textrm{type=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}checkbox{\textquotedbl} }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}information{\textquotedbl} }}}\textrm{value=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}mobil{\textquotedbl} }}}\textrm{/{\textgreater}Mobilní číslo{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{input }}}\textrm{type=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}checkbox{\textquotedbl} }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}information{\textquotedbl} }}}\textrm{value=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}uctovano{\textquotedbl} }}}\textrm{/{\textgreater}Účtováno{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{input }}}\textrm{type=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}checkbox{\textquotedbl} }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}information{\textquotedbl} }}}\textrm{value=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}uctovana\_castka{\textquotedbl} }}}\textrm{/{\textgreater}Hovorné{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{input }}}\textrm{type=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}checkbox{\textquotedbl} }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}information{\textquotedbl} }}}\textrm{value=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}tarifni\_castka{\textquotedbl} }}}\textrm{/{\textgreater}Tarifní částka{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{input }}}\textrm{type=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}checkbox{\textquotedbl} }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}information{\textquotedbl} }}}\textrm{value=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}sleva{\textquotedbl} }}}\textrm{/{\textgreater}Sleva{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{li}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \textrm{{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ul}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{div}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{div }}}\textrm{class=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}cverify{\textquotedbl}}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{input }}}\textrm{type=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}file{\textquotedbl} }}}\textrm{id=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}fileinput{\textquotedbl} }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}file[]{\textquotedbl} }}}\textrm{onChange=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}}}}\textrm{\textit{prepareUpload}}\textrm{(}\textrm{\textbf{\textcolor[rgb]{0.4,0.05490196,0.47843137}{event}}}\textrm{,}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{}'LoadO2'}}}\textrm{,}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{}'file'}}}\textrm{)}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}}}}\textrm{{\textgreater}{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{button}}}\textrm{{\textgreater}Nahrát data{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{button}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{button }}}\textrm{name=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}verify{\textquotedbl} }}}\textrm{onClick=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}}}}\textrm{\textbf{\textcolor[rgb]{0.4,0.05490196,0.47843137}{verify}}}\textrm{(}\textrm{\textbf{\textcolor[rgb]{0.4,0.05490196,0.47843137}{event}}}\textrm{,}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{}'LoadO2'}}}\textrm{,}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{function }}}\textrm{(data)\{}\textrm{\textbf{\textcolor[rgb]{0.4,0.05490196,0.47843137}{\$}}}\textrm{(}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{}'.outO2'}}}\textrm{).}\textrm{\textcolor[rgb]{0.47843137,0.47843137,0.2627451}{text}}\textrm{(data);\})}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}}}}\textrm{{\textgreater}Ověřit{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{button}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \ \ \ \ \textrm{{\textless}}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{div }}}\textrm{class=}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}outO2{\textquotedbl}}}}\textrm{{\textgreater}{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{div}}}\textrm{{\textgreater}}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{\textless}/}\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{div}}}\textrm{{\textgreater}}}
+
+{\color{black}
+{\textless}/\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{div}}{\textgreater}}
+
+{\itshape\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka fragmentu kódu pro načítání údajů pro modul LoadO2}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Konkrétní parametry pro modul musí být ohraničeny párovým tagem obsahující parametr \textit{data-module s} název modulu. Tento parametr (data-*) je ve standardu HTML určen pro vlastní užití a nemělo by dojít ke kolizi.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Nevýhodou tohoto postupu je ve zhoršené distribuci případných modulů, kdy je nutné soubory rozkopírovat do požadovaných podadresářů, ale z hlediska nezávislosti nástroje na portálu se tento postup jeví jako nejvhodnější i s ohledem na možnost budoucí úprav bez dopadu na zbývající části.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Spuštění receptu}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Nezávisle na testování části nebo celého receptu je postup pro spuštění receptu shodný. U klienta se zjistí, kde provedl kliknutí. Pomocí znalostí na umístění ve struktuře DOM provede načtení parametrů jednotlivých modulů předcházející tomuto tlačítku. Tyto parametry transformuje do formátu YAML. Poté provede nahrání dat na server a následně zaslání receptu ke zpracování. V rámci odpovědi získá výsledek, který následně zobrazí ve vymezené oblasti.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+(obrázky)}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Užití:}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+otestování receptu}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ {}- získá se část nebo celý recept}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ {}- pošle se na server}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ {}- vyhodnotí se}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ {}- nazpět je navrácen výsledek}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ {}- výsledek je zobrazen}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Načtení}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\ \ {}- načte se soubor do paměti}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+{}- provede se konverze z YAML souboru}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Bezpečnost}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Celé řešení je založeno na bezstavovém režimu, kdy vstupem jsou veškeré potřebné informace jak s daty pracovat a zpracovat je. Po ukončení běhu jsou veškeré neuložené informace smazány. Kritickým bodem se tak stávají vstupní a výstupní místa, která jsou potřeba ošetřit, aby k nim mohla přistoupit pouze oprávněná osoba. }
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Využití standardního postupu ve formě uživatelského jména a hesla se jeví nevhodné, protože uživatelé \ v prostředí IS NKÚ neznají hesla, případně vznikne závislost na externí komponentě (systém pro správu uživatelských rolí) a v rámci plánovaného návrhu by se dále nevyužilo. Jako nejvhodnější variantou se jeví pouze zabezpečení konkrétní seance. Na úrovni webového prohlížeče lze toto zajistit pomocí šifrovaného protokolu HTTPS a na straně serveru dočasnou složkou pro vstupní a výstupní data, která budou dostupná pouze po dobu existence seance spolu s dodatečnými ochranami.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci tohoto návrhu budou implementovány následující bezpečnostní prvky}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+{}- využití dočasných adresářů}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+{}- smazání dočasných adresářů po ukončení seance}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+{}- smazání dočasných adresářů po vypršení časového limitu}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+{}- omezení počtu stažení jednotlivých souborů}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+{}- šifrovaná komunikace mezi klientem a serverovou částí}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Implementace bude provedena průnikem prvků, aby byl systém odolný vůči dočasným výpadkům na síti, ačkoliv v rámci interního nasazení by k tomu nemělo docházet ve větším množství.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Administrátor aplikace bude zasahovat nepřímo přes operační systém na kterém bude aplikace provozována. V rámci návrhu a testování bude řešení provozováno na linuxovém systému poskytující vysokou míru přizpůsobení a případné automatizace. Záznam prováděných změn lze vynutit nástrojem etckeeper a systémové logy pomocí RSyslog odesílat na centrální logovací server.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Pro zvýšení bezpečnosti bude nasazen webový server NGINX spolu s certifikátem pro realizaci HTTPS komunikace. S ohledem na interní nástroj lze využít certifikát vydaný vnitřní certifikační autoritou. Možnost využití autority Let‘s Encrypt, s automatizovaným vydáváním certifikátů, se nejeví vhodné z důvodu nutnosti publikování serveru směrem do internetu. To lze řešit implementací reverzním proxy server, který zprostředkovával šifrovanou komunikaci. Pro zamezení možného MITM je nutné tento server zabezpečit, aby nedošlo k získání privátního klíče a zároveň byl na reverzním proxy ověřován certifikát nástroje a komunikace na něj byla dále šifrována.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+K úplnému ošetření všech požadavků stanovený zákonem a bezpečnostní dokumentací bude nutné v případě linuxového prostředí na úrovni operačního systému implementovat řešení typu freeIPA, které umožňuje centrálně spravovat účty a role. V prostředí Windows toto zařizuje Active Directory.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Realizací výše uvedených úkonů budou splněny povinné požadavky pro možnost provozu řešení v IS NKÚ. }
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Realizace}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Pro realizaci byl využit objektový programovací jazyk Ruby. Tento jazyk je interpretovaný za provozu a snaží se o minimální omezení programátora. Je tak vhodný pro prototypování řešení.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Pro webové rozhraní bylo použit framework Padrino, který i když je stále ve vývoji, tak poskytuje dostačující předpřipravené nástroje pro účely této práce. Zvažován byl i framework Ruby on Rails s nímž má autor zkušenosti z bakalářské práce, avšak jedná se o velmi robustní řešení, který by nebylo využito a bylo by nutné jej zjednodušovat.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Vývoj celého řešení byl realizován na prototypování a postupné upřesňování fungování jednotlivých částí podle stanoveného návrhu. Pro minimalizaci možných chyb byla snaha o využití již existujících řešení, pokud splňovaly stanovené potřeby.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Externí knihovny}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci práce bylo využito několik externích knihoven, které zjednodušují práci s daty.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Dentaku}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Stránky projektu: \url{https://github.com/rubysolo/dentaku}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Využito v modulu: Compute, Filter}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Instalace: gem install dentaku}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Popis: Jedná se o knihovnu vyhodnocující matematické a logické operace}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Důvod: Architektura knihovny zajišťovala zamezení spuštění neoprávněného kódu (pomocí funkce \textit{eval} ) a poskytovala vyšší výkon oproti vlastní základní implementaci.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Nokogiri}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Stránky projektu: http://www.nokogiri.org/}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Využito v modulu: LoadO2}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Instalace: gem install nokogiri}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Popis: Jedná se o knihovnu pro manipulaci s XML soubory}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Důvod: Knihovna implementuje možnost dotazování pomocí XQuery/XPath a selektorů, takže bylo možné rychle nalézt požadovaná data, případně provádět průchod stromu dokumentu.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+YAML}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Využito: Arbitr}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Instalace: gem install yaml}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Popis: Knihovna pro serializaci dat do formátu YAML}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Důvod: Parsování vstupních konfiguračních dat pro jednotlivé moduly}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+jQuery}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Stránky projektu: http://www.jquery.org/}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Využito: webové rozhraní}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Instalace: vložení tagu do html stránky}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Popis: Jedná se o knihovnu pro interakci HTML stránky}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Důvod: Poskytuje sjednocené manipulace s daty na HTML stránce a jejich předávání na server na pozadí}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+JSON to HTML Table}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Stranky projektu: \url{https://github.com/afshinm/Json-to-HTML-Table}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Využito: webové rozhraním}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Instalace: vložení tagu do html stránky}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Popis: Funkce provádějící konverzi dat v JSON formátu do HTML tabulky}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Důvod: V rámci testování receptu může nastat situace, kdy je navrácena k náhledu tabulka a pomocí této funkce ji lze zobrazit ve srozumitelném tvaru.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Databáze/Paměť}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Jak již bylo zmíněno v návrhu, tak v rámci návrhu předávání dat došlo k několika úpravám návrhu v závislosti na prototypech, kdy byl problém s požadovanou mírou abstrakce. Představa byla v přístupu k datům jako poli, což vyžadovalo velké množství ošetřujícího kódu v závislosti na užité databázi. V rámci prototypu byly realizovány pokusy o implementaci SQL databáze pro ukládání mezivýsledku, ale \ následně s ohledem na předpokládané množství dat byl tento směr zamítnut a došlo ke zjednodušení za využití základní struktur využívající Hash tabulku.}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci nástroje se využívá společné paměti realizovaná Hash proměnnou obsahující veškerá data, které moduly do ni uloží.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Zpracovávaná data jsou reprezentována třídou Dataset, která poskytuje rozhraní pro manipulaci s daty. Při průchodu v rámci cyklu postupně navrací řádku z pole typu Hash u níž se přistupuje k jednotlivým hodnotám. Využívá se zde vlastnosti jazyka Ruby, kdy se proměnné přiřazuje reference na hodnotu, takže změna dat se promítne i do Datasetu. Toto neplatí u základních typů. Na toto je nutné pamatovat v rámci modulů, kdy by nemělo docházet k recyklování proměnných.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci třídy byly implementovány funkce pro řazení dat, získání klíčů/sloupců hodnot, možnost přejmenování sloupců a spojování dvou Datasetů.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+U spojování dvou Datasetů byl implementován algoritmus $\Omega $(m.n), přičemž se považuje, že hlavní data jsou v prvním Datasetu s nímž se druhý Dataset spojuje, tj. vynecháním části dat z druhé části nevznikne chyba. V rámci účelu nástroje by toto zjednodušení nemělo mít vliv.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+(obrázek třídy Dataset)}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Arbitr}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Arbitr se stará o načtení všech modulů ze stanoveného adresáře a poté načítá předaná data v YAML formátu, který postupně zpracovává a spouští jednotlivé moduly.}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Původně bylo pro realizaci využito funkce eval(), která vytvářela objekty typu předaného modulu a následně spouští u objektu jednotlivé funkce v definovaném prostředí. U této funkce hrozí velké riziko spuštění neautorizovaného kódu. Programovací jazyk Ruby poskytuje možnost získání přehledu o načtených objektech, tříd a funkcí. Lze tak zkontrolovat zdali předaná hodnota odpovídá názvu třídy a z ní vytvořit nový objekt, kterému se předají další údaje.}
+
+
+\bigskip
+
+{\ttfamily\color{black}
+\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{if }}}\textrm{\textbf{\textit{\textcolor[rgb]{0.4,0.05490196,0.47843137}{Object}}}}\textrm{.const\_defined?(}\textrm{\textit{\textcolor[rgb]{0.7647059,0.45882353,0.13333334}{modu}}}\textrm{)}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\ \ }\textrm{\textit{\textcolor[rgb]{0.0,0.23529412,0.3529412}{emodule }}}\textrm{= }\textrm{\textbf{\textit{\textcolor[rgb]{0.4,0.05490196,0.47843137}{Object}}}}\textrm{.const\_get(}\textrm{\textit{\textcolor[rgb]{0.7647059,0.45882353,0.13333334}{modu}}}\textrm{).new}}
+
+{\ttfamily\color{black}
+\ \ \textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{if }}}\textrm{\textit{\textcolor[rgb]{0.0,0.23529412,0.3529412}{emodule}}}\textrm{.is\_a?(}\textrm{\textbf{\textit{\textcolor[rgb]{0.4,0.05490196,0.47843137}{ModuleMED}}}}\textrm{)}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textit{\textcolor[rgb]{0.0,0.23529412,0.3529412}{emodule}}}\textrm{.properties(}\textrm{\textbf{\textcolor[rgb]{0.4,0.05490196,0.47843137}{@memory}}}\textrm{,}\textrm{\textit{\textcolor[rgb]{0.7647059,0.45882353,0.13333334}{value}}}\textrm{)}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{execModule(}\textrm{\textit{\textcolor[rgb]{0.0,0.23529412,0.3529412}{emodule}}}\textrm{.preprocessing(}\textrm{\textbf{\textcolor[rgb]{0.4,0.05490196,0.47843137}{@memory}}}\textrm{))}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textit{\textcolor[rgb]{0.0,0.23529412,0.3529412}{emodule}}}\textrm{.execute(}\textrm{\textbf{\textcolor[rgb]{0.4,0.05490196,0.47843137}{@memory}}}\textrm{)}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{execModule(}\textrm{\textit{\textcolor[rgb]{0.0,0.23529412,0.3529412}{emodule}}}\textrm{.postprocessing(}\textrm{\textbf{\textcolor[rgb]{0.4,0.05490196,0.47843137}{@memory}}}\textrm{))}}
+
+{\ttfamily\color{black}
+\ \ \textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{end}}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci polymorfismu se testuje zdali byla třída objektu odvozena od třídy ModuleMED, která definuje povinné rozhraní modulů, aby bylo možné předávat pokyny.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Moduly}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Realizace modulů pro zpracování dat se od původního návrhu skoro neliší až na rozšíření společné třídy ModuleMED o společné metody pro snížení množství duplikovaného kódu. Jedná se o funkci řešící formátování dat do textu i s ohledem na lokální prostředí. Konkrétně je ošetřeno zkrácení čísla na dvě desetinná místa a v českém prostředí nahrazení desetinnou tečku za čárku.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+(obrázek třídy ModuleMED a povinné hodnoty)}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Webové rozhraní}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Uživatelské rozhraní je tvořeno jedinou stránkou do níž se pomocí jQuery načítají jednotlivé stránky modulu obsahující formulářové prvky s požadovanými daty. Veškerá interaktivita probíhá v prohlížeči uživatele. Na server jsou odesílaná data pouze pro účely vyhodnocení ve formátu YAML u konfiguračního souboru a poté zdrojová data.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Na serveru jsou data ukládána do dočasného místa, kde po ukončení spojení jsou smazána. Výjimkou jsou provedené exporty, kde dochází ke smazání v okamžiku ukončení seance.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci serverové aplikace jsou přijímány požadavky POST na url /upload sloužící pro nahrání dat a /verify pro otestování receptu.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Získání parametrů bylo v původním návrhu ponecháno plně na modulu včetně možnosti nahrání vstupních souborů. To však přinášelo komplikace, protože bylo nutné ošetřit nahrání všech souborů a jejich adresaci v rámci receptu. S ohledem na teoretickou možnost nahrávání souboru se stejným názvem nebylo vhodné provádět nahrazování až na straně serveru. Proto bylo přistoupeno k interakci mezi klientem a serverem, kdy klient postupně zasílá jednotlivé soubory a po jejich úspěšném nahrání klient obdrží lokální cestu k daným souborům, kterou zapíše do skrytých parametrů jednotlivých modulů.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci prototypování byla tato funkcionalita implementována a testována. Z testů vyplynulo, že přes drobné potíže s vyhledáním skrytého parametru ve struktuře DOM, lze tento přístup použít. Avšak jsou zde nevýhody v případě opakovaného využití stejného zdroje dat, což má za následek vícenásobné nahrání stejného souboru. Z toho důvodu v další iteraci byl vytvořen nový modul umožňující uložení hodnoty do proměnné a tuto proměnnou dále využít v rámci importu či exportu dat. Tím lze nahrávání dat zjednodušit a lépe ošetřit před načtením nesprávných dat.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Nejproblematičtější část zpracování lze označit okamžik, kdy je nutný ruční zásah do výsledku prováděných výpočtů. Konkrétně u řešení s přeúčtováváním se jedná o situace, kdy jsou neúplné a neaktuální údaje, případně je schválena výjimka. Jde zejména o změnu tarifu, schválený roaming, odchod zaměstnance, … . Z toho důvodu bylo nutné umožnit úpravu dat před převodem do neměnného formátu (např. PDF). V rámci návrhu bylo zvoleno generování výstupu pomocí šablonovacího systému ERB do HTML stránky, která je poté převedena do PDF souboru. Toho bylo využito, kdy je možné provést vygenerování pouze do HTML stránky, která pomocí JavaScriptu umožňuje editovat jednotlivé řádky a hodnoty v tabulce. Je tak možné odstranit nebo přidat záznamy a opravit případné chyby ve zpracování. Následně se provede export do PDF přímým tiskem.}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Testování}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Testování bylo provedeno na skutečném vyúčtování za jednotlivé měsíce březen, duben a květen 2016 obsahující několik nestandardních hodnot v podobě dobropisu, neoprávněného naúčtování za datové služby, roaming, a podobně. Podobně tomu bylo u podpůrných materiálů (kdo má číslo přiděleno, přidělený tarif) obsahující neúplné či neaktuální údaje.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Porovnání probíhalo v papírové formě a původnímu způsobu procesu zpracování, aby se případně odhalily nesrovnalosti a chyby ve zdrojových datech.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Výsledky}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Březen:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{7.208cm}|m{1.096cm}|m{3.9009998cm}|m{4.589cm}|}
+\hline
+Test &
+Shoda &
+Chyba v programu &
+Výsledek\\\hline
+Shodný počet mobilních čísel &
+Ano &
+Ne &
+OK\\\hline
+Ke všem číslům přiřazeny jména a limity &
+Ne &
+Ne, ve zdrojovém souboru chyběly záznamy s jménem nebo limitem &
+OK, náprava provedena ve zdrojovém souboru\\\hline
+Shodný počet uživatelů překračující limit &
+Ne &
+Ne &
+Částečně OK, nutné upravit recept pro ošetření situace se změnou limitu v \ rámci měsíce\\\hline
+Výstup lze otevřít v Excelu &
+{}- &
+Ano, české aplikace vyžadují desetinnou čárku v CSV &
+Po opravě a změně formátu na SSV, OK\\\hline
+Souhlasí celková hodnota bez DPH &
+Ano &
+Ne &
+OK\\\hline
+Nalezení podezřelých částek &
+Ano &
+Ne &
+OK, neoprávněná účtování za data nalezena\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Duben:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{7.208cm}|m{1.096cm}|m{3.9009998cm}|m{4.589cm}|}
+\hline
+Test &
+Shoda &
+Chyba v programu &
+Výsledek\\\hline
+Shodný počet mobilních čísel &
+Ano &
+Ne &
+OK\\\hline
+Ke všem číslům přiřazeny jména a limity &
+Ne &
+Ne, ve zdrojovém souboru chyběly záznamy s jménem nebo limitem &
+OK\\\hline
+Shodný počet uživatelů překračující limit &
+Ne &
+Ne &
+OK, nutné vypracovat pokyny pro správu dat o uživatelích\\\hline
+Výstup lze otevřít v Excelu &
+Ne &
+Ne, při otevření napřímo vyžaduje Excel formátování dat v ISO-8859-1, při otevření z jiných zdrojů je vše OK &
+Změna neprováděna a ponechán export ve formátu UTF-8; v LibreOffice otevíráno korektně\\\hline
+Souhlasí celková hodnota bez DPH &
+Ano &
+Ne &
+OK\\\hline
+Export CSV/SSV do SAPu &
+Ano &
+Ne &
+OK\\\hline
+Stažení přílohy z e-mailu &
+Ano &
+Ne &
+OK, nutno ošetřit situaci pro případ komprimovaného souboru a nutnost před zpracováním provést dekompresi\\\hline
+Nalezení podezřelých částek &
+Ano &
+Ne &
+OK, ošetřeny data a dobropisy\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Květen}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{7.208cm}|m{1.096cm}|m{3.9009998cm}|m{4.589cm}|}
+\hline
+Test &
+Shoda &
+Chyba v programu &
+Výsledek\\\hline
+Shodný počet mobilních čísel &
+Ano &
+Ne &
+OK\\\hline
+Ke všem číslům přiřazeny jména a limity &
+Ano &
+Ne &
+OK\\\hline
+Shodný počet uživatelů překračující limit &
+Ano &
+Ne &
+OK\\\hline
+Výstup lze otevřít v Excelu &
+Ne &
+Ne &
+Nepřímo lze → OK\\\hline
+Souhlasí celková hodnota bez DPH &
+Ano &
+Ne &
+OK\\\hline
+Export CSV/SSV do SAPu &
+Ano &
+Ne &
+OK\\\hline
+Vygenerování seznamu osob překračující limit &
+Ano &
+Ne &
+OK, nutno nastylovat a ošetřit překročení stránky\\\hline
+Export do PDF &
+Ano &
+Ne &
+OK\\\hline
+Nalezení podezřelých částek &
+Ano &
+Ne &
+OK, informace potvrzeny uživatelem (zahraniční data)\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci testování byly nalezeny drobné chyby mající vliv na formát zápisu receptu, kdy vícenásobné použití stejného modulu mělo za následek přepisování hodnot, což způsobilo nekorektní zpracování dat. Po úpravě formátu zápisu byl problém vyřešen a aplikace měla k dispozici veškeré pokyny pro zpracování.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+V rámci zpracovávání dat docházelo opakovaně k problémům s uplatněním limitům, kdy z důvodu nedostatku zdrojových informací je nutné provádět manuální úpravu výstupu, aby vše odpovídalo skutečnostem. Nejedná se o chybu programu, ale spíše o uplatnění interních směrnic a postupech.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Za velmi problematické lze označit chování aplikace Microsoft Excel 2013, která se chová vůči importu dat ve formátu CSV/SSV nekonzistentně. Zatímco při přímém spuštění aplikace poklepáním na zdrojová data neprovede žádné dotazování a rovnou otevře již naformátovaná data, ale ve špatné jazykové sadě ISO-8859-1, což u českého jazyka má důsledek ve vytvoření nepoužitelných dat. Ale při otevření možností importu z jiného zdroje dat je korektně detekován formát dat UTF-8 a je nabídnuta možnost specifikovat jak jsou data dělena. U programu LibreOffice Calc 5.1.3 k tomuto problému nedocházelo a vždy je uživatel dotazován na formátování a formát dat v UTF-8 je správně detekován. V rámci testování importu dat do SAPu se taktéž nevyskytl problém s daty a proto bylo upuštěno od úpravy modulu neboť po úplné implementaci nástroje již nebude potřeba Excel využívat.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Po ustálení způsobu předávání dat mezi moduly došlo k rozšíření modulů o interní testování, aby bylo možné provádět částečné automatické ověřování správné funkčnosti modulu. V rámci vývoje bylo aplikován základní způsob testování, kdy byl předkládán recept s různými parametry a byla prováděna ruční kontrola výstupu.}
+
+\clearpage{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Závěr}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Cíle této diplomové práce byly v celkovém rámci splněny až na automatizaci získávaných dat od operátora. Ačkoliv se smluvně zavázal poskytnout rozhraní pro automatické načítání dat, tak jeho zprovoznění je až v rozmezí minimálně půl roku. Pro splnění tohoto cíle by tak vyžadovalo implementaci OCR manipulaci se stránkou. S ohledem na ohlášenou změnu systémů operátora by bylo nutné řešení přepracovat a rozsah řešení by přesahoval řešení zbývajících částí diplomové práce. Původní teze v plném propojení se systémem SAP prozatím zůstala na úrovni exportu dat do CSV, která jsou následně po vytvoření sérií procesních kroků importována do tohoto systému. Došlo tak k urychlení zpracování, ale původní očekávaná integrace, prozatím, čeká na vybudování REST API rozhraní v rámci integrace elektronického podepisování dokumentů.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Touto prací byl vytvořen základ pro základní automatizované zpracování vyúčtování mobilních hovorů v rámci organizace NKÚ, snižující administrativu pracovníka, který je na to vyčleněn. S ohledem na návrh lze řešení přizpůsobit i jiným zdrojům dat a případně výstupy dále zpracovávat. Příkladem může být statistika množství stažených dat. Domnívám se, že tato práce bude moci využita i ostatními organizačními složkami státu a zjednodušit napříč organizacemi přeúčtovávání mobilních služeb.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Kromě svého výstupu – praktické části – tato diplomová práce přispěla k hlubšímu seznámení s manipulací strojově čitelných dat v moderním prostředí Ruby, a tak významně autorovi napomohla k získání a upevnění znalostí ve studovaném oboru.}
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+\clearpage{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{Příloha č.1}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{{\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{subscriber }}\textcolor{black}{phoneNumber}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}702204351{\textquotedbl} }}\textcolor{black}{ownerRefNum}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}3606068384{\textquotedbl} }}\textcolor{black}{ownerCustCode}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}4.2251.11.00.100001{\textquotedbl} }}\textcolor{black}{mainTariff}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Profil Neomezený{\textquotedbl} }}\textcolor{black}{accountType}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}CUST{\textquotedbl} }}\textcolor{black}{summaryPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}218.0{\textquotedbl}}}\textcolor{black}{{\textgreater}}}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{{\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{tariffs}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{tariff }}\textcolor{black}{validTo}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2016-03-31{\textquotedbl} }}\textcolor{black}{validFrom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2016-03-01{\textquotedbl} }}\textcolor{black}{tariffType}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}C{\textquotedbl} }}\textcolor{black}{tariffName}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Profil Neomezený{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{{\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{tariffs}}\textcolor{black}{{\textgreater}}}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{{\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{summaryData}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{regularCharges }}\textcolor{black}{rcTotalPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}218.0{\textquotedbl}}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{rcItem }}\textcolor{black}{validTo}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2016-03-31{\textquotedbl} }}\textcolor{black}{validFrom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2016-03-01{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{tariffFee}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl} }}\textcolor{black}{mainTariff}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}10001{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}79.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}911{\textquotedbl} }}\textcolor{black}{feeName}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Profil Neomezený{\textquotedbl} }}\textcolor{black}{count}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}1{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{rcItem }}\textcolor{black}{validTo}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2016-03-31{\textquotedbl} }}\textcolor{black}{validFrom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2016-03-01{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{tariffFee}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl} }}\textcolor{black}{mainTariff}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}10002{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}139.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}911{\textquotedbl} }}\textcolor{black}{feeName}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Internet v mobilu Unlimited{\textquotedbl} }}\textcolor{black}{count}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}1{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ {\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{regularCharges}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{usageCharges }}\textcolor{black}{ucTotalPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl}}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{usageCharge }}\textcolor{black}{usageType}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}V{\textquotedbl} }}\textcolor{black}{usagePackName}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Calls{\textquotedbl} }}\textcolor{black}{subtotalPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl}}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ucItem }}\textcolor{black}{quantity}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}3392{\textquotedbl} }}\textcolor{black}{displayedUom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}min{\textquotedbl} }}\textcolor{black}{uom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Sec{\textquotedbl} }}\textcolor{black}{periodDescr}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}špička{\textquotedbl} }}\textcolor{black}{period}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}02{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}1{\textquotedbl} }}\textcolor{black}{quantityOfConnect}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}13{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}901{\textquotedbl} }}\textcolor{black}{name}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Do O2{\textquotedbl} }}\textcolor{black}{freeUnitsPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeUnitsAmount}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeCredits}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ucItem }}\textcolor{black}{quantity}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}1000{\textquotedbl} }}\textcolor{black}{displayedUom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}min{\textquotedbl} }}\textcolor{black}{uom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Sec{\textquotedbl} }}\textcolor{black}{periodDescr}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}špička{\textquotedbl} }}\textcolor{black}{period}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}02{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2{\textquotedbl} }}\textcolor{black}{quantityOfConnect}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}9{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}901{\textquotedbl} }}\textcolor{black}{name}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Mimo O2{\textquotedbl} }}\textcolor{black}{freeUnitsPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeUnitsAmount}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeCredits}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ucItem }}\textcolor{black}{quantity}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}473{\textquotedbl} }}\textcolor{black}{displayedUom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}min{\textquotedbl} }}\textcolor{black}{uom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Sec{\textquotedbl} }}\textcolor{black}{periodDescr}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}mimo šp.{\textquotedbl} }}\textcolor{black}{period}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}03{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2{\textquotedbl} }}\textcolor{black}{quantityOfConnect}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}1{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}901{\textquotedbl} }}\textcolor{black}{name}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Mimo O2{\textquotedbl} }}\textcolor{black}{freeUnitsPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeUnitsAmount}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeCredits}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ucItem }}\textcolor{black}{quantity}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}660{\textquotedbl} }}\textcolor{black}{displayedUom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}min{\textquotedbl} }}\textcolor{black}{uom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Sec{\textquotedbl} }}\textcolor{black}{periodDescr}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}špička{\textquotedbl} }}\textcolor{black}{period}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}02{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}4{\textquotedbl} }}\textcolor{black}{quantityOfConnect}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}8{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}901{\textquotedbl} }}\textcolor{black}{name}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Do pevných sítí v ČR{\textquotedbl} }}\textcolor{black}{freeUnitsPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeUnitsAmount}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeCredits}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ucItem }}\textcolor{black}{quantity}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}922{\textquotedbl} }}\textcolor{black}{displayedUom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}min{\textquotedbl} }}\textcolor{black}{uom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Sec{\textquotedbl} }}\textcolor{black}{periodDescr}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}špička{\textquotedbl} }}\textcolor{black}{period}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}02{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}5{\textquotedbl} }}\textcolor{black}{quantityOfConnect}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}12{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}901{\textquotedbl} }}\textcolor{black}{name}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Ve VPN{\textquotedbl} }}\textcolor{black}{freeUnitsPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeUnitsAmount}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeCredits}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ucItem }}\textcolor{black}{quantity}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}600{\textquotedbl} }}\textcolor{black}{displayedUom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}min{\textquotedbl} }}\textcolor{black}{uom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Sec{\textquotedbl} }}\textcolor{black}{periodDescr}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}špička{\textquotedbl} }}\textcolor{black}{period}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}02{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}6{\textquotedbl} }}\textcolor{black}{quantityOfConnect}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}3{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}901{\textquotedbl} }}\textcolor{black}{name}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Na bezplatné infolinky v ČR{\textquotedbl} }}\textcolor{black}{freeUnitsPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeUnitsAmount}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeCredits}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{usageCharge}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{usageCharge }}\textcolor{black}{usageType}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}M{\textquotedbl} }}\textcolor{black}{usagePackName}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Messages{\textquotedbl} }}\textcolor{black}{subtotalPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl}}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ucItem }}\textcolor{black}{quantity}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}3{\textquotedbl} }}\textcolor{black}{displayedUom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}SMS{\textquotedbl} }}\textcolor{black}{uom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Msg{\textquotedbl} }}\textcolor{black}{periodDescr}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}špička{\textquotedbl} }}\textcolor{black}{period}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}02{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}3{\textquotedbl} }}\textcolor{black}{quantityOfConnect}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}902{\textquotedbl} }}\textcolor{black}{name}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}SMS do mobilních sítí v ČR{\textquotedbl} }}\textcolor{black}{freeUnitsPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeUnitsAmount}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeCredits}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{usageCharge}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{usageCharge }}\textcolor{black}{usageType}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}D{\textquotedbl} }}\textcolor{black}{usagePackName}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Data, Internet{\textquotedbl} }}\textcolor{black}{subtotalPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl}}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ucItem }}\textcolor{black}{quantity}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}2864559{\textquotedbl} }}\textcolor{black}{displayedUom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}kB{\textquotedbl} }}\textcolor{black}{uom}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Kbyte{\textquotedbl} }}\textcolor{black}{periodDescr}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}vždy{\textquotedbl} }}\textcolor{black}{period}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}01{\textquotedbl} }}\textcolor{black}{tax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}21.0{\textquotedbl} }}\textcolor{black}{rowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}7{\textquotedbl} }}\textcolor{black}{quantityOfConnect}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl} }}\textcolor{black}{priceWithoutTax}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{parentRowID}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}903{\textquotedbl} }}\textcolor{black}{name}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Připojení k Internetu{\textquotedbl} }}\textcolor{black}{freeUnitsPrice}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeUnitsAmount}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0.0{\textquotedbl} }}\textcolor{black}{freeCredits}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}0{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{usageCharge}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ {\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{usageCharges}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{invoiceInfo}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ \ \ {\textless}}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{invoiceInfoItem }}\textcolor{black}{invoiceInfoSection}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}N{\textquotedbl} }}\textcolor{black}{invoiceInfoItemText}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{={\textquotedbl}Toto účastnické číslo je účtováno dle Ceníku pro firemní zákazníky - O2 Mobilní hlasová služba a O2 Mobilní internetové připojení – nový.}}\textbf{\textcolor{blue}{\&lt;}}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{br/}}\textbf{\textcolor{blue}{\&gt;}}\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}}}\textcolor{black}{/{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{\ \ {\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{invoiceInfo}}\textcolor{black}{{\textgreater}}}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{{\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{summaryData}}\textcolor{black}{{\textgreater}}}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+\textcolor{black}{{\textless}/}\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{subscriber}}\textcolor{black}{{\textgreater}}}
+
+
+\bigskip
+
+\clearpage{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Příloha č. 2 – Dokumentace modulů}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Load O2}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul pro načítání XML údajů o podrobném vyúčtování od operátora 02.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: LoadO2}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+store &
+kam &
+Název proměnné kam se mají načtené hodnoty uložit\\\hline
+file &
+cesta &
+Cesta k XML souboru s daty od O2, případně název proměnné, kde je cesta uložená\\\hline
+information &
+{}- mobil
+
+{}- uctovano
+
+{}- tarifni\_castka
+
+{}- uctovana\_castka
+
+{}- data\_castka
+
+{}- volani\_castka
+
+{}- zpravy\_castka
+
+{}- roaming\_castka
+
+{}- data\_objem
+
+{}- data\_jednotka
+
+{}- sleva
+
+{}- treti\_strana &
+Mobilní číslo 
+
+Celková účtovaná částka bez třetích stran
+
+Částky za tarifní služby
+
+Částka za služby mobilního operátora
+
+Částka za datové služby
+
+Částka za hovory
+
+Částka za zaslané zprávy (SMS,MMS)
+
+Částka za roaming
+
+Celkové množství přenesených dat
+
+Jednotka přenesených dat
+
+Uplatněné slevy
+
+Částka za služby třetích stran\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+
+\bigskip
+
+{\color{black}
+{}- \textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{LoadO2:}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{store: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}o2data{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{file: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}./Data/2016-03-3606068384-4\_2251\_11\_00\_100001-01-s-mob.xml{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{information:}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ \ }\textrm{{}- mobil}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- uctovano}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- uctovana\_castka}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- sleva}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- treti\_strana}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- data\_objem}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- data\_jednotka}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- data\_castka}}
+
+
+\bigskip
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Load CSV}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Načtení hodnot ve formátu CSV, případně SSV.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: LoadCSV}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+store &
+kam &
+Název proměnné kam se mají načtené hodnoty uložit\\\hline
+file &
+cesta &
+Cesta k XML souboru s daty od O2, případně proměnná kde je cesta uložená\\\hline
+type &
+csv
+
+ssv &
+Hodnoty oddělené čárkou (výchozí)
+
+Hodnoty oddělené středníkem\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+{\color{black}
+{}- \textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{LoadCSV:}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{store: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}users{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{file: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}./Data/\_20160404-AKTUALNI\_seznam\_MT.csv{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{type: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}ssv{\textquotedbl}}}}}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Load Mail}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Načtení přílohy z e-mailu a její uložení do dočasného místa. Načítá se hodnota pouze z posledního příchozího e-mailu}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: LoadCSV}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+server &
+URI &
+Adresa poštovního serveru \\\hline
+username &
+jméno &
+Uživatelské jméno\\\hline
+password &
+heslo &
+Přístupové heslo k poštovní schránce\\\hline
+subject &
+text &
+Selekce správného e-mailu\\\hline
+attachment &
+text &
+Název přílohy, která se má stáhnout (dostačuje neúplný text)\\\hline
+store &
+kam &
+Název proměnné do které se uloží cesta k souboru\\\hline
+folder
+
+(nepovinné) &
+složka &
+Název složky v níž se má prohledávat pošta\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+{\color{black}
+{}- \textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{LoadMail:}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{server: }}}\textrm{postovni.server.cz}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{username: }}}\textrm{jan.mares@server.cz}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{password: }}}\textrm{jsuperTajneHeslo}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{subject: }}}\textrm{T-mobile}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{attachment: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}Vyuctovani{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{store: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}vyuctovani{\textquotedbl}}}}}
+
+
+\bigskip
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Compute}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul provádí logické a matematické operace nad jednotlivými řádky.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: Compute}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+store &
+kam &
+Název sloupce kam se má výsledek uložit\\\hline
+source &
+odkud &
+Název proměnné odkud budou načteny hodnoty\\\hline
+calculate &
+výraz &
+Výraz, který jej vyhodnocován\\\hline
+precision (nepovinné) &
+počet &
+Požadovaný počet desetinných míst\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+{\color{black}
+{}- \textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{Compute:}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{source: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}o2data{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{store: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}zaplatit{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{calculate: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}MAX(uctovano - limit\_Kc,0) + treti\_strana{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textit{\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\#minimum: 0}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.5019608,0.5019608,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{precision: }}}\textrm{2}}
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Aggregate}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Možnost agregace hodnot ve stanoveném sloupci uložené do samostatné proměnné.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: Aggregate}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+store &
+kam &
+Název sloupce kam se má výsledek uložit\\\hline
+source &
+odkud &
+Název proměnné odkud budou načteny hodnoty\\\hline
+calculate &
+výraz &
+Výraz, který jej vyhodnocován\\\hline
+operation &
++-*/\% &
+Operace uplatňována na hodnoty ve sloupci\\\hline
+precision (nepovinné) &
+počet &
+Požadovaný počet desetinných míst\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+{\color{black}
+{}- \textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{Agregate:}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{store: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}CUMUL\_ZAPLATIT{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{source: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}o2data{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{calculate: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}zaplatit{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{operation: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}+{\textquotedbl}}}}}
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Filtr}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul provádí selekci hodnot splňující poskytnutou podmínku.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: Filter}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+source &
+odkud &
+Název proměnné, kde jsou uloženy hodnoty pro filtraci\\\hline
+condition &
+podmínka &
+Splňující podmínka\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+{\color{black}
+{}- \textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{Filter:}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{source: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}o2data{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{condition: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}zaplatit{\textgreater}0{\textquotedbl}}}}}
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+DB Join}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Modul provádí párování dat ze dvou zdrojů.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: DBJoin}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+store &
+kam &
+Název proměnné kam se mají načtené hodnoty uložit\\\hline
+source &
+odkud &
+Název proměnné kde je uložená druhá tabulka\\\hline
+pair &
+{}- Sloupec1
+
+{}- Sloupec2 &
+Stanovení sloupce z dat store a ze source určené pro spárování hodnot\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+{\color{black}
+{}- \textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{DBJoin:}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{store: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}o2data{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{source: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}users{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{pair:}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ \ }\textrm{{}- mobil}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- MTC}}
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Export CSV}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Uložení hodnot ve formátu CSV, případně SSV..}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: ExportCSV}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+store &
+kam &
+Název proměnné kam se mají načtené hodnoty uložit\\\hline
+file &
+cesta &
+Cesta k XML souboru s daty od O2\\\hline
+type &
+CSV
+
+SSV &
+Hodnoty oddělené čárkou (výchozí)
+
+Hodnoty oddělené středníkem\\\hline
+columns &
+{}- sloupce: Přejmenováno &
+Sloupce, které mají být exportovány s možností přejmenování\\\hline
+enviroment &
+{}- cs
+
+{}- ... &
+Změna desetinné tečky za čárku (pro možnost importu do Excelu)\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+{\color{black}
+{}- \textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ExportCSV:}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{source: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}o2data{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{file: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}./nums.csv{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{columns:}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ \ }\textrm{{}- ODB}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- Jmeno}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- mobil}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- uctovano}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- treti\_strana}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- data\_castka}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{data\_objem : }}}\textrm{Staženo}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- data\_jednotka}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{limit\_Kc : }}}\textrm{limit}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- zaplatit}}
+
+{\ttfamily\color{black}
+\ \ \ \textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{type: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}ssv{\textquotedbl}}}}}
+
+{\bfseries\color[rgb]{0.14509805,0.14509805,0.14509805}
+Export JSON}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Export hodnot do formátu JSON a případně odešle HTTP GET požadavek na zadanou URL.}
+
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Název modulu: ExportJSON}
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Parametry modulu:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{2.208cm}|m{3.187cm}|m{11.6cm}|}
+\hline
+Parametr &
+Hodnoty &
+Popis\\\hline
+store &
+kam &
+Název proměnné kam se mají načtené hodnoty uložit\\\hline
+file &
+cesta &
+Cesta k XML souboru s daty od O2\\\hline
+ping (nepovinné) &
+URL &
+Na jakou URL adresu bude odeslána informace o dokončení\\\hline
+columns &
+{}- sloupce: Přejmenováno &
+Sloupce, které mají být exportovány s možností přejmenování\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+{\color[rgb]{0.14509805,0.14509805,0.14509805}
+Ukázka:}
+
+{\bfseries\color[rgb]{0.0,0.0,0.5019608}
+{}- ExportJSON:}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{source: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}o2data{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{file: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}./nums.json{\textquotedbl}}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.5019608,0.0}{\ \ \ }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{columns:}}}}
+
+{\ttfamily\color{black}
+\textcolor[rgb]{0.0,0.0,0.5019608}{\ \ \ \ }\textrm{{}- ODB}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- Jmeno}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- mobil}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- data\_objem}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- data\_castka}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- uctovano}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- treti\_strana}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- }\textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{limit\_Kc : }}}\textrm{limit}}
+
+{\ttfamily\color{black}
+\ \ \ \ \textrm{{}- zaplatit}}
+
+{\ttfamily\color{black}
+\ \ \ \textrm{\textbf{\textcolor[rgb]{0.0,0.0,0.5019608}{ping: }}}\textrm{\textbf{\textcolor[rgb]{0.0,0.5019608,0.0}{{\textquotedbl}http://localhost/fin{\textquotedbl}}}}}
+
+
+\bigskip
+\end{document}

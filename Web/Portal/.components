@@ -1,0 +1,10 @@
+---
+:orm: activerecord
+:test: none
+:mock: none
+:script: jquery
+:renderer: slim
+:stylesheet: less
+:namespace: Portal
+:migration_format: number
+:admin_renderer: slim

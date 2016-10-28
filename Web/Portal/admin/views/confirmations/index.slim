@@ -1,0 +1,66 @@
+ul class="nav nav-tabs"
+  li class="active" = link_to tag_icon(:list, pat(:list)), url(:confirmations, :index)
+  li = link_to tag_icon(:plus, pat(:new)), url(:confirmations, :new)
+
+div class="tabs-content"
+  table class="table table-striped table-hover table-condensed" id="list"
+    thead
+      tr
+        th class='header list-menu'
+          div class='dropdown'
+            a href='#' class='list-menu-toggle.dropdown-toggle dropdown-toggle' data-toggle='dropdown'
+              = tag_icon :magic
+              span class='caret'
+            ul class='list-menu dropdown-menu' role='dropdown'
+              li class='list-menu-wrapper' = link_to tag_icon('check-square-o', pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
+              li class='list-menu-wrapper list-menu-wrapper-disabled' = link_to tag_icon('square-o', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
+              li class='list-menu-divider divider'
+              li class='list-menu-wrapper list-menu-wrapper-disabled'
+                = link_to tag_icon('trash-o', pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled'
+                div class='list-menu-popover-delete-selected popover right'
+                  div class='arrow'
+                  h3 class='popover-title' = pat(:delete_selected_title)
+                  div class='popover-content'
+                    = form_tag url(:confirmations, :destroy_many), :method => :delete do
+                      = hidden_field_tag :confirmation_ids, :'data-delete-many-ids' => true
+                      = submit_tag  pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
+                      div class='btn btn-default btn-small cancel' = pat(:cancel)
+        th class='header' = mat(:confirmation, :id)
+        th class='header' = mat(:confirmation, :user)
+        th class='header' = mat(:confirmation, :mail)
+        th class='header' = mat(:confirmation, :sent)
+        th class='header' = mat(:confirmation, :ack)
+        th class='header' = mat(:confirmation, :dec)
+        th class='header' = mat(:confirmation, :reason)
+        th class='header' = mat(:confirmation, :created_at)
+        th class='header' = mat(:confirmation, :updated_at)
+        th class='header' = mat(:confirmation, :information)
+        th class='header' = mat(:confirmation, :reference)
+        th class='header list-row-action-header'
+
+    tbody
+      -@confirmations.each do |confirmation|
+        tr class='list-row'
+          td class='list-column list-selectable' = check_box_tag 'confirmation_ids[]', :value => confirmation.id, :class => 'list-selectable-checkbox'
+          td class='list-column' = confirmation.id
+          td class='list-column' = confirmation.user
+          td class='list-column' = confirmation.mail
+          td class='list-column' = confirmation.sent
+          td class='list-column' = confirmation.ack
+          td class='list-column' = confirmation.dec
+          td class='list-column' = confirmation.reason
+          td class='list-column' = time_ago_in_words confirmation.created_at
+          td class='list-column' = time_ago_in_words confirmation.updated_at
+          td class='list-column' = confirmation.information
+          td class='list-column' = confirmation.reference
+          td class='list-column list-row-action'
+            div class='list-row-action-wrapper'
+              = link_to tag_icon(:edit), :href => url(:confirmations, :edit, :id => confirmation.id), :rel => :tooltip, :title => "#{pat(:edit)} confirmation", :class => 'list-row-action-wrapper-link'
+              = link_to tag_icon('trash-o'), :rel => :tooltip, :title => "#{pat(:delete)} confirmation", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              div class='popover list-row-action-popover-delete-one left'
+                div class='arrow'
+                h3 class='popover-title' = pat(:delete, :model => "confirmation")
+                div class='popover-content'
+                  = form_tag url(:confirmations, :destroy, :id => confirmation.id), :method => :delete do
+                    = submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+                    div class='btn btn-default btn-small cancel' = pat(:cancel)
