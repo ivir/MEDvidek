@@ -1,0 +1,15 @@
+<div class="module">
+    <div data-module="Report">
+    Provedení výpočtů.<br />
+        <div><label>Načíst z:</label><input type="text" name="source" size="20" /></div>
+        <div><label>Uložit do:</label><input type="text" name="file" size="20" /></div>
+        <div><label>Šablona:</label><input type="text" name="template" size="20" /></div>
+        <div><label>Formát:</label><select name="format">
+            <option value="html" selected>HTML</option>
+            <option value="pdf">PDF</option>
+        </select></div>
+    </div>
+    <div class="cverify">
+        <button name="verify" onClick="verify(event,'Compute',function (data){$('.demoView').text(data);})">Ověřit</button>
+    </div>
+</div>

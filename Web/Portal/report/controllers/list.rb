@@ -20,7 +20,7 @@ Portal::Report.controllers :list do
   # end
   
   get :index do
-
+    'Hello world!'
   end
 
   get :search do

@@ -20,7 +20,13 @@ Portal::Storage.controllers :list do
   # end
   
   get :index do
-
+    #vypisovani vsech souboru v adresari s moznosti stazeni
+    userdir = File.join("temp", session[:session_id])
+    FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
+    @files = Dir.entries(userdir)
+    @files.delete_if{|val| (val == ".") || (val == "..")}
+    render 'download'
+    #vypiseme ulozene soubory
   end
 
   get :list do

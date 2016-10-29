@@ -1,0 +1,14 @@
+<div class="module">
+    <div data-module="LoadCSV">
+        <label>Source:</label><input type="text" name="file" />
+        <label>Store:</label><input type="text" name="store" /><br />
+        <label>Type:</label>
+            <select name="type">
+                <option value="csv">Comma separed value (CSV)</option>
+                <option value="ssv">Semi-colon separed value (SSV)</option>
+            </select>
+    </div>
+    <div class="cverify">
+        <button name="verify" onClick="verify(event,'LoadCSV',function (data){$('.demoView').text(data);})">Ověřit</button>
+    </div>
+</div>

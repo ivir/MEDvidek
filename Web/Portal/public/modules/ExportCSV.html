@@ -1,0 +1,22 @@
+<div class="module">
+    <div data-module="ExportCSV">
+        <script>
+
+        </script>
+    Zvolené sloupce dat budou vyexportovány do formátu CSV nebo SSV.Je možné nastavit požadované sloupce a případně přejmenovat.<br />
+        <div><label>Načíst z:</label><input type="text" name="source" size="20" /></div>
+        <div><label>Uložit do:</label><input type="text" name="file" size="20" /></div>
+        <label>Type:</label>
+        <select name="type">
+            <option value="csv">Comma separed value (CSV)</option>
+            <option value="ssv">Semi-colon separed value (SSV)</option>
+        </select><br />
+        <label>Sloupec:</label><input type="text" name="scolumn" />:<input type="text" name="srename" />
+        <button onClick="addCol('columns',event)">Přidat</button>
+        <ul class="options">
+        </ul>
+    </div>
+    <div class="cverify">
+        <button name="verify" onClick="verify(event,'Compute',function (data){$('.demoView').text(data);})">Ověřit</button>
+    </div>
+</div>

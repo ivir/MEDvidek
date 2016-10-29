@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Builder - tvorba receptu</title>
+    <meta content="">
+    <%= stylesheet_link_tag 'main' %>
+    <%= javascript_include_tag 'jquery', 'jquery-ujs', 'application', 'json-to-table.js' %>
+  </head>
+  <body>
+  <nav class="main">
+    <a href="/">Zpět</a>
+
+    <a href="/download" >Ke stažení</a>
+  </nav>
+  <div class="data">
+    <ul>
+      <% for file in @files %>
+        <li><%= link_to file, "/download/#{file}" %></li>
+      <% end %>
+    </ul>
+  </div>
+  </body>
+</html>

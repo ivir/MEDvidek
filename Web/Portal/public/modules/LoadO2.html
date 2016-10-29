@@ -1,0 +1,24 @@
+<div class="module">
+    <div data-module="LoadO2">
+        <label>Store:</label><input type="text" name="store" /><br />
+        <label>Source:</label><input type="text" name="file" /><br />
+        <ul>
+            <li><input type="checkbox" name="information" value="mobil" />Mobilní číslo</li>
+            <li><input type="checkbox" name="information" value="uctovano" />Účtováno</li>
+            <li><input type="checkbox" name="information" value="uctovana_castka" />Hovorné</li>
+            <li><input type="checkbox" name="information" value="tarifni_castka" />Tarifní částka</li>
+            <li><input type="checkbox" name="information" value="sleva" />Sleva</li>
+            <li><input type="checkbox" name="information" value="treti_strana" />Náklady třetích stran</li>
+            <li><input type="checkbox" name="information" value="data_objem" />Objem dat</li>
+            <li><input type="checkbox" name="information" value="data_jednotka" />Jednotka dat</li>
+            <li><input type="checkbox" name="information" value="data_castka" />Účtováno za data</li>
+            <li><input type="checkbox" name="information" value="volani_castka" />Provoláno</li>
+            <li><input type="checkbox" name="information" value="zpravy_castka" />Částky za zprávy</li>
+            <li><input type="checkbox" name="information" value="roaming_castka" />Roaming</li>
+        </ul>
+    </div>
+    <div class="cverify">
+        <button name="verify" onClick="verify(event,'LoadO2',function (data){$('.outO2').text(data);})">Ověřit</button>
+        <div class="outO2"></div>
+    </div>
+</div>
