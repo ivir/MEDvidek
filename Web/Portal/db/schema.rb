@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 5) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -18,6 +18,21 @@ ActiveRecord::Schema.define(version: 4) do
     t.string   "email"
     t.string   "crypted_password"
     t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "billings", force: :cascade do |t|
+    t.string   "user"
+    t.string   "name"
+    t.string   "department"
+    t.integer  "phonenumber"
+    t.date     "month"
+    t.float    "limit"
+    t.float    "total"
+    t.float    "others"
+    t.float    "overlimit"
+    t.float    "pay"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

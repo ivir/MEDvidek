@@ -31,4 +31,12 @@ Portal::Report.controllers :list do
 
   end
 
+  post :store do
+    params[""]
+  end
+
+  get :load do
+
+  end
+
 end
