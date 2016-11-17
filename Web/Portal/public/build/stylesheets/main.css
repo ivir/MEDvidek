@@ -1,0 +1,46 @@
+.main {
+    width: 98%;
+    background-color: lightblue;
+    font-stretch: expanded;
+    font-style: oblique;
+    padding: 1em 1em 1em 1em;
+    margin-bottom: 0.25em;
+}
+
+.main a {
+    padding: 1em 0.5em 1em 0.5em;
+}
+
+.module {
+    margin-bottom: 0.5em;
+}
+
+.module div[data-module] {
+    border: 1px solid black;
+    padding: 0.5em 0 0.25em 1em;
+    margin-bottom: 0.5em;
+    float: none;
+    display: block;
+    line-height: 1.5em;
+}
+
+.toolbox {
+    display: block;
+    position: relative;
+    top: -2em;
+    float:right;
+    vertical-align: top;
+}
+
+.module div[data-module] ul {
+    list-style: none;
+}
+
+.head {
+    color: white;
+    background-color: black;
+    font-style: oblique;
+    width: 100%;
+    padding-left: 0.5em;
+    font-size: larger;
+}
