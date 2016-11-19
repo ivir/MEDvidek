@@ -49,6 +49,7 @@ class LoadCSV < ModuleMED
 
     data.each_line { |line|
       #printf(line)
+      line.encode!('UTF-8','UTF-8', :invalid => :replace) #osetreni chybneho kodovani
       line.tr!("\n","")
       values = line.split(",") if @type == "csv"
       values = line.split(";") if @type == "ssv"
