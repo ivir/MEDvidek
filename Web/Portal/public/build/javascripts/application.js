@@ -11,7 +11,7 @@ function pripraven(){
 function loadModule(file){ //nacte do stranky formular modulu
     var formular,fsource;
 
-    fsource = "/modules/" + file + ".html";
+    fsource = "./modules/" + file + ".html";
     $.get(fsource, function( data ) {
         var tg = "<input type=\"hidden\" name=\"__i__\" value=\""+ I + "\" />";
         var head = "<div class='head'>"+ file + "</div>"
@@ -128,7 +128,7 @@ function verify(evt,module,fce){ //odesle recept na server k overeni vysledku
 
     $.ajax({
         type: "POST",
-        url: "/verify",
+        url: "./verify",
         data: sformData,
         processData: false, // Don't process the files
         contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
@@ -359,7 +359,7 @@ function processRecipe(evt){
         //var data = evt.target.result;
         $.ajax({
             type: "POST",
-            url: "/upload",
+            url: "./upload",
             enctype: 'multipart/form-data',
             data: sformData,
             processData: false, // Don't process the files
@@ -372,8 +372,8 @@ function processRecipe(evt){
                 } else {
                     nms = nms[nms.length-1];
                 }
-                alert(nms);
-                $.get("/process/" + nms, function (data){location.reload(true)});
+                //alert(nms);
+                $.get("./process/" + nms, function (data){location.reload(true)});
                 //findSet(evt.target,module,parameter,data);
             }
         });
@@ -552,7 +552,7 @@ function appendFile(evt){
 var CSRF_TOKEN = '';
 
 function configureCSRF() {
-    $.get('/csrf_token','', function (data, textStatus, jqXHR) {
+    $.get('csrf_token','', function (data, textStatus, jqXHR) {
             CSRF_TOKEN = data.csrf;
         });
 }

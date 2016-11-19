@@ -1,3 +1,5 @@
+require_relative("../../../../arbitrMED")
+require 'json'
 Portal::Build.controllers :build do
   
   # get :index, :map => '/foo/bar' do
@@ -26,7 +28,7 @@ Portal::Build.controllers :build do
 
 
   #osetreni ziskani CSRF tokenu pro moznost nahravani dat pomoci GET/POST
-  get :csrf_token, :map => '/csrf_token', :provides => :json do
+  get :csrf_token, :map => "/csrf_token", :provides => :json do
     logger.debug 'Retrieving csrf_token'
     result = '{ "csrf": "' + session[:csrf] + '"}'
     logger.debug result
@@ -46,7 +48,7 @@ Portal::Build.controllers :build do
   # get '/example' do
   #   'Hello world!'
   # end
-  post :verify do
+  post :verify, :map => "verify" do
     #ulozeni receptu
     logger.debug params.to_s
     recipe = params["recipe"]
@@ -76,7 +78,7 @@ Portal::Build.controllers :build do
     return JSON.generate({:result => out})
   end
 
-  post :upload do
+  post :upload, :map => "upload" do
     #nahravani souboru
     #vezmeme soubor, ulozime do tempu a navratime cestu
     logger.debug params.to_s
@@ -95,7 +97,7 @@ Portal::Build.controllers :build do
     send_file(uplna_cesta,:filename => File.basename(uplna_cesta), :disposition => 'attachment') if File.exist?(uplna_cesta)
   end
 
-  get :download do
+  get :download, :map => "download" do
     #vypisovani vsech souboru v adresari s moznosti stazeni
     userdir = File.join("temp", session[:session_id])
     FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
@@ -109,15 +111,16 @@ Portal::Build.controllers :build do
     #smazeme zvoleny soubor
   end
 
-  get :process do
-    #zobrazi formular spolu s jiz nahranymi daty v ramci sance
+  get :process, :map => "process" do
+    #zobrazi formular spolu s jiz nahranymi daty v ramci seance
     userdir = File.join("temp", session[:session_id])
     FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou adresar jiz neexistuje
     @files = Dir.entries(userdir)
     @files.delete_if{|val| (val == ".") || (val == "..")}
     render "process"
   end
-  get :process, :with => :file do
+
+  get :process, :map => "process", :with => :file do
 
     #fce prijala recept a zpracuje jej
 
