@@ -24,8 +24,14 @@ module Portal
     set :admin_model, 'Account'
     set :login_page,  '/sessions/new'
 
+    set :session_id, "my-global-session"
+
     enable  :sessions
     disable :store_location
+
+    before do
+      Account.current = current_account
+    end
 
     access_control.roles_for :any do |role|
       role.protect '/'

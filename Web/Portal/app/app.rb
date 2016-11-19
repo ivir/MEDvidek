@@ -5,6 +5,11 @@ module Portal
     register Padrino::Mailer
     register Padrino::Helpers
 
+    register Padrino::Admin::AccessControl
+
+    enable :authentication
+    enable :store_location
+
     enable :sessions
 
     ##
@@ -63,6 +68,24 @@ module Portal
     #     render 'errors/500'
     #   end
     #
+    
+    set :login_page, "/admin/session/new"
+
+    access_control.roles_for :any do |role|
+      role.protect "/build/process"
+      role.protect "/process"
+      role.protect "/process"
+      #role.allow "/"
+      role.allow "/sessions"
+    end
+
+    #access_control.roles_for :admin do |role|
+    #  role.project_module :settings, "/settings"
+    #end
+
+    access_control.roles_for :admin do |role|
+      role.allow "/build/process"
+    end
 
   end
 end

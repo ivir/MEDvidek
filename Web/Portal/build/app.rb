@@ -2,8 +2,11 @@ module Portal
   class Build < Padrino::Application
     register Padrino::Mailer
     register Padrino::Helpers
+    register Padrino::Admin::AccessControl
 
     enable :sessions
+    enable :authentication
+    enable :store_location
 
     ##
     # Caching support.
@@ -61,5 +64,7 @@ module Portal
     #     render 'errors/500'
     #   end
     #
+
+    #set :public_folder, './build/public/'
   end
 end
