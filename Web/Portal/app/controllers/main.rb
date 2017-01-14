@@ -20,6 +20,7 @@ Portal::App.controllers :main do
   # end
   
   get :index, :map => "/" do
+    @soubory = buildTree(userDir())
     render 'main/index'
   end
 

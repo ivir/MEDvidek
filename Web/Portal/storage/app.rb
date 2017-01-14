@@ -2,8 +2,10 @@ module Portal
   class Storage < Padrino::Application
     register Padrino::Mailer
     register Padrino::Helpers
+    register Padrino::Admin::AccessControl
 
     enable :sessions
+    enable :authentication
 
     ##
     # Caching support.

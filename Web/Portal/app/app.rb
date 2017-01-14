@@ -75,7 +75,7 @@ module Portal
       role.protect "/build/process"
       role.protect "/process"
       role.protect "/process"
-      #role.allow "/"
+      #role.protect "/"
       role.allow "/sessions"
     end
 

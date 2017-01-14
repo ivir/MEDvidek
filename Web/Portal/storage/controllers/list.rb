@@ -18,13 +18,20 @@ Portal::Storage.controllers :list do
   # get '/example' do
   #   'Hello world!'
   # end
+
+  get :csrf_token, :map => "/csrf_token", :provides => :json do
+    logger.debug 'Retrieving csrf_token'
+    result = '{ "csrf": "' + session[:csrf] + '"}'
+    logger.debug result
+    result
+  end
   
-  get :index do
-    session[:datapath] = "mares"
+  get :index, :map=>"/" do
+
     #vypisovani vsech souboru v adresari s moznosti stazeni
-    userdir = File.join("temp", session[:datapath])
-    FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
-    @files = Dir.entries(userdir)
+    @userdir = userDir()
+    FileUtils.mkdir_p(@userdir) # nutno osetrit zdali nahodou jiz neexistuje
+    @files = Dir.entries(@userdir)
     @files.delete_if{|val| (val == ".") || (val == "..")}
     render 'download'
     #vypiseme ulozene soubory
@@ -32,7 +39,7 @@ Portal::Storage.controllers :list do
 
   get :list do
     # :with => [:id, :name], :provides => [:html, :json]
-    userdir = File.join("temp", session[:datapath])
+    userdir = userDir()
     FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
     @files = Dir.entries(userdir)
     @files.delete_if{|val| (val == ".") || (val == "..")}
@@ -43,7 +50,7 @@ Portal::Storage.controllers :list do
     #nahravani souboru
     #vezmeme soubor, ulozime do tempu a navratime cestu
     logger.debug params.to_s
-    userdir = File.join("temp", session[:datapath])
+    userdir = userDir()
     FileUtils.mkdir_p(userdir)
     path = File.join(userdir,params["0"][:filename])
 
@@ -53,25 +60,25 @@ Portal::Storage.controllers :list do
   end
 
   delete :delete do
-    userdir = File.join("temp", session[:datapath])
+    userdir = userDir()
     path = File.join(userdir,params["file"])
     FileUtils.rm_f(path)
   end
 
   get :delete do
-    userdir = File.join("temp", session[:datapath])
+    userdir = userDir()
     FileUtils.mkdir_p(userdir)
     path = File.join(userdir,params["file"])
     FileUtils.rm_f(path)
   end
 
   get :new do
-    userdir = File.join("temp", session[:datapath],params["name"])
+    userdir = File.join(userDir(),params["name"])
     FileUtils.mkdir_p(userdir)
   end
 
   get :download do
-    uplna_cesta = File.join("temp", session[:session_id],params[:file])
+    uplna_cesta = File.join(userDir(),params[:file])
     send_file(uplna_cesta,:filename => File.basename(uplna_cesta), :disposition => 'attachment') if File.exist?(uplna_cesta)
   end
 
@@ -79,8 +86,14 @@ Portal::Storage.controllers :list do
 
   end
 
+  post :directory, :with => [:dir] do
+    userdir = File.join(userDir(),:dir)
+    FileUtils.mkdir_p(userdir)
+    redirect url(:index)
+  end
+
   post :store do
-    userdir = File.join("temp", session[:datapath])
+    userdir = userDir()
     FileUtils.mkdir_p(userdir)
     path = File.join(userdir,params["name"])
 
@@ -91,7 +104,7 @@ Portal::Storage.controllers :list do
   end
 
   get :load do
-    userdir = File.join("temp", session[:datapath])
+    userdir = userDir()
     path = File.join(userdir,params["name"])
 
     #zkopirujeme docasny soubor na spravne misto

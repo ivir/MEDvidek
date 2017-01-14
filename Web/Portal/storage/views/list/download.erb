@@ -2,19 +2,33 @@
   <head>
     <title>Builder - tvorba receptu</title>
     <meta content="">
-    <%= stylesheet_link_tag 'main' %>
-    <%= javascript_include_tag 'jquery', 'jquery-ujs', 'application', 'json-to-table.js' %>
+    <%= stylesheet_link_tag "bootstrap.min", 'main' %>
+    <%= javascript_include_tag 'jquery', 'application', 'json-to-table.js', 'bootstrap.min' %>
   </head>
   <body>
-  <nav class="main">
-    <a href="/">Zpět</a>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">MEDvídek</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><%= link_to "Zpět", Portal::App.url(:main, :index) %></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
 
-    <a href="/download" >Ke stažení</a>
+    <%= link_to "Ke stažení", url_for(:list, :download) %>
   </nav>
   <div class="data">
     <ul>
       <% for file in @files %>
-        <li><%= link_to file, "/download/#{file}" %></li>
+          <% if File.file?(@userdir + "/" + file) %>
+            <li><%= link_to file, url_for(:list, :download, :file => file) %></li>
+          <% else %>
+              <li><%= link_to file, url_for(:list, :list, :dir => file) %></li>
+          <% end %>
       <% end %>
     </ul>
   </div>

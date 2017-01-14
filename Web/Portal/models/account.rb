@@ -1,3 +1,5 @@
+# ref. rozsireno dle http://stackoverflow.com/questions/20135607/how-to-access-current-account-in-models-in-padrino
+
 class Account < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
 

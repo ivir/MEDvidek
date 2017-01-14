@@ -47,6 +47,8 @@ class LoadCSV < ModuleMED
     i = 0
     td = Array.new
 
+    #TODO osetrit situaci, kdy je v uvozovkach strednik; RESENI - nalezeni pozici vsech uvozovek a stredniku a podle poctu delit
+
     data.each_line { |line|
       #printf(line)
       line.encode!('UTF-8','UTF-8', :invalid => :replace) #osetreni chybneho kodovani
