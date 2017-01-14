@@ -1,6 +1,7 @@
 <html>
 <head>
   <title>MEDvídek - portál pro správu financí</title>
+  <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta content="">
   <%= stylesheet_link_tag 'bootstrap-theme', 'bootstrap.min','main' %>
@@ -18,7 +19,11 @@
           <li><%= link_to "Soubory", Portal::Storage.url(:list, :index) %></li>
           <li><%= link_to "Report", Portal::Report.url(:list, :index) %></li>
           <li>Evidence</li>
-          <li class="navbar-right"><span class="navbar-brand">Přihlášen: <%= Account.current.name unless Account.current.nil? %> <%= Account.current.surname unless Account.current.nil? %></span></li>
+          <% if Account.current.nil? %>
+              <li class="navbar-right"><span class="navbar-brand"><%= link_to "Přihlásit", "/admin/session/new" %></span></li>
+          <% else %>
+              <li class="navbar-right"><span class="navbar-brand">Přihlášen: <%= Account.current.name %> <%= Account.current.surname %></span></li>
+          <% end %>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -27,6 +32,7 @@
     <div class="starter-template">
       <h1>Zpracování vyúčtování</h1>
       <form class="navbar-form navbar-left" method="post" action="<%= Portal::Build.url(:build,:process) %>">
+        <%= csrf_token_field %>
         <div class="form-group">
           <div class="files">
             <a href="#" onClick="addFile(event);return false;">Přidat možnost nahrání dalšího souboru</a>

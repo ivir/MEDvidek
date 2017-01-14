@@ -6,6 +6,16 @@ module Portal
       # def simple_helper_method
       # ...
       # end
+
+      def userDir()
+        storagePath = "temp"
+        user = Account.current.surname unless Account.current.nil?
+        user = user || "global"
+        store = File.join(storagePath,user)
+        logger.info store
+        return store
+      end
+
     end
 
     helpers ListHelper
