@@ -131,20 +131,7 @@ Portal::Build.controllers :build do
     # nahrada se provede v okamziku, kdy soubor existuje;
 
     # samostatne je osetrena situace, kdy se jedna o Export nebo Report dat, pak se u parametru file provede nahrada
-    data.each { |modu|
-      modu.each { |modul,parameters|
-        parameters.each {|k, val|
-          next unless val.is_a?(String)
-          soubor = File.basename(val)
-          uplna_cesta = File.join("temp", session[:session_id],soubor)
-          parameters[k] = uplna_cesta if File.exist?(uplna_cesta)
-          if( (k == "file") && (modul.include?("Export") || modul.include?("Report")))
-            parameters[k] = uplna_cesta
-            p "Nastavuji parametr #{k} na #{uplna_cesta}"
-          end
-        }
-      }
-    }
+    modifyPaths(data)
     #--------------
     app = ArbitrMED.new
     app.loadRecipeYAML(data)
@@ -187,24 +174,9 @@ Portal::Build.controllers :build do
 
     uplna_cesta = recept
     data = YAML.load_file(uplna_cesta)
-    # nahradime nazvy souboru za uplne cesty k nemu;
-    # nahrada se provede v okamziku, kdy soubor existuje;
 
-    # samostatne je osetrena situace, kdy se jedna o Export nebo Report dat, pak se u parametru file provede nahrada
-    data.each { |modu|
-      modu.each { |modul,parameters|
-        parameters.each {|k, val|
-          next unless val.is_a?(String)
-          soubor = File.basename(val)
-          uplna_cesta = File.join(userdir,soubor)
-          parameters[k] = uplna_cesta if File.exist?(uplna_cesta)
-          if( (k == "file") && (modul.include?("Export") || modul.include?("Report")))
-            parameters[k] = uplna_cesta
-            p "Nastavuji parametr #{k} na #{uplna_cesta}"
-          end
-        }
-      }
-    }
+    #upravi cesty v YAMLu pro spravne ulozeni
+    modifyPaths(data)
 
     setValues.each do |fl|
       data.unshift(fl)
@@ -215,8 +187,10 @@ Portal::Build.controllers :build do
     app.loadRecipeYAML(data)
     app.cook() #provedeme predany recept
     out = app.getOutput()
-    return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
-    return JSON.generate({:result => out})
+    @output = out
+    render 'build/output.erb'
+    #return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
+    #return JSON.generate({:result => out})
   end
 
 end
