@@ -154,4 +154,69 @@ Portal::Build.controllers :build do
     return JSON.generate({:result => out})
   end
 
+
+    post :process, :map => "process" do
+
+    #fce prijala soubory a recept -> po ulozeni je zpracuje
+    logger.info params
+
+    recept = (params[:recipe])
+    files = params[:data]
+
+    userdir = userDir()
+    FileUtils.mkdir_p(userdir)
+
+    setValues = Array.new
+    num = 1
+
+    files.each do |fil|
+      soubor = fil
+      path = File.join(userdir,soubor[:filename])
+      #zkopirujeme docasny soubor na spravne misto
+      FileUtils.cp(soubor[:tempfile].path,path)
+      lF = Hash.new
+      lF["SetValue"] = Hash.new
+      lF["SetValue"]["variable"] =  "file#{num}"
+      lF["SetValue"]["value"] = path
+      setValues.push(lF)
+      num = num + 1
+    end
+
+    logger.info "Files loaded"
+    logger.info setValues
+
+    uplna_cesta = recept
+    data = YAML.load_file(uplna_cesta)
+    # nahradime nazvy souboru za uplne cesty k nemu;
+    # nahrada se provede v okamziku, kdy soubor existuje;
+
+    # samostatne je osetrena situace, kdy se jedna o Export nebo Report dat, pak se u parametru file provede nahrada
+    data.each { |modu|
+      modu.each { |modul,parameters|
+        parameters.each {|k, val|
+          next unless val.is_a?(String)
+          soubor = File.basename(val)
+          uplna_cesta = File.join(userdir,soubor)
+          parameters[k] = uplna_cesta if File.exist?(uplna_cesta)
+          if( (k == "file") && (modul.include?("Export") || modul.include?("Report")))
+            parameters[k] = uplna_cesta
+            p "Nastavuji parametr #{k} na #{uplna_cesta}"
+          end
+        }
+      }
+    }
+
+    setValues.each do |fl|
+      data.unshift(fl)
+    end
+    logger.info(data)
+    #--------------
+    app = ArbitrMED.new
+    app.loadRecipeYAML(data)
+    app.cook() #provedeme predany recept
+    out = app.getOutput()
+    return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
+    return JSON.generate({:result => out})
+  end
+
 end

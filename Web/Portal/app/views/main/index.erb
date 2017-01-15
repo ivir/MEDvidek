@@ -31,7 +31,7 @@
 
     <div class="starter-template">
       <h1>Zpracování vyúčtování</h1>
-      <form class="navbar-form navbar-left" method="post" action="<%= Portal::Build.url(:build,:process) %>">
+      <form class="navbar-form navbar-left" method="post" action="<%= Portal::Build.url(:build,:process) %>" enctype='multipart/form-data'>
         <%= csrf_token_field %>
         <div class="form-group">
           <div class="files">
@@ -44,9 +44,9 @@
         </div>
         <div class="form-group">
           <label class="control-label">Dostupné recepty:</label>
-          <select name="recept" class="form-control">
+          <select name="recipe" class="form-control">
             <% @soubory.each do |soubor| %>
-              <option value="<%= soubor[0] %>"><%= soubor[1] %></option>
+              <option value="<%= soubor[0] %>/<%= soubor[1] %>"><%= soubor[1] %></option>
             <% end %>
           </select>
         </div>

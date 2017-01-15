@@ -20,7 +20,7 @@ function getPack(evt){ //vyhledani zakladniho tagu obalujici file
 
 function addFile(evt){
     var div = getPack(evt);
-    num = ($.find("input[name='data[]']")).length;
+    num = ($.find("input[type='file']")).length;
     data = '<div class="input-group">' +
         '<span class="input-group-addon" id="basic-addon1">Soubor pro zpracování (file' + (num+1) + ')</span>' +
         '<input type="file" name="data[]" class="form-control" placeholder="Nahravana data" aria-describedby="basic-addon1"></div>';
