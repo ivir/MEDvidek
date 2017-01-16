@@ -5,6 +5,7 @@ require_relative("../modules/tools")
 
 gem 'nokogiri'
 require 'nokogiri'
+require 'date'
 
 class LoadO2 < ModuleMED
 
@@ -33,6 +34,21 @@ class LoadO2 < ModuleMED
 
     doc = Nokogiri::XML(File.open(@file))
 
+    globalInfo = doc.css('summaryHead')
+    #<summaryHead payerRefNum="3606068384"><billingPeriod to="2016-12-31" from="2016-12-01"/></summaryHead>
+    billing = globalInfo.at_css("billingPeriod")
+    refInfo = globalInfo.at_css('summaryHead')
+    from = billing["from"]
+    to = billing["to"]
+    p globalInfo.to_s
+    o2Year = Date.parse(from).year
+    o2Month = Date.parse(from).month
+    o2Reference = convert(refInfo["payerRefNum"])
+
+    @memory.store("o2Year",o2Year)
+    @memory.store("o2Month",o2Month)
+    @memory.store("o2Reference",o2Reference)
+    #-----
     subs = doc.css('subscriber')
     #puts subs
     @line = Hash.new
@@ -54,6 +70,7 @@ class LoadO2 < ModuleMED
     #puts @data
     @data
     @memory.store(@store,@data)
+
   end
 
   private

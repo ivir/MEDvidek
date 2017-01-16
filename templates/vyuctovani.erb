@@ -121,7 +121,8 @@
 </head>
 <body>
 <h2>Přehled částek předepsaných k úhradě</h2>
-Níže uvedení uživatelé mobilních telefonů překročili v KVĚTNU 2016 stanovený měsíční limit nákladů
+<% kalendar = ["CHYBNY MESIC","lednu","únoru","březnu","dubnu","květnu","červnu","červenci","srpnu","září","říjnu","listopadu","prosinci"] %>
+Níže uvedení uživatelé mobilních telefonů překročili v <%= kalendar[@memory["o2Month"]].capitalize %> <%= @memory["o2Year"] %> stanovený měsíční limit nákladů
   <table>
     <tr>
     <th>Poř. čslo</th>
@@ -149,11 +150,11 @@ Níže uvedení uživatelé mobilních telefonů překročili v KVĚTNU 2016 sta
           <td><%= format(item["tarif"]) %></td>
           <td><%= format(item["uctovano_bez_limitu"]) %></td>
           <td><%= format(item["zaplatit"]) %></td>
-          <td><%= format(item["zaplatit_zaokr"]) %></td>
+          <td class="last"><%= format(item["zaplatit_zaokr"]) %></td>
         </tr>
         <% i=i+1 %>
     <% end %>
-    <tr>
+    <tr class="end">
       <td class="vystavil" colspan="3">Vystavil: Hana Matrasová</td>
       <td class="prikazce" colspan="6">Podpis příkazce operce:<br /><br />V Praze dne:</td>
     </tr>
