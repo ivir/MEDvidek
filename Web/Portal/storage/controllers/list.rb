@@ -37,13 +37,29 @@ Portal::Storage.controllers :list do
     #vypiseme ulozene soubory
   end
 
-  get :list do
+  get :list, :provides => [:html, :json] do
     # :with => [:id, :name], :provides => [:html, :json]
+
     userdir = userDir()
+    path = params[:dir]
+
+    unless path.nil?
+      path.gsub!(/^\.+/,'')
+      userdir = File.join(userdir,path)
+    end
+
+    @userdir = userdir
     FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
     @files = Dir.entries(userdir)
     @files.delete_if{|val| (val == ".") || (val == "..")}
-    JSON.generate(@files)
+    @files.unshift("..") unless path.nil?
+    case content_type
+      when :js
+        JSON.generate(@files)
+      when :html
+        render 'download'
+    end
+
   end
 
   post :upload do
