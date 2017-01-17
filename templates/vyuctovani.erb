@@ -54,11 +54,13 @@
   }
 
   function repairMenu(where){
+      //fce ma na starosti namapovat volane funkce na prvky, ktere byly nove pridany.
     var element = where.nextElementSibling;
     if(element == undefined){
       element = where;
     }
-    $(element).find("td").click(function (event){
+    $(element).find("td").dblclick(function (event){
+        lastCall = event.currentTarget;
       editValue(this);
     });
     var elem;
@@ -69,19 +71,30 @@
       elem = $(element).find("tr");
     }
 
-    elem.mouseover(function (event){
-      var x,y = 0;
-      lastCall = event.currentTarget;
-      var rect = event.currentTarget.getBoundingClientRect();
-      y = rect.top;
-      x = rect.right + 10;
-      //x = prvek.position.
-      $('.toolbox').css({"display": "block","position":"absolute","left": x +"px","top": y +"px"});
-
-    });
   }
 
-  function addRow(e){
+function findRow(start){
+    var zacatek = start.parentElement;
+    while( (zacatek != undefined)){
+        if (zacatek.tagName == "TR"){
+            return zacatek;
+        }
+
+        if( typeof zacatek.previousElementSibling !== undefined){
+            zacatek = zacatek.previousElementSibling;
+        } else {
+            zacatek = zacatek.parentElement;
+        }
+    }
+    if (zacatek == undefined){
+        //nepovedlo se najit, zkusime jQuery
+        return $(start).closest("tr");
+    }
+
+}
+
+function addRow(e){
+    lastCall = findRow(editPath);
     var pocetBunek = $(lastCall).find("td").size();
     var row = "<tr>";
     for(var i=0;i<pocetBunek;i++){
@@ -93,14 +106,16 @@
   }
 
   function DelRow(e){
+    lastCall = findRow(editPath);
     $(lastCall).remove();
+    closeEdit();
   }
 
   function editValue(from){
     resetChangesByTool();
     editPath = from;
     lastColor = $(from).css("background-color");
-    $($from).css("background-color", "red");
+    $(from).css("background-color", "red");
 
     var edit = $(from).html();
     $(".valuesbox [name='Dvalue']").val(edit);
@@ -114,6 +129,7 @@
   }
 
   function EditRow(from){
+    lastCall = findRow(editPath);
     editedValues = $(lastCall).find("td");
     var first = editedValues.pop();
     editValue(first);
