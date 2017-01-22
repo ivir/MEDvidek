@@ -82,7 +82,7 @@ Portal::Build.controllers :build do
     #nahravani souboru
     #vezmeme soubor, ulozime do tempu a navratime cestu
     logger.debug params.to_s
-    userdir = File.join("temp", session[:session_id])
+    userdir = userDir()
     FileUtils.mkdir_p(userdir)
     path = File.join(userdir,params["0"][:filename])
 
@@ -91,24 +91,9 @@ Portal::Build.controllers :build do
     return params["0"][:filename]
   end
 
-  get :download_file, :map => "/download/:file" do
-    #fce pro osetreni moznosti stazeni dat
-    uplna_cesta = File.join("temp", session[:session_id],params[:file])
-    send_file(uplna_cesta,:filename => File.basename(uplna_cesta), :disposition => 'attachment') if File.exist?(uplna_cesta)
-  end
-
-  get :download, :map => "download" do
-    #vypisovani vsech souboru v adresari s moznosti stazeni
-    userdir = File.join("temp", session[:session_id])
-    FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
-    @files = Dir.entries(userdir)
-    @files.delete_if{|val| (val == ".") || (val == "..")}
-    render 'download'
-    #vypiseme ulozene soubory
-  end
-
-  delete :download do
-    #smazeme zvoleny soubor
+  delete :clear do
+    #provedeme uklid
+    @uploaded_files = Array.new
   end
 
   get :process, :map => "process" do
@@ -124,28 +109,62 @@ Portal::Build.controllers :build do
 
     #fce prijala recept a zpracuje jej
 
-    nazev = File.basename(params[:file])
-    uplna_cesta = File.join("temp", session[:session_id],nazev)
-    data = YAML.load_file(uplna_cesta)
-    # nahradime nazvy souboru za uplne cesty k nemu;
-    # nahrada se provede v okamziku, kdy soubor existuje;
+    userdir = userDir()
+    FileUtils.mkdir_p(userdir)
 
-    # samostatne je osetrena situace, kdy se jedna o Export nebo Report dat, pak se u parametru file provede nahrada
+    setValues = Array.new
+    num = 1
+    #ponechana moznost zpracovani receptu bez vstupnich dat
+    unless @uploaded_files.nil? then
+      @uploaded_files.each do |fil|
+        path = fil
+        lF = Hash.new
+        lF["SetValue"] = Hash.new
+        lF["SetValue"]["variable"] =  "file#{num}"
+        lF["SetValue"]["value"] = path
+        setValues.push(lF)
+        num = num + 1
+      end
+
+    end
+    @uploaded_files = nil
+
+    recept = File.join(userdir,params[:file])
+    logger.debug(recept)
+    logger.debug(setValues)
+    uplna_cesta = recept
+    unless verifyYAML(uplna_cesta) then
+      logger.debug("Soubor se nepovedlo nacist.")
+      out = "Operace nemohla být provedena z důvodu nesprávného formátu receptu. Zkontrolujte, prosím, správnost receptu."
+      return JSON.generate({:result => out})
+    end
+
+    data = YAML.load_file(uplna_cesta)
+
+    #upravi cesty v YAMLu pro spravne ulozeni
     modifyPaths(data)
+
+    setValues.each do |fl|
+      data.unshift(fl)
+    end
     #--------------
-    app = ArbitrMED.new
-    app.loadRecipeYAML(data)
-    app.cook() #provedeme predany recept
-    out = app.getOutput()
+    begin
+      app = ArbitrMED.new
+      app.loadRecipeYAML(data)
+      app.cook() #provedeme predany recept
+      out = app.getOutput()
+    rescue Exception => emsg
+      out = "Bohužel došlo v podpurné aplikaci k výjimce s níže uvedeným výstupem. Prosím o zaslání administrátorovi.\n"
+      out += emsg
+    end
     return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
     return JSON.generate({:result => out})
   end
 
 
-    post :process, :map => "process" do
+  post :process, :map => "process" do
 
     #fce prijala soubory a recept -> po ulozeni je zpracuje
-    logger.info params
 
     recept = (params[:recipe])
     files = params[:data]
@@ -169,9 +188,6 @@ Portal::Build.controllers :build do
         setValues.push(lF)
         num = num + 1
       end
-
-      logger.info "Files loaded"
-      logger.info setValues
 
     end
     uplna_cesta = recept

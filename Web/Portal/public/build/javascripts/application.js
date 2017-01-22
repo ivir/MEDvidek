@@ -14,13 +14,16 @@ function loadModule(file){ //nacte do stranky formular modulu
     fsource = "./modules/" + file + ".html";
     $.get(fsource, function( data ) {
         var tg = "<input type=\"hidden\" name=\"__i__\" value=\""+ I + "\" />";
-        var head = "<div class='head'>"+ file + "</div>"
+        var head = "<div class='panel-heading'><h3 class='panel-title'>"+ file + "</h3></div>"
         I= I + 1;
         var sr = $(data);
         $(tg).appendTo(sr);
         moduleToolbox(sr);
+        sr = sr.wrap("<div class='panel-body'></div>");
+
         $(head).prependTo(sr);
-        var t = $(sr).wrap("<div class='module'></div>")
+        var t = $(sr).addClass("panel panel-default");
+        $(sr).find("div[data-module]").addClass("panel-body");
 
         t.appendTo($(".recipe"));
         return false;
@@ -555,4 +558,31 @@ function configureCSRF() {
     $.get('csrf_token','', function (data, textStatus, jqXHR) {
             CSRF_TOKEN = data.csrf;
         });
+}
+
+function getPack(evt){ //vyhledani zakladniho tagu obalujici file
+    var zacatek = evt.currentTarget.parentElement;
+    var modu = undefined;
+    while( (zacatek != undefined)){
+        if( $(zacatek).hasClass("files")){
+            modu = zacatek;
+            return modu;
+        }
+        if( zacatek.previousElementSibling != null){
+            zacatek = zacatek.previousElementSibling;
+        } else {
+            zacatek = zacatek.parentElement;
+        }
+    }
+    return modu;
+}
+
+function addFile(evt,mov){
+    mov = (mov == undefined) ? 0 : mov; //Rubymine 2016.3.1 nepodporuje syntaxi s vychozi hodnotou v definici -> pouzito std. reseni
+    var div = getPack(evt);
+    num = ($.find("input[type='file']")).length + mov;
+    data = '<div class="input-group">' +
+        '<span class="input-group-addon" id="basic-addon1">Soubor pro zpracování (file' + (num+1) + ')</span>' +
+        '<input type="file" name="data[]" class="form-control" placeholder="Nahravana data" aria-describedby="basic-addon1"></div>';
+    $(data).appendTo(div);
 }
