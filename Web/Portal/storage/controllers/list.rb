@@ -26,7 +26,7 @@ Portal::Storage.controllers :list do
     result
   end
   
-  get :index, :map=>"/" do
+  get :index, :map => "/" do
 
     #vypisovani vsech souboru v adresari s moznosti stazeni
     @userdir = userDir()
@@ -37,24 +37,31 @@ Portal::Storage.controllers :list do
     #vypiseme ulozene soubory
   end
 
-  get :list, :provides => [:html, :json] do
+  get :list, :with => :path, :provides => [:html, :json, :js], :map => "list" do
     # :with => [:id, :name], :provides => [:html, :json]
 
     userdir = userDir()
-    path = params[:dir]
+    FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
+
+    path = params[:path]
 
     unless path.nil?
       path.gsub!(/^\.+/,'')
       userdir = File.join(userdir,path)
     end
-
+    logger.debug(path)
     @userdir = userdir
-    FileUtils.mkdir_p(userdir) # nutno osetrit zdali nahodou jiz neexistuje
-    @files = Dir.entries(userdir)
-    @files.delete_if{|val| (val == ".") || (val == "..")}
-    @files.unshift("..") unless path.nil?
+    if(Dir.exists?(userdir)) then
+      @files = Dir.entries(userdir)
+      @files.delete_if{|val| (val == ".") || (val == "..")}
+      @files.unshift("..") unless path.nil?
+    else
+      @files = Array.new
+    end
     case content_type
       when :js
+        JSON.generate(@files)
+      when :json
         JSON.generate(@files)
       when :html
         render 'download'
@@ -62,7 +69,7 @@ Portal::Storage.controllers :list do
 
   end
 
-  post :upload do
+  post :upload, :map => "upload" do
     #nahravani souboru
     #vezmeme soubor, ulozime do tempu a navratime cestu
     logger.debug params.to_s
@@ -75,13 +82,13 @@ Portal::Storage.controllers :list do
     return params["0"][:filename]
   end
 
-  delete :delete do
+  delete :delete, :map => "delete" do
     userdir = userDir()
     path = File.join(userdir,params["file"])
     FileUtils.rm_f(path)
   end
 
-  get :delete do
+  post :delete, :map => "delete" do
     userdir = userDir()
     FileUtils.mkdir_p(userdir)
     path = File.join(userdir,params["file"])
@@ -93,9 +100,19 @@ Portal::Storage.controllers :list do
     FileUtils.mkdir_p(userdir)
   end
 
-  get :download do
-    uplna_cesta = File.join(userDir(),params[:file])
-    send_file(uplna_cesta,:filename => File.basename(uplna_cesta), :disposition => 'attachment') if File.exist?(uplna_cesta)
+  get :download, :with => :file, :map => "download" do
+    if params[:file].nil? then
+      halt 404, "Not found"
+    end
+
+    sfile = params[:file].gsub(/\.+\//,'')
+    uplna_cesta = File.join(userDir(),sfile)
+
+    unless File.exists?(uplna_cesta) then
+      halt 404, "File not found"
+    end
+
+    send_file(uplna_cesta,:filename => File.basename(uplna_cesta), :disposition => 'attachment')
   end
 
   get :path do

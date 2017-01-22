@@ -23,6 +23,12 @@
 
 <div class="starter-template">
   <h1>Přihlášení</h1>
+  <% unless @error.nil? then %>
+      <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Chyba!</strong> <%= @error %>
+      </div>
+  <% end %>
   <form class="navbar-form navbar-left" method="post" action="<%= Portal::App.url(:main,:login) %>" enctype='multipart/form-data'>
     <%= csrf_token_field %>
     <div class="form-group">

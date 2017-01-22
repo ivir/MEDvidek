@@ -63,5 +63,11 @@ module Portal
     #     render 'errors/500'
     #   end
     #
+    get "/list/" do
+      redirect "/storage/"
+    end
+    get "/download" do
+      redirect "/storage/"
+    end
   end
 end

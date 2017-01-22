@@ -18,17 +18,18 @@
       </div><!--/.nav-collapse -->
     </div>
   </nav>
-    <%= link_to "Ke stažení", url_for(:list, :download) %>
-  <div class="data">
-    <ul>
-      <% for file in @files %>
-          <% if File.file?(@userdir + "/" + file) %>
-            <li><%= link_to file, url_for(:list, :download, :file => file) %></li>
-          <% else %>
-              <li><%= link_to file, url_for(:list, :list, :dir => file) %></li>
-          <% end %>
-      <% end %>
-    </ul>
+  <div class="container">
+    <div class="data">
+      <ul class="list-group">
+        <% for file in @files %>
+            <% if File.file?(@userdir + "/" + file) %>
+              <li class="list-group-item"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> <%= link_to file, url_for(:list, :download, :file => file) %></li>
+            <% else %>
+                <li class="list-group-item"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <%= link_to file, url_for(:list, :list, :path => file) %></li>
+            <% end %>
+        <% end %>
+      </ul>
+    </div>
   </div>
   </body>
 </html>

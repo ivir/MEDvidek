@@ -40,7 +40,7 @@ Portal::App.controllers :main do
     else
       params[:email] = h(params[:email])
       flash.now[:error] = pat('login.error')
-      @error = "Bad login"
+      @error = "Chybné uživatelské jméno nebo heslo"
       render "/main/login"
     end
   end
