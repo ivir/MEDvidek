@@ -71,6 +71,19 @@ module Portal
           }
         }
       end
+
+      def verifyYAML(file)
+        #pokusi se otevrit YAML soubor pro zpracovani
+        return false unless File.exist?(file) #koncime, pokud neexistuje
+        begin
+          return !!YAML.load(yaml) #navrati true/false
+        rescue Exception => e
+          return false
+        end
+
+      end
+
+
     end
     helpers BuildHelper
   end

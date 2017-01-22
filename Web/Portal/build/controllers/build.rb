@@ -155,24 +155,31 @@ Portal::Build.controllers :build do
 
     setValues = Array.new
     num = 1
+    #ponechana moznost zpracovani receptu bez vstupnich dat
+    unless files.nil? then
+      files.each do |fil|
+        soubor = fil
+        path = File.join(userdir,soubor[:filename])
+        #zkopirujeme docasny soubor na spravne misto
+        FileUtils.cp(soubor[:tempfile].path,path)
+        lF = Hash.new
+        lF["SetValue"] = Hash.new
+        lF["SetValue"]["variable"] =  "file#{num}"
+        lF["SetValue"]["value"] = path
+        setValues.push(lF)
+        num = num + 1
+      end
 
-    files.each do |fil|
-      soubor = fil
-      path = File.join(userdir,soubor[:filename])
-      #zkopirujeme docasny soubor na spravne misto
-      FileUtils.cp(soubor[:tempfile].path,path)
-      lF = Hash.new
-      lF["SetValue"] = Hash.new
-      lF["SetValue"]["variable"] =  "file#{num}"
-      lF["SetValue"]["value"] = path
-      setValues.push(lF)
-      num = num + 1
+      logger.info "Files loaded"
+      logger.info setValues
+
     end
-
-    logger.info "Files loaded"
-    logger.info setValues
-
     uplna_cesta = recept
+    unless verifyYAML(uplna_cesta) then
+      logger.debug("Soubor se nepovedlo nacist.")
+      @output = "Operace nemohla být provedena z důvodu nesprávného formátu receptu. Zkontrolujte, prosím, správnost receptu."
+      return render 'build/output.erb'
+    end
     data = YAML.load_file(uplna_cesta)
 
     #upravi cesty v YAMLu pro spravne ulozeni

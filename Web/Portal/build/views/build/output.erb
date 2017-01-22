@@ -1,6 +1,8 @@
 <html>
 <head>
-  <title>Builder - tvorba receptu</title>
+  <title>MEDvídek - portál pro správu financí</title>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta content="">
   <%= stylesheet_link_tag 'bootstrap-theme', 'bootstrap.min','main' %>
   <%= javascript_include_tag 'jquery', 'bootstrap.min', 'app.js'%>
@@ -13,20 +15,33 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><%= link_to "Zpět", Portal::App.url(:main, :index) %></li>
+        <li class="active"><%= link_to "Domů", Portal::App.url(:main, :index) %></li>
+        <li><%= link_to "Soubory", Portal::Storage.url(:list, :index) %></li>
+        <li><%= link_to "Report", Portal::Report.url(:list, :index) %></li>
+        <li>Evidence</li>
+        <% if Account.current.nil? %>
+            <li class="navbar-right"><span class="navbar-brand"><%= link_to "Přihlásit", "/admin/session/new" %></span></li>
+        <% else %>
+            <li class="navbar-right"><span class="navbar-brand">Přihlášen: <%= Account.current.name %> <%= Account.current.surname %></span></li>
+        <% end %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
-<div class="data">
-  <% if @output.nil? %>
-    Uloha byla zpracována a nevrátila žádný výsledek.
-  <% else %>
-      Uloha byla zpracována a navrátila následující výsledek:
-      <code><%= @output %></code>
-  <% end %>
 
-  Soubory lze stáhnout: <%= link_to "Ke stažení", Portal::Storage.url(:list, :index) %>
+<div class="starter-template">
+  <h1>Výstup</h1>
+  <div class="data">
+    <% if @output.nil? %>
+        Uloha byla zpracována a nevrátila žádný výsledek.
+    <% else %>
+        Uloha byla zpracována a navrátila následující výsledek:<br />
+        <code><%= @output %></code>
+    <% end %>
+    <div>
+      Soubory lze stáhnout: <%= link_to "Ke stažení", Portal::Storage.url(:list, :index) %>
+    </div>
+  </div>
 </div>
 </body>
 </html>

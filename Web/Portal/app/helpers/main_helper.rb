@@ -7,7 +7,7 @@ module Portal
       # ...
       # end
 
-      def buildTree(path)
+      def buildTree(path,filter)
         # buildTree generuje na zaklade path strom, ktery navraci
         # navrat je pole poli obsahující cestu a název
         files = Dir.entries(path)
@@ -17,10 +17,13 @@ module Portal
 
         files.each do |file|
           if File.file?(File.join(path,file))
+            unless filter.nil?
+              next unless file =~ filter
+            end
             out.push([path,file])
           else
             # je slozkou
-            out.push(buildTree(File.join(path,file)))
+            out.push(buildTree(File.join(path,file),filter))
           end
         end
         return out
@@ -35,10 +38,13 @@ module Portal
         return store
       end
 
-      def genOptions(data)
+      def genOptions(data,filter)
         # generuje z data (ziskaneho z buildTree) nabídku v option
         out = ""
         data.each do |row|
+          unless filter.nil?
+            next unless row =~ filter
+          end
           out += "<option value=\"#{row[0]}/#{row[1]}\">#{row[1]}</option>\n"
         end
         logger.info out
