@@ -183,11 +183,16 @@ Portal::Build.controllers :build do
     end
     logger.info(data)
     #--------------
-    app = ArbitrMED.new
-    app.loadRecipeYAML(data)
-    app.cook() #provedeme predany recept
-    out = app.getOutput()
-    @output = out
+    begin
+      app = ArbitrMED.new
+      app.loadRecipeYAML(data)
+      app.cook() #provedeme predany recept
+      out = app.getOutput()
+      @output = out
+    rescue Exception => emsg
+      @output = "Bohužel došlo v podpurné aplikaci k výjimce s níže uvedeným výstupem. Prosím o zaslání administrátorovi.\n"
+      @output += emsg
+    end
     render 'build/output.erb'
     #return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
     #return JSON.generate({:result => out})
