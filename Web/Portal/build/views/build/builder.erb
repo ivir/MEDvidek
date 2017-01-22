@@ -1,33 +1,56 @@
 <html>
   <head>
     <title>Builder - tvorba receptu</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="">
-    <%= stylesheet_link_tag 'main' %>
-    <%= javascript_include_tag 'jquery', 'jquery-ujs', 'application', 'json-to-table.js' %>
+    <%= stylesheet_link_tag 'bootstrap-theme', 'bootstrap','main' %>
+    <%= javascript_include_tag 'jquery', 'bootstrap.min', 'application', 'json-to-table' %>
   </head>
   <body>
-  <nav class="main">
-    <a href="#" onClick="loadModule('SetValue')">Nahrát/Nastavit</a>
-    <a href="#" onClick="loadModule('LoadCSV')">Import CSV</a>
-    <a href="#" onClick="loadModule('LoadO2')">Import od O2</a>
-    <a href="#" onClick="loadModule('Compute')">Výpočet</a>
-    <a href="#" onClick="loadModule('Aggregate')">Agregace</a>
-    <a href="#" onClick="loadModule('ExportCSV')">Export CSV</a>
-    <a href="#" onClick="loadModule('ExportJSON')">Export JSON</a>
-    <a href="#" onClick="loadModule('Filter')">Filtr</a>
-    <a href="#" onClick="loadModule('DBSort')">Seřadit</a>
-    <a href="#" onClick="loadModule('DBJoin')">Spojit tabulku</a>
-    <a href="#" onClick="loadModule('Report')">Report</a> ||
-    <a href="/storage" >Ke stažení</a>&nbsp;
-    <%= link_to 'Zpracovat recept','./process' %>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">MEDvídek</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><%= link_to "Domů", Portal::App.url(:main, :index) %></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Operace<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" onClick="loadModule('SetValue')">Nahrát/Nastavit</a></li>
+              <li><a href="#" onClick="loadModule('LoadCSV')">Import CSV</a></li>
+              <li><a href="#" onClick="loadModule('LoadO2')">Import od O2</a></li>
+              <li><a href="#" onClick="loadModule('Compute')">Výpočet</a></li>
+              <li><a href="#" onClick="loadModule('Aggregate')">Agregace</a></li>
+              <li><a href="#" onClick="loadModule('ExportCSV')">Export CSV</a></li>
+              <li><a href="#" onClick="loadModule('ExportJSON')">Export JSON</a></li>
+              <li><a href="#" onClick="loadModule('Filter')">Filtr</a></li>
+              <li><a href="#" onClick="loadModule('DBSort')">Seřadit</a></li>
+              <li><a href="#" onClick="loadModule('DBJoin')">Spojit tabulku</a></li>
+              <li><a href="#" onClick="loadModule('Report')">Report</a></li>
+            </ul>
+          </li>
+          <li><%= link_to 'Zpracovat recept','./process' %></li>
+          <li><%= link_to "Ke stažení", Portal::Storage.url(:list, :index) %></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
   </nav>
-  <div class="recipe">
+  <div class="container">
+    <div class="starter-template">
+      <div class="recipe">
 
+      </div>
+      <button onClick="loadFiles()">Nahrát data</button>
+      <button onClick="createRecipe()">Vytvořit recept</button><button onClick="downloadRecipes()">Stáhnout recept</button>
+      <div class="DemoView">
+        Výstup
+      </div>
+    </div>
   </div>
-  <button onClick="loadFiles()">Nahrát data</button>
-  <button onClick="createRecipe()">Vytvořit recept</button><button onClick="downloadRecipes()">Stáhnout recept</button>
-  <div class="DemoView">
-    Výstup
-  </div>
+
   </body>
 </html>

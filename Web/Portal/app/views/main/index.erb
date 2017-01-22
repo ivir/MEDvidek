@@ -46,6 +46,7 @@
           <label class="control-label">Dostupné recepty:</label>
           <select name="recipe" class="form-control">
             <% @soubory.each do |soubor| %>
+                <% next if soubor[1].nil? %>
               <option value="<%= soubor[0] %>/<%= soubor[1] %>"><%= soubor[1] %></option>
             <% end %>
           </select>
