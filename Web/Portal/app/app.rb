@@ -69,7 +69,7 @@ module Portal
     #   end
     #
     
-    set :login_page, "/admin/session/new"
+    set :login_page, "/login"
 
     access_control.roles_for :any do |role|
       role.protect "/build/process"

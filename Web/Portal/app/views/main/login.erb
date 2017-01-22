@@ -1,0 +1,48 @@
+<html>
+<head>
+  <title>MEDvídek - portál pro správu financí</title>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="">
+  <%= stylesheet_link_tag 'bootstrap-theme', 'bootstrap.min','main' %>
+  <%= javascript_include_tag 'jquery', 'bootstrap.min', 'app.js'%>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">MEDvídek</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><%= link_to "Přihlášení", Portal::App.url(:main, :login) %></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<div class="starter-template">
+  <h1>Přihlášení</h1>
+  <form class="navbar-form navbar-left" method="post" action="<%= Portal::App.url(:main,:login) %>" enctype='multipart/form-data'>
+    <%= csrf_token_field %>
+    <div class="form-group">
+      <div class="files">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Uživatelské jméno</span>
+          <input type="text" name="username" class="form-control" placeholder="uživatelské jméno" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Heslo</span>
+          <input type="password" name="password" class="form-control" placeholder="Heslo" aria-describedby="basic-addon1">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="btn">
+        <button class="btn btn-default" type="submit">Přihlásit</button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>

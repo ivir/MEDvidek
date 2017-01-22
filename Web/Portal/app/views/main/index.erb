@@ -20,9 +20,9 @@
           <li><%= link_to "Report", Portal::Report.url(:list, :index) %></li>
           <li>Evidence</li>
           <% if Account.current.nil? %>
-              <li class="navbar-right"><span class="navbar-brand"><%= link_to "Přihlásit", "/admin/session/new" %></span></li>
+              <li class="navbar-right"><span class="navbar-brand"><%= link_to "Přihlásit", Portal::App.url(:main,:login) %></span></li>
           <% else %>
-              <li class="navbar-right"><span class="navbar-brand">Přihlášen: <%= Account.current.name %> <%= Account.current.surname %></span></li>
+              <li class="navbar-right"><span class="navbar-brand"><%= Account.current.name %> <%= Account.current.surname %> - <%= link_to "Odhlásit", Portal::App.url(:main, :logout) %></span></li>
           <% end %>
         </ul>
       </div><!--/.nav-collapse -->

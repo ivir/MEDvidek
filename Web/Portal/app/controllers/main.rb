@@ -28,4 +28,31 @@ Portal::App.controllers :main do
 
   end
 
+  get :login, :map => "/login" do
+    render 'main/login'
+  end
+
+  post :login, :map => "/login" do
+    if account = Account.authenticate(params[:username], params[:password])
+      logger.debug account
+      Account.current = account
+      redirect url(:main, :index)
+    else
+      params[:email] = h(params[:email])
+      flash.now[:error] = pat('login.error')
+      @error = "Bad login"
+      render "/main/login"
+    end
+  end
+
+  delete :login, :map => "/login" do
+    set_current_account(nil)
+    redirect url(:main, :index)
+  end
+  get :logout, :map => "/logout" do
+    set_current_account(nil)
+    Account.current = nil
+    redirect url(:main, :index)
+  end
+
 end
