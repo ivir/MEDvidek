@@ -3,7 +3,7 @@
     <title>Builder - tvorba receptu</title>
     <meta content="">
     <%= stylesheet_link_tag "bootstrap.min", 'main' %>
-    <%= javascript_include_tag 'jquery', 'application', 'json-to-table.js', 'bootstrap.min' %>
+    <%= javascript_include_tag 'jquery', 'bootstrap.min' %>
   </head>
   <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -22,10 +22,10 @@
     <div class="data">
       <ul class="list-group">
         <% for file in @files %>
-            <% if File.file?(@userdir + "/" + file) %>
-              <li class="list-group-item"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> <%= link_to file, url_for(:list, :download, :file => file) %></li>
+            <% if File.file?(File.join(@userdir,file.join(File::SEPARATOR))) %>
+              <li class="list-group-item"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> <%= link_to file.last, url_for(:list, :download, :file => file.join("/")) %></li>
             <% else %>
-                <li class="list-group-item"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <%= link_to file, url_for(:list, :list, :path => file) %></li>
+                <li class="list-group-item"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <%= link_to file.last, url_for(:list, :list, :path => file.join("/")) %></li>
             <% end %>
         <% end %>
       </ul>

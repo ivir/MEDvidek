@@ -12,7 +12,6 @@ module Portal
         user = Account.current.surname unless Account.current.nil?
         user = user || "global"
         store = File.join(storagePath,user)
-        logger.info store
         return store
       end
 

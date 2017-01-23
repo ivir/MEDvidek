@@ -19,7 +19,7 @@ Portal::Storage.controllers :list do
   #   'Hello world!'
   # end
 
-  get :csrf_token, :map => "/csrf_token", :provides => :json do
+  get :csrf_token, :map => "csrf_token", :provides => :json do
     logger.debug 'Retrieving csrf_token'
     result = '{ "csrf": "' + session[:csrf] + '"}'
     logger.debug result
@@ -30,14 +30,21 @@ Portal::Storage.controllers :list do
 
     #vypisovani vsech souboru v adresari s moznosti stazeni
     @userdir = userDir()
+    @files = Array.new
     FileUtils.mkdir_p(@userdir) # nutno osetrit zdali nahodou jiz neexistuje
-    @files = Dir.entries(@userdir)
-    @files.delete_if{|val| (val == ".") || (val == "..")}
+    file = Dir.entries(@userdir)
+    file.delete_if{|val| (val == ".") || (val == "..")}
+
+    file.each do |item|
+      full_path = File.join(@userdir,item)
+        @files.push([item])
+    end
+
     render 'download'
     #vypiseme ulozene soubory
   end
 
-  get :list, :with => :path, :provides => [:html, :json, :js], :map => "list" do
+  get :list, :provides => [:html, :json, :js], :map => "list/*path" do
     # :with => [:id, :name], :provides => [:html, :json]
 
     userdir = userDir()
@@ -45,19 +52,39 @@ Portal::Storage.controllers :list do
 
     path = params[:path]
 
+    logger.debug params
+    logger.debug "Cesta #{path}"
+    @files = Array.new
+
     unless path.nil?
       path.gsub!(/^\.+/,'')
       userdir = File.join(userdir,path)
-    end
-    logger.debug(path)
-    @userdir = userdir
-    if(Dir.exists?(userdir)) then
-      @files = Dir.entries(userdir)
-      @files.delete_if{|val| (val == ".") || (val == "..")}
-      @files.unshift("..") unless path.nil?
     else
-      @files = Array.new
+      path = "/"
     end
+
+    @userdir = userDir()
+
+    if(Dir.exists?(userdir)) then
+      file = Dir.entries(userdir)
+      file.delete_if{|val| (val == ".") || (val == "..")}
+
+      file.each do |item|
+        spath = File.join(path,item)
+        @files.push(spath.split(File::SEPARATOR))
+      end
+    end
+    unless path.nil? then
+      back = path.split(File::SEPARATOR)
+
+      if back.size < 2 then
+        @files.unshift([".."])
+      else
+        back.pop()
+        @files.unshift(back)
+      end
+    end
+
     case content_type
       when :js
         JSON.generate(@files)
