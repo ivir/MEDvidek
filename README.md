@@ -1,7 +1,7 @@
 # MEDvídek
 
 ## Autor
-Jan Mareš
+Jan Mareš - jan.mares (a-t) manast.eu
 
 ## Popis
 Dílo je tvořeno ve volném čase primárně pro vnitřní účely NKÚ (Nejvyššího kontrolního úřadu).
