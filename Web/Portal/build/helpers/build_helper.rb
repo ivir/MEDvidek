@@ -76,7 +76,7 @@ module Portal
         #pokusi se otevrit YAML soubor pro zpracovani
         return false unless File.exist?(file) #koncime, pokud neexistuje
         begin
-          return !!YAML.load(yaml) #navrati true/false
+          return !!YAML.load(file) #navrati true/false
         rescue Exception => e
           return false
         end
