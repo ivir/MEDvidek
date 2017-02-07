@@ -6,3 +6,4 @@
 /Web/builder/temp/*
 .directory
 /Web/Portal/temp/*
+/Web/Portal/temp/*/*
