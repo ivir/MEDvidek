@@ -1,0 +1,206 @@
+#ukazkovy recept pro zjisteni prumeru ze dvou cisel
+#- LoadMail:
+#    server: imap.email.com
+#    username: my@email.com
+#    password:
+#    subject: T-mobile
+#    filter: "Vyuctovani"
+
+- LoadO2:
+   store: "o2data"
+   file: file1
+   information:
+    - mobil
+    - uctovano
+    - uctovana_castka
+    - sleva
+    - treti_strana
+    - data_objem
+    - data_jednotka
+    - data_castka
+
+- LoadCSV:
+   store: "users"
+   file: file2
+   type: "ssv"
+   rename:
+    - TARIF: tarif
+
+#- Print:
+#   source: "users"
+
+- DBJoin:
+   store: "o2data"
+   source: "users"
+   pair:
+    - mobil
+    - Telefonní číslo
+
+- Compute:
+   source: "o2data"
+   store: "zaplatit"
+   calculate: "MAX(uctovano*1.21 - tarif,0) + treti_strana"
+   #minimum: 0
+   precision: 2
+
+- Compute:
+   source: "o2data"
+   store: "celkem"
+   calculate: "(uctovano*1.21) + treti_strana"
+   #minimum: 0
+   precision: 2
+
+- Compute:
+   source: "o2data"
+   store: "celkemBezDPH"
+   calculate: "(uctovano) + treti_strana"
+   #minimum: 0
+   precision: 2
+
+- Compute:
+   source: "o2data"
+   store: "uctovano_bez_limitu"
+   calculate: "MAX(uctovano*1.21 - tarif,0)"
+   #minimum: 0
+   precision: 2
+
+- Agregate:
+   source: "o2data"
+   store: "CELKOVACASTKA"
+   calculate: "(uctovano) + treti_strana"
+   operation: "-"
+   #minimum: 0
+   precision: 2
+
+- Compute:
+   source: "o2data"
+   store: "zaplatit_zaokr"
+   calculate: "ROUND(zaplatit)"
+   #minimum: 0
+   #precision: 2
+- ExportCSV:
+   source: "o2data"
+   file: "./%DATA%/report.csv"
+   columns:
+    - odbor
+    - jméno a příjmení
+    - mobil
+    - uctovano
+    - treti_strana
+    - data_castka
+    - data_objem : Staženo
+    - data_jednotka
+    - tarif : limit
+    - zaplatit
+    - zaplatit_zaokr
+   type: "ssv"
+   enviroment: "cz"
+
+- Filter:
+   source: "o2data"
+   condition: "celkem>0"
+
+- ExportCSV:
+   source: "o2data"
+   file: "./%DATA/sap_data.csv"
+   columns:
+    - odbor
+    - mobil
+    - celkem
+   type: "ssv"
+   enviroment: "cz"
+
+- ExportCSV:
+   source: "o2data"
+   file: "./%DATA/sap_data_bezDPH.csv"
+   columns:
+    - odbor
+    - mobil
+    - celkemBezDPH
+   type: "ssv"
+   enviroment: "cz"
+#- Filter:
+#   source: "o2data"
+#   condition: "zaplatit>0"
+
+#Agregate:
+#  store: "CUMUL_ZAPLATIT"
+#  source: "o2data"
+#  calculate: "zaplatit"
+#  operation: "+"
+
+#Filter:
+#  source: "numbers"
+#  condition: "first < 10"
+
+#- ExportCSV:
+#   source: "o2data"
+#   file: "./nums.csv"
+#   columns:
+#    - ODB
+#    - Jmeno
+#    - mobil
+#    - uctovano
+#    - treti_strana
+#    - data_castka
+#    - data_objem : Staženo
+#    - data_jednotka
+#    - limit_Kc : limit
+#    - zaplatit_zaokr
+#    - celkem
+#   type: "ssv"
+#   enviroment: "cz"
+
+- Filter:
+   source: "o2data"
+   condition: "zaplatit>0"
+
+- DBSort:
+    source: "o2data"
+    sort: "zaplatit_zaokr"
+    asceding: false
+
+
+
+- ExportCSV:
+   source: "o2data"
+   file: "./%DATA/nums.csv"
+   columns:
+    - jméno a příjmení
+    - mobil
+    - celkem
+    - treti_strana
+    - TARIF: limit
+    - uctovano_bez_limitu
+    - zaplatit
+    - zaplatit_zaokr
+   type: "ssv"
+   enviroment: "cz"
+
+- Report:
+    template: "vyuctovani.erb"
+    file: "./%DATA/vysledek.html"
+    source: "o2data"
+    format: "html"
+    
+#- ExportJSON:
+#   source: "o2data"
+#   file: "./nums.json"
+#   columns:
+#    - ODB
+#    - Jmeno
+#    - mobil
+#    - data_objem
+#    - data_castka
+#    - uctovano
+#    - treti_strana
+#    - limit_Kc : limit
+#    - zaplatit
+#   type: "ssv"
+
+
+#Print:
+#  source: "o2data"
+
+#Print:
+#  source: "AVERAGE"
