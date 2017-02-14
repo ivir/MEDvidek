@@ -154,8 +154,8 @@ Portal::Build.controllers :build do
       app.cook() #provedeme predany recept
       out = app.getOutput()
     rescue Exception => emsg
-      out = "Bohužel došlo v podpurné aplikaci k výjimce s níže uvedeným výstupem. Prosím o zaslání administrátorovi.\n"
-      out += emsg.to_s
+      out = "Bohužel došlo v podpurné aplikaci k výjimce s níže uvedeným výstupem. Prosím o zaslání administrátorovi.<br />\n"
+      out += emsg.message
       return render 'build/output.erb'
     end
     return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
@@ -215,7 +215,7 @@ Portal::Build.controllers :build do
       @output = out
     rescue Exception => emsg
       @output = "Bohužel došlo v podpurné aplikaci k výjimce s níže uvedeným výstupem. Prosím o zaslání administrátorovi.\n"
-      @output += emsg
+      @output += emsg.message
     end
     render 'build/output.erb'
     #return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
