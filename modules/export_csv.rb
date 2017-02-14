@@ -1,6 +1,8 @@
 require_relative('../module_med')
 require_relative('../db_storage')
 
+require 'csv'
+
 class ExportCSV < ModuleMED
   def initialize
     @db = Dataset.new
