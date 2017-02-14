@@ -57,7 +57,7 @@ class LoadCSV < ModuleMED
         separator = ','
     end
 
-    CSV.foreach(@file,col_sep: separator) do |line|
+    CSV.foreach(@file,col_sep: separator,converters: :numeric) do |line|
       if(i <= 0)
         line.each { |column|
           # prevadi se na mala pismena kvuli vypoctum
@@ -73,6 +73,11 @@ class LoadCSV < ModuleMED
             next
           end
 
+          unless tval.is_a?(String)
+            #povedla se konverze na cislo -> rovnou ulozime
+            td.push(tval)
+            next
+          end
           tval.gsub!(/^".*"$/,'')
 
           if(tval =~ /^[+-]{0,1}\d+\s*$/)
@@ -100,6 +105,7 @@ class LoadCSV < ModuleMED
 
           if(tval =~ /^[+-]?\d+[\S\s]*\d*,?\d+[e+\-\d]*\s*$/)
             #pouzita ceska forma zapisu
+            #puts "Prevedeno z ceske normy"
             tval.gsub!(/[^+\-0-9,e]/,'')
             tval.tr!(",",".")
             begin # pokud regularni vyraz zachyti retezec tvoreny cislem a pomlckou, pak to ulozi jako retezec
