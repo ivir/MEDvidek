@@ -47,11 +47,11 @@ class Compute < ModuleMED
       #nepocitame neco v datasetu -> navratime cislo do promenne
       @memory["output"] = @destination
 
-      hodnota = compute(nil)
-      if hodnota
-        hodnota = hodnota.round(@precision) unless @precision.nil?
+      result = compute(nil)
+      if result
+        result = result.round(@precision) unless @precision.nil?
       end
-      @memory.store(@destination,hodnota) unless @destination.nil?
+      @memory.store(@destination, result) unless @destination.nil?
       return
     end
 
@@ -77,15 +77,15 @@ class Compute < ModuleMED
         end
       end
     #-----
-      hodnota = compute(nil)
-      if hodnota
-        hodnota = hodnota.round(@precision) unless @precision.nil?
-        #print "Vyšlo #{hodnota}\n"
-        #hodnota = @minimum if (!(@minimum.nil?) && (hodnota < @minimum))
-        #hodnota = @maximum if (!(@maximum.nil?) && (hodnota > @maximum))
+      result = compute(nil)
+      if result
+        result = result.round(@precision) unless @precision.nil?
+        #print "Vyšlo #{result}\n"
+        #result = @minimum if (!(@minimum.nil?) && (result < @minimum))
+        #result = @maximum if (!(@maximum.nil?) && (result > @maximum))
       end
 
-      temp.store(@destination,hodnota)
+      temp.store(@destination,result)
 
       value.merge!(temp)
 
@@ -112,15 +112,15 @@ class Agregate < Compute
       #nepocitame neco v datasetu -> navratime cislo do promenne
       @memory["output"] = @destination
 
-      hodnota = compute(nil)
-      if hodnota
-        hodnota = hodnota.round(@precision) unless @precision.nil?
+      result = compute(nil)
+      if result
+        result = result.round(@precision) unless @precision.nil?
       end
-      @memory.store(@destination,hodnota) unless @destination.nil?
+      @memory.store(@destination,result) unless @destination.nil?
       return
     end
 
-    #vysledkem bude hodnota
+    #vysledkem bude result
     @memory["output"] = @destination
 
     @what.each do |value|
