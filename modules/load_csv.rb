@@ -1,6 +1,7 @@
 require_relative('../module_med')
 require_relative('../db_storage')
 
+require 'csv'
 
 class LoadCSV < ModuleMED
   def initialize
@@ -47,25 +48,31 @@ class LoadCSV < ModuleMED
     i = 0
     td = Array.new
 
-    #TODO osetrit situaci, kdy je v uvozovkach strednik; RESENI - nalezeni pozici vsech uvozovek a stredniku a podle poctu delit
+    case @type
+      when 'csv'
+        separator = ','
+      when 'ssv'
+        separator = ';'
+      else
+        separator = ','
+    end
 
-    data.each_line { |line|
-      #printf(line)
-      line.encode!('UTF-8','UTF-8', :invalid => :replace) #osetreni chybneho kodovani
-      line.tr!("\n","")
-      values = line.split(",") if @type == "csv"
-      values = line.split(";") if @type == "ssv"
+    CSV.foreach(@file,col_sep: separator) do |line|
       if(i <= 0)
-        values.each { |column|
+        line.each { |column|
           # prevadi se na mala pismena kvuli vypoctum
             @db.add_column(column.downcase(),nil)
         }
         i = i + 1
         next
       else
-        #print "#{values}\n"
         td.clear()
-        values.each { |tval|
+        line.each { |tval|
+          if tval.nil? then
+            td.push(nil)
+            next
+          end
+
           tval.gsub!(/^".*"$/,'')
 
           if(tval =~ /^[+-]{0,1}\d+\s*$/)
@@ -82,8 +89,8 @@ class LoadCSV < ModuleMED
           end
 
           if(tval =~ /^[+-]?\d+\s*\d*\.\d+[e+\-\d]*\s*$/)
-              td.push(Float(tval));
-              next
+            td.push(Float(tval));
+            next
           end
 
           if(tval =~ /^\d+-\d+$/)
@@ -104,17 +111,16 @@ class LoadCSV < ModuleMED
             next
           end
           if tval.nil?
-              td.push(0);
-              next
+            td.push(0)
+            next
           end
           #nebylo rozpoznano co to jest -> ulozime jak to je
           td.push(String(tval))
         }
-        #print "#{td}\n"
         @db.push td
       end
       i = i + 1
-    }
+    end
     #@store = @db
     #print @db
     @memory.store(@store,@db)
