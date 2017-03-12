@@ -43,4 +43,8 @@ Portal::App.controllers :accounting do
 
   end
 
+  post :import do
+
+  end
+
 end

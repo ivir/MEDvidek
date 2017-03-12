@@ -20,7 +20,8 @@ Portal::App.controllers :sim do
   # end
   
   get :index do
-
+    @phones = Sim.all
+    render "sim/list.erb"
   end
 
   post :create do
@@ -32,6 +33,10 @@ Portal::App.controllers :sim do
   end
 
   post :delete do
+
+  end
+
+  get :sync do
 
   end
 

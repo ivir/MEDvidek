@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 5) do
+ActiveRecord::Schema.define(version: 8) do
+
+  create_table "accountings", force: :cascade do |t|
+    t.string   "username"
+    t.string   "name"
+    t.string   "surname"
+    t.integer  "division"
+    t.integer  "department"
+    t.integer  "phone"
+    t.float    "voice"
+    t.float    "data"
+    t.float    "roaming"
+    t.date     "from"
+    t.date     "to"
+    t.text     "note"
+    t.boolean  "disabled"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -48,6 +66,31 @@ ActiveRecord::Schema.define(version: 5) do
     t.datetime "updated_at"
     t.text     "information"
     t.text     "reference"
+  end
+
+  create_table "sims", force: :cascade do |t|
+    t.string   "serial"
+    t.integer  "phone"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tariffs", force: :cascade do |t|
+    t.string   "user"
+    t.string   "username"
+    t.string   "department"
+    t.string   "division"
+    t.integer  "phone"
+    t.string   "tariffVoice"
+    t.string   "tariffData"
+    t.string   "note"
+    t.boolean  "valid"
+    t.date     "validFrom"
+    t.date     "validTo"
+    t.date     "change"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end

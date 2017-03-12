@@ -1,6 +1,6 @@
 class CreateSiMs < ActiveRecord::Migration
   def self.up
-    create_table :si_ms do |t|
+    create_table :sims do |t|
       t.string :serial
       t.integer :phone
       t.boolean :active
@@ -9,6 +9,6 @@ class CreateSiMs < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :si_ms
+    drop_table :sims
   end
 end
