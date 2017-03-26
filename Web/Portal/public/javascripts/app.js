@@ -30,3 +30,36 @@ function addFile(evt){
 function process(evt){
     return true;
 }
+document.addEventListener("deviceready",configureCSRF);
+$(document).ready(function () { configureCSRF() });
+var CSRF_TOKEN = '';
+
+function configureCSRF() {
+    $.get('/build/csrf_token','', function (data, textStatus, jqXHR) {
+        CSRF_TOKEN = data.csrf;
+    });
+}
+
+function sim_del(evt){
+    var sformData = new FormData();
+    var rodic = evt.target.parentElement.parentElement;
+    var hodnota = $(rodic).find("td");
+    sformData.append("sim",hodnota[1].innerHTML);
+    sformData.append("authenticity_token",CSRF_TOKEN);
+    $.ajax({
+        type: "POST",
+        url: "/sim/delete",
+        data: sformData,
+        processData: false, // Don't process the files
+        contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
+        success: function (data) {
+                //odstranime radek
+                $.removeChild(rodic);
+        }
+    });
+    return false;
+}
+
+function sim_add(evt){
+
+}

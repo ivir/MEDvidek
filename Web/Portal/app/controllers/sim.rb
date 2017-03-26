@@ -25,7 +25,15 @@ Portal::App.controllers :sim do
   end
 
   post :create do
+    unless params["sim"].nil?
+      phone = Sim.new
+      phone.serial = params["sim"]
+      phone.phone = params["phone"]
+      phone.save
+    end
 
+    @phones = Sim.all
+    render "sim/list.erb"
   end
 
   post :update do
@@ -33,7 +41,11 @@ Portal::App.controllers :sim do
   end
 
   post :delete do
+    phone = Sim.find_by serial: params["sim"]
+    phone.delete
 
+    @phones = Sim.all
+    render "sim/list.erb"
   end
 
   get :sync do
