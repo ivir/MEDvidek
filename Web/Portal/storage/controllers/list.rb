@@ -127,7 +127,7 @@ Portal::Storage.controllers :list do
     FileUtils.mkdir_p(userdir)
   end
 
-  get :download, :with => :file, :map => "download" do
+  get :download, :map => "download/*file" do
     if params[:file].nil? then
       halt 404, "Not found"
     end
