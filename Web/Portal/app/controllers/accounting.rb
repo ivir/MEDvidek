@@ -20,7 +20,7 @@ Portal::App.controllers :accounting do
   # end
   
   get :index do
-
+    render "index"
   end
 
   get :list do

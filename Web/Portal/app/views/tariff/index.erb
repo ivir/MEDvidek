@@ -19,7 +19,7 @@
         <li class="dropdown active">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lidé<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><%= link_to "Tarify", Portal::App.url(:tariff, :index) %></li>
+            <li><%= link_to "Tarify", Portal::App.url(:accounting, :index) %></li>
             <li><%= link_to "SIM", Portal::App.url(:sim, :index) %></li>
             <li><%= link_to "Zahraniční cesty", Portal::App.url(:accounting, :index) %></li>
             <li><%= link_to "Lidé", Portal::App.url(:accounting, :index) %></li>
@@ -42,10 +42,10 @@
 </nav>
 
 <div class="starter-template">
-  <h1>Přehled Tarifů</h1>
+  <h1>Tarify</h1>
   <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading">Přehled tarifů</div>
+    <div class="panel-heading">Tarify</div>
     <div class="panel-body">
       <p>Přehled dostupných tarifů</p>
     </div>
@@ -54,7 +54,7 @@
       <table class=".table tariff">
         <tr><th>NUM</th><th>Název tarifu</th><th>Částka</th></tr>
         <tr><td><button class="btn btn-default" onClick="tariff_add(event)">Přidat</button></td><td><input type="text" name="name" class="form-control" placeholder="Název tarifu" aria-describedby="basic-addon1"></td><td><input type="number" name="price" class="form-control" placeholder="Částka" aria-describedby="basic-addon1"></td></tr>
-        <% 1.times do |rate| %>
+        <% @tariffs.each do |rate| %>
             <tr><td><button class="btn btn-default" type="button" onClick="tariff_del(event);return false;">Smazat</button></td><td><%= rate %></td><td><%= rate %></td></tr>
         <% end %>
       </table>
