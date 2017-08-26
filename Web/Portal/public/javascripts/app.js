@@ -60,6 +60,46 @@ function sim_del(evt){
     return false;
 }
 
+function js_post(path,val,ret_func){
+    var sformData = new FormData();
+    sformData.append("authenticity_token",CSRF_TOKEN);
+    sformData.append("data",val);
+    $.ajax({
+        type: "POST",
+        url: path,
+        data: sformData,
+        processData: false, // Don't process the files
+        contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
+        success: function (data) {
+            //odstranime radek
+            if(ret_func != null){
+                ret_func(data);
+            }
+        }
+    });
+    return false;
+}
+
+function js_get(path,val,ret_func){
+    var sformData = new FormData();
+    sformData.append("authenticity_token",CSRF_TOKEN);
+    sformData.append("data",val);
+    $.ajax({
+        type: "GET",
+        url: path,
+        data: sformData,
+        processData: false, // Don't process the files
+        contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
+        success: function (data) {
+            //odstranime radek
+            if(ret_func != null){
+                ret_func(data);
+            }
+        }
+    });
+    return false;
+}
+
 function sim_add(evt){
 
 }
