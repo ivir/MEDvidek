@@ -1,5 +1,5 @@
 Portal::App.controllers :sim do
-  
+  layout "main"
   # get :index, :map => '/foo/bar' do
   #   session[:foo] = 'bar'
   #   render 'index'

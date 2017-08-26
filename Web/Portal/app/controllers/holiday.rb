@@ -1,7 +1,8 @@
 Portal::App.controllers :holiday do
+  layout "main"
 
   get :index do
     @tariffs = Tariff.all
-    render "tariff/index"
+    render "tariff/holiday"
   end
 end
