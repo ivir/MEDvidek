@@ -159,6 +159,8 @@ function sendPOST(path,source,pageReload, ret_func){
             //odstranime radek
             if(ret_func != null){
                 ret_func(data);
+            } else {
+                if(pageReload) window.location.reload(true);
             }
         }
     });

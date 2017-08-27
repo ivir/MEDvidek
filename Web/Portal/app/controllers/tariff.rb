@@ -46,14 +46,19 @@ Portal::App.controllers :tariff do
           tariffs = tariffs[0] if tariffs.size == 1
           tariffs = tariffs.split(",") if tariffs.include?(",")
         end
-        tariffs.each do |tar|
-          logger.debug("Pridavam #{tar}")
-          tariff = Tariff.find_by_id(tar)
+        if tariffs.size == 1
+          tariff = Tariff.find_by_id(tariffs)
           package.tariffs << tariff unless tariff.nil?
+        else
+          tariffs.each do |tar|
+            logger.debug("Pridavam #{tar}")
+            tariff = Tariff.find_by_id(tar)
+            package.tariffs << tariff unless tariff.nil?
+          end
         end
         package.save
     end
-    redirect :index
+    return 200
   end
 
   post :delete, :map =>"delete/*model" do
@@ -69,7 +74,7 @@ Portal::App.controllers :tariff do
         package = Package.find_by_id(params[:data])
         package.destroy unless package.nil?
     end
-    render "tariff/index"
+    return 200
   end
 
   post :create do
