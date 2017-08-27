@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 8) do
+ActiveRecord::Schema.define(version: 10) do
 
   create_table "accountings", force: :cascade do |t|
     t.string   "username"
@@ -68,10 +68,47 @@ ActiveRecord::Schema.define(version: 8) do
     t.text     "reference"
   end
 
+  create_table "limits", force: :cascade do |t|
+    t.text     "name"
+    t.text     "parameter"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "packages", force: :cascade do |t|
+    t.text     "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "packages_tarriffs", id: false, force: :cascade do |t|
+    t.integer "package_id"
+    t.integer "tariff_id"
+    t.index ["package_id"], name: "index_packages_tarriffs_on_package_id"
+    t.index ["tariff_id"], name: "index_packages_tarriffs_on_tariff_id"
+  end
+
   create_table "sims", force: :cascade do |t|
     t.string   "serial"
     t.integer  "phone"
     t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tariffs", force: :cascade do |t|
+    t.text     "name"
+    t.float    "price"
+    t.integer  "limit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "travels", force: :cascade do |t|
+    t.integer  "phone"
+    t.date     "from"
+    t.date     "till"
+    t.integer  "package_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
