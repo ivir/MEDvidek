@@ -76,21 +76,4 @@ ActiveRecord::Schema.define(version: 8) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tariffs", force: :cascade do |t|
-    t.string   "user"
-    t.string   "username"
-    t.string   "department"
-    t.string   "division"
-    t.integer  "phone"
-    t.string   "tariffVoice"
-    t.string   "tariffData"
-    t.string   "note"
-    t.boolean  "valid"
-    t.date     "validFrom"
-    t.date     "validTo"
-    t.date     "change"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
 end
