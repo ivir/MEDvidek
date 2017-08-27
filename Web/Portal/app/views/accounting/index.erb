@@ -5,15 +5,6 @@
     <div class="panel-body">
       <p>Přehled dostupných tarifů</p>
     </div>
-    <form class="navbar-form navbar-left" method="post" action="">
-      <%= csrf_token_field %>
-      <table class=".table tariff">
-        <tr><th>NUM</th><th>Název tarifu</th><th>Částka</th></tr>
-        <tr><td><button class="btn btn-default" onClick="tariff_add(event)">Přidat</button></td><td><input type="text" name="name" class="form-control" placeholder="Název tarifu" aria-describedby="basic-addon1"></td><td><input type="number" name="price" class="form-control" placeholder="Částka" aria-describedby="basic-addon1"></td></tr>
-        <% 1.times do |rate| %>
-            <tr><td><button class="btn btn-default" type="button" onClick="tariff_del(event);return false;">Smazat</button></td><td><%= rate %></td><td><%= rate %></td></tr>
-        <% end %>
-      </table>
     </form>
 
   </div>

@@ -81,11 +81,11 @@ ActiveRecord::Schema.define(version: 10) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "packages_tarriffs", id: false, force: :cascade do |t|
+  create_table "packages_tariffs", id: false, force: :cascade do |t|
     t.integer "package_id"
     t.integer "tariff_id"
-    t.index ["package_id"], name: "index_packages_tarriffs_on_package_id"
-    t.index ["tariff_id"], name: "index_packages_tarriffs_on_tariff_id"
+    t.index ["package_id"], name: "index_packages_tariffs_on_package_id"
+    t.index ["tariff_id"], name: "index_packages_tariffs_on_tariff_id"
   end
 
   create_table "sims", force: :cascade do |t|
@@ -97,11 +97,12 @@ ActiveRecord::Schema.define(version: 10) do
   end
 
   create_table "tariffs", force: :cascade do |t|
+    t.integer  "limit_id"
     t.text     "name"
     t.float    "price"
-    t.integer  "limit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["limit_id"], name: "index_tariffs_on_limit_id"
   end
 
   create_table "travels", force: :cascade do |t|
