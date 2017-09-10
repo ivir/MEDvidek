@@ -129,7 +129,12 @@ function sendPOST(path,source,pageReload, ret_func){
                     val.clear();
                     checkboxes = "";
                 }
-                sformData.append(parametr.name, parametr.value);
+                if(parametr.type == "file"){
+                    sformData.append(parametr.name,parametr.files[0]);
+                } else {
+                    sformData.append(parametr.name, parametr.value);
+                }
+
             }
 
         } else if (parametr.tagName == "SELECT") {
@@ -153,6 +158,7 @@ function sendPOST(path,source,pageReload, ret_func){
         type: "POST",
         url: path,
         data: sformData,
+        cache: false,
         processData: false, // Don't process the files
         contentType: false, // Set content type to false as jQuery will tell the server its a query string request (zdroj: http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax)
         success: function (data) {
