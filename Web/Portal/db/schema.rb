@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 10) do
+ActiveRecord::Schema.define(version: 11) do
 
   create_table "accountings", force: :cascade do |t|
     t.string   "username"
@@ -68,11 +68,43 @@ ActiveRecord::Schema.define(version: 10) do
     t.text     "reference"
   end
 
+  create_table "contacts", force: :cascade do |t|
+    t.integer "persona_id"
+    t.text    "type"
+    t.text    "value"
+    t.index ["persona_id"], name: "index_contacts_on_persona_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer  "sim_id"
+    t.float    "total"
+    t.float    "others"
+    t.float    "request"
+    t.date     "month"
+    t.boolean  "correction"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sim_id"], name: "index_invoices_on_sim_id"
+  end
+
   create_table "limits", force: :cascade do |t|
     t.text     "name"
     t.text     "parameter"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "mobiles", force: :cascade do |t|
+    t.integer  "persona_id"
+    t.integer  "sim_id"
+    t.integer  "package_id"
+    t.date     "from"
+    t.date     "to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["package_id"], name: "index_mobiles_on_package_id"
+    t.index ["persona_id"], name: "index_mobiles_on_persona_id"
+    t.index ["sim_id"], name: "index_mobiles_on_sim_id"
   end
 
   create_table "packages", force: :cascade do |t|
@@ -86,6 +118,28 @@ ActiveRecord::Schema.define(version: 10) do
     t.integer "tariff_id"
     t.index ["package_id"], name: "index_packages_tariffs_on_package_id"
     t.index ["tariff_id"], name: "index_packages_tariffs_on_tariff_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "persona_id"
+    t.text    "type"
+    t.text    "value"
+    t.index ["persona_id"], name: "index_payments_on_persona_id"
+  end
+
+  create_table "personas", force: :cascade do |t|
+    t.text     "name"
+    t.text     "surname"
+    t.text     "username"
+    t.text     "title"
+    t.text     "postitle"
+    t.text     "department"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "contact_id"
+    t.integer  "payment_id"
+    t.index ["contact_id"], name: "index_personas_on_contact_id"
+    t.index ["payment_id"], name: "index_personas_on_payment_id"
   end
 
   create_table "sims", force: :cascade do |t|
