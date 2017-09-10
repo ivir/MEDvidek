@@ -1,0 +1,13 @@
+      <h1>Import uživatelů</h1>
+      <form class="navbar-form navbar-left" method="post" action="" enctype='multipart/form-data'>
+        <%= csrf_token_field %>
+        <div class="form-group">
+          <div class="files">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Soubor pro zpracování (file1)</span>
+              <input type="file" name="data" class="form-control" placeholder="Nahravana data" aria-describedby="basic-addon1">
+              <button class="btn btn-default" type="submit" onClick="sendPOST('/sync/csv',event,false);return false;">Importovat</button>
+            </div>
+          </div>
+        </div>
+      </form>

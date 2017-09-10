@@ -37,7 +37,7 @@
         </tr>
         <% @tariffs.each do |rate| %>
             <% next if rate.nil? %>
-            <tr><td><button class="btn btn-default" type="button" onClick="js_post('/delete/tariff','<%= rate.id %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button></td><td><%= rate.name %></td><td><%= rate.price %></td><td><%= rate.limit.name %></td></tr>
+            <tr><td><button class="btn btn-default" type="button" onClick="js_post('/delete/tariff','<%= rate.id %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button></td><td><%= rate.name %></td><td><%= rate.price %></td><td><%= rate.limit.name unless rate.limit.nil? %></td></tr>
         <% end %>
       </table></p>
     </div>
