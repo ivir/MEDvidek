@@ -8,7 +8,8 @@ class ExportCSV < ModuleMED
     @db = Dataset.new
 
   end
-  def properties(memory,fdata)
+
+  def properties(memory, fdata)
     @store = fdata["source"]
     @memory = memory
     #@store = Dataset.new if @store.nil?
@@ -16,6 +17,8 @@ class ExportCSV < ModuleMED
     @file = fdata["file"]
     @columns = fdata["columns"]
     @enviroment = fdata["enviroment"]
+
+    @nocolumn = !(fdata["nocolumn"].nil?)
   end
 
   def preprocessing(fdata)
@@ -46,25 +49,27 @@ class ExportCSV < ModuleMED
 
     ds = @memory[@store]
 
-    CSV.open(@file,"w",col_sep: separator) { |rcsv|
-      if(@columns.nil?)
-        rcsv << ds.columns
+    CSV.open(@file, "w", col_sep: separator) {|rcsv|
+      if (@columns.nil?)
+        rcsv << ds.columns unless @nocolumn
         ds.each do |row|
           rcsv << row.values
         end
       else
         #resime prejmenovnai prvku, apod
         arr = Array.new
-        @columns.each do |col|
-          unless (col.class == Hash)
-            arr.push(col)
-          else
-            col.each_pair do |key,value|
-              arr.push(value)
+        if !@nocolumn
+          @columns.each do |col|
+            unless (col.class == Hash)
+              arr.push(col)
+            else
+              col.each_pair do |key, value|
+                arr.push(value)
+              end
             end
           end
+          rcsv << arr
         end
-        rcsv << arr
         # nyni nahrajeme data jak je chteji
         ds.each do |row|
           arr.clear
@@ -77,7 +82,7 @@ class ExportCSV < ModuleMED
               end
 
             else
-              col.each_pair do |key,value|
+              col.each_pair do |key, value|
                 if row[key].nil?
                   arr.push(format(row[key.downcase]))
                 else
@@ -94,16 +99,16 @@ class ExportCSV < ModuleMED
   end
 
   private
-    def separate(arr)
-      case @type
-        when 'csv'
-          separator = ','
-        when 'ssv'
-          separator = ';'
-        else
-          separator = ','
-      end
-      arr.join(separator)
+  def separate(arr)
+    case @type
+      when 'csv'
+        separator = ','
+      when 'ssv'
+        separator = ';'
+      else
+        separator = ','
     end
+    arr.join(separator)
+  end
 
 end
