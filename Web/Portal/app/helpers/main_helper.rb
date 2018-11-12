@@ -10,8 +10,12 @@ module Portal
       def buildTree(path,filter)
         # buildTree generuje na zaklade path strom, ktery navraci
         # navrat je pole poli obsahující cestu a název
-        files = Dir.entries(path)
-        files.delete_if{|val| (val == ".") || (val == "..")}
+        unless Dir.exist?(path)
+          return Array.new
+        end
+
+          files = Dir.entries(path)
+          files.delete_if{|val| (val == ".") || (val == "..")}
 
         out = Array.new
 
