@@ -84,6 +84,7 @@ class LoadO2 < ModuleMED
       @line["mobil"] = convert(phoneNumber)
       @line["uctovano"] = convert summaryPrice
 
+      oneTimeChafges node
       regularCharges node
       usageCharges node
       discounts node
@@ -97,6 +98,13 @@ class LoadO2 < ModuleMED
 
       @line["tarifni_castka"] = convert(standardni_cena)
     end
+
+  def oneTimeCharges(node)
+    regch = node.at_css("oneTimeCharges")
+    jednorazove_poplatky = regch["otcTotalPrice"] unless regch.nil?
+
+    @line["jednorazove_poplatky"] = convert(jednorazove_poplatky)
+  end
 
     def usageCharges(node)
       usach = node.at_css("usageCharges")
