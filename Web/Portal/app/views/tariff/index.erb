@@ -14,11 +14,15 @@
         </tr>
         <% @packages.each do |package| %>
             <% next if package.nil? %>
-            <tr><td><button class="btn btn-default" type="button" onClick="js_post('/delete/package','<%= package.id %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button></td><td><%= package.name %></td>
+            <tr>
               <td>
-                <% package.tariffs.each do |tar| %>
-                  <%= tar.name %>
-                <% end %>
+                  <button class="btn btn-default" type="button" onClick="js_post('/delete/package','<%= package.id %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button>
+                  <button class="btn btn-default" type="button" onClick="sendPOST('/update/package',event,true);return false;">Aktualizovat</button>
+                  <input type="hidden" name="id" value="<%= package.id %>" />
+              </td>
+              <td><input type="text" name="name" class="form-control" value="<%= package.name %>" aria-describedby="basic-addon1"></td>
+              <td>
+                <%= select_tag(:tariffs, :options => @tariffs_select, :multiple => true, :selected => package.tariffs) %>
               </td>
             </tr>
         <% end %>
@@ -37,7 +41,17 @@
         </tr>
         <% @tariffs.each do |rate| %>
             <% next if rate.nil? %>
-            <tr><td><button class="btn btn-default" type="button" onClick="js_post('/delete/tariff','<%= rate.id %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button></td><td><%= rate.name %></td><td><%= rate.price %></td><td><%= rate.limit.name unless rate.limit.nil? %></td></tr>
+            <td>
+              <button class="btn btn-default" type="button" onClick="js_post('/delete/tariff','<%= rate.id %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button>
+              <button class="btn btn-default" type="button" onClick="sendPOST('/update/tariff',event,true);return false;">Aktualizovat</button>
+            </td>
+            <td>
+              <input type="text" name="name" class="form-control" value="<%= rate.name %>" aria-describedby="basic-addon1">
+            </td>
+            <td>
+              <input type="number" name="price" class="form-control" value="<%= rate.price %>" aria-describedby="basic-addon1">
+            </td>
+            <td><%= select_tag(:limit, :options => @limits_select, :selected => rate.limit.name) %> - <%= rate.limit.name %></td></tr>
         <% end %>
       </table></p>
     </div>
@@ -54,7 +68,18 @@
         </tr>
         <% @limits.each do |lim| %>
             <% next if lim.nil? %>
-            <tr><td><button class="btn btn-default" type="button" onClick="js_post('/delete/limit','<%= lim.id %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button></td><td><%= lim.name %></td><td><%= lim.parameter %></td></tr>
+            <tr>
+              <td>
+                <button class="btn btn-default" type="button" onClick="js_post('/delete/limit','<%= lim.id %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button>
+                <button class="btn btn-default" type="button" onClick="sendPOST('/update/limit',event,true);return false;">Aktualizovat</button>
+              </td>
+              <td>
+                <input type="text" name="name" class="form-control" value="<%= lim.name %>" aria-describedby="basic-addon1">
+              </td>
+              <td>
+                <input type="text" name="parameter" class="form-control" value="<%= lim.parameter %>" aria-describedby="basic-addon1">
+              </td>
+            </tr>
         <% end %>
       </table>
       </p>

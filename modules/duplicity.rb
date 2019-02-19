@@ -29,7 +29,7 @@ class Duplicity < ModuleMED
   def execute(fdata)
     #printf "Jdu pracovat s filtrem\n"
     @what.sort(@condition)
-    
+
   end
 
 end

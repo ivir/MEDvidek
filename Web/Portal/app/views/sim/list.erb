@@ -1,11 +1,11 @@
   <h1>Přehled SIM karet</h1>
   <form class="navbar-form navbar-left" method="post" action="<%= Portal::App.url(:sim,:create) %>">
     <%= csrf_token_field %>
-  <table class=".table">
-    <tr><th>NUM</th><th>Číslo karty</th><th>Telefonní číslo</th></tr>
-    <tr><td><button class="btn btn-default" onClick="sim_add(event)">Přidat</button></td><td><input type="text" name="sim" class="form-control" placeholder="Číslo SIM" aria-describedby="basic-addon1"></td><td><input type="text" name="phone" class="form-control" placeholder="Mobilní číslo" aria-describedby="basic-addon1"></td></tr>
-    <% @phones.each do |simcard| %>
-    <tr><td><button class="btn btn-default" type="button" onClick="js_post('/sim/delete','<%= simcard.serial %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button></td><td><%= simcard.serial %></td><td><%= simcard.phone %></td></tr>
-    <% end %>
-  </table>
+    <table class=".table">
+      <tr><th>NUM</th><th>Číslo karty</th><th>Telefonní číslo</th></tr>
+      <tr><td><button class="btn btn-default" onClick="sim_add(event)">Přidat</button></td><td><input type="text" name="sim" class="form-control" placeholder="Číslo SIM" aria-describedby="basic-addon1"></td><td><input type="text" name="phone" class="form-control" placeholder="Mobilní číslo" aria-describedby="basic-addon1"></td></tr>
+      <% @phones.each do |simcard| %>
+        <tr><td><button class="btn btn-default" type="button" onClick="js_post('/sim/delete','<%= simcard.serial %>',function(data) { $(event.target.parentElement.parentElement).remove();});return false;">Smazat</button></td><td><%= simcard.serial %></td><td><%= simcard.phone %></td></tr>
+      <% end %>
+    </table>
   </form>

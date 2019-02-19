@@ -1,5 +1,5 @@
-Portal::App.controllers :accounting do
-  layout "main"
+Portal::App.controllers :editor do
+  
   # get :index, :map => '/foo/bar' do
   #   session[:foo] = 'bar'
   #   render 'index'
@@ -20,31 +20,6 @@ Portal::App.controllers :accounting do
   # end
   
   get :index do
-    @mobiles = Mobile.all
-    render "accounting/index.erb"
-  end
-
-  get :list do
-
-  end
-
-  get :export do
-
-  end
-
-  post :create do
-
-  end
-
-  post :update do
-
-  end
-
-  post :delete do
-
-  end
-
-  post :import do
 
   end
 

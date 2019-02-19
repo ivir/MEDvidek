@@ -11,7 +11,7 @@
         <tr><th>NUM</th><th>Číslo</th><th>Od</th><th>Do</th></tr>
         <tr><td><button class="btn btn-default" onClick="holiday_add(event)">Přidat</button></td><td><input type="phone" name="telephone" class="form-control" placeholder="Telefonní číslo" aria-describedby="basic-addon1"></td><td><input type="date" name="from" class="form-control" placeholder="Čas odjezdu" aria-describedby="basic-addon1"></td><td><input type="date"  name="to" class="form-control" placeholder="Čas odjezdu" aria-describedby="basic-addon1"/></td></tr>
         <% @tariffs.each do |rate| %>
-            <tr><td><button class="btn btn-default" type="button" onClick="holiday_del(event);return false;">Smazat</button></td><td><%= rate %></td><td><%= rate %></td></tr>
+            <tr><td><button class="btn btn-default" type="button" onClick="holiday_del(event);return false;">Smazat</button></td><td><%= rate.phone %></td><td><%= rate.from %></td><td><%= rate.till %></td></tr>
         <% end %>
       </table>
     </form>
