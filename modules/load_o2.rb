@@ -23,7 +23,13 @@ class LoadO2 < ModuleMED
 
     @data = Dataset.new
     @columns.each do |col|
-      @data.add_column(col, 0)
+      unless (col.class == Hash)
+        @data.add_column(col, 0)
+      else
+        col.each_pair do |key, value|
+          @data.add_column(value, 0)
+        end
+      end
     end
     ''
   end
@@ -59,7 +65,13 @@ class LoadO2 < ModuleMED
       subscriber(su)
 
       @columns.each do |col|
-        @content.push @line[col]
+        unless (col.class == Hash)
+          @content.push @line[col]
+        else
+          col.each_pair do |key, value|
+            @content.push @line[key]
+          end
+        end
       end
 
       @data.push @content
@@ -143,6 +155,7 @@ class LoadO2 < ModuleMED
       #nalezne hodnotu a provede konverzi, kterou navrati
       return nil if node.nil?
       where = node.at_css(path)
+      something = ""
       something = where[value] unless where.nil?
 
       convert(something)
