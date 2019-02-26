@@ -30,11 +30,12 @@ class ArbitrMED
     return if mod.nil?
 
     mod.each { |modu,value|
+      #nutno osetrit zavolani parametru bez vlastnosti
       if Object.const_defined?(modu)
         #emodule = eval(modu + ".new")
         emodule = Object.const_get(modu).new
         if emodule.is_a?(ModuleMED)
-          emodule.properties(@memory,value)
+          emodule.properties(@memory,value) unless value.nil?
           execModule(emodule.preprocessing(@memory))
           emodule.execute(@memory)
           execModule(emodule.postprocessing(@memory))
