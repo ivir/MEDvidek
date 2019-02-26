@@ -24,22 +24,29 @@ class LoadO2 < ModuleMED
     @memory["output"] = @store
 
     @data = Dataset.new
-    @requiredcolumns = Array.new
+    @inputcolumns = Array.new
+    @outputcolumns = Array.new
+
     @columns.each do |col|
       unless (col.class == Hash)
-        if @rename[col].nil?
-          @requiredcolumns.push col
-          @data.add_column(col,0)
-        else
-          @requiredcolumns.push @rename[col]
-          @data.add_column(@rename[col],0)
-        end
+          @inputcolumns.push(col)
+          @outputcolumns.push(col)
       else
         col.each_pair do |key, value|
-          @requiredcolumns.push value
-          @data.add_column(value, 0)
+          @inputcolumns.push(key)
+          @outputcolumns.push(value)
         end
       end
+    end
+    @rename.each do |col|
+      col.each_pair do | key, value|
+        position = @inputcolumns.index(key)
+        @outputcolumns[position] = value unless position.nil?
+      end
+    end
+
+    @outputcolumns.each do |col|
+      @data.add_column(col, 0)
     end
     ''
   end
@@ -74,14 +81,8 @@ class LoadO2 < ModuleMED
 
       subscriber(su)
 
-      @columns.each do |col|
-        unless (col.class == Hash)
-          @content.push @line[col]
-        else
-          col.each_pair do |key, value|
-            @content.push @line[key]
-          end
-        end
+      @inputcolumns.each do |col|
+        @content.push @line[col]
       end
 
       @data.push @content
