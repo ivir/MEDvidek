@@ -17,16 +17,26 @@ class LoadO2 < ModuleMED
     @columns = fdata["information"]
     @file = fdata["file"]
 
+    @rename = fdata["rename"]
+
     @file = @memory[@file] unless @memory[@file].nil?
 
     @memory["output"] = @store
 
     @data = Dataset.new
+    @requiredcolumns = Array.new
     @columns.each do |col|
       unless (col.class == Hash)
-        @data.add_column(col, 0)
+        if @rename[col].nil?
+          @requiredcolumns.push col
+          @data.add_column(col,0)
+        else
+          @requiredcolumns.push @rename[col]
+          @data.add_column(@rename[col],0)
+        end
       else
         col.each_pair do |key, value|
+          @requiredcolumns.push value
           @data.add_column(value, 0)
         end
       end
