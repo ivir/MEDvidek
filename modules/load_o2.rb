@@ -107,7 +107,7 @@ class LoadO2 < ModuleMED
       @line["mobil"] = convert(phoneNumber)
       @line["uctovano"] = convert summaryPrice
 
-      oneTimeChafges node
+      oneTimeCharges node
       regularCharges node
       usageCharges node
       discounts node
