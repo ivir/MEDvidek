@@ -156,6 +156,7 @@ Portal::Build.controllers :build do
     rescue Exception => emsg
       out = "Bohužel došlo v podpurné aplikaci k výjimce s níže uvedeným výstupem. Prosím o zaslání administrátorovi.<br />\n"
       out += emsg.message
+      out += emsg.backtrace.join("\r\n")
       return render 'build/output.erb'
     end
     return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
@@ -214,8 +215,9 @@ Portal::Build.controllers :build do
       out = app.getOutput()
       @output = out
     rescue Exception => emsg
-      @output = "Bohužel došlo v podpurné aplikaci k výjimce s níže uvedeným výstupem. Prosím o zaslání administrátorovi.\n"
+      @output = "Bohužel došlo v podpurné aplikaci k výjimce s níže uvedeným výstupem. Prosím o zaslání administrátorovi.\r\n"
       @output += emsg.message
+      @output += emsg.backtrace.join("\r\n")
     end
     render 'build/output.erb'
     #return '{"result":' + out.to_json() + '}' if out.respond_to? :to_json
