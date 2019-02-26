@@ -44,7 +44,7 @@ class LoadCSV < ModuleMED
     @file = @file[0] if @file.is_a?(Array)
 
     @db.clear
-    data = File.open(@file)
+
     i = 0
     td = Array.new
 
@@ -58,15 +58,15 @@ class LoadCSV < ModuleMED
     end
 
     CSV.foreach(@file,col_sep: separator,converters: :numeric) do |line|
-      if(i <= 0)
+      if i <= 0
         line.each { |column|
           # prevadi se na mala pismena kvuli vypoctum
-            @db.add_column(column.downcase(),nil)
+            @db.add_column(column.downcase,nil)
         }
         i = i + 1
         next
       else
-        td.clear()
+        td.clear
         line.each { |tval|
           if tval.nil? then
             td.push(nil)
@@ -80,30 +80,30 @@ class LoadCSV < ModuleMED
           end
           tval.gsub!(/^".*"$/,'')
 
-          if(tval =~ /^[+-]{0,1}\d+\s*$/)
-            td.push(Integer(tval));
+          if tval =~ /^[+-]{0,1}\d+\s*$/
+            td.push(Integer(tval))
             next
           end
 
-          if(tval =~ /^\s*[+-]{0,1}\d+[\s\d]*$/) #osetreni mobilnich cisel
+          if tval =~ /^\s*[+-]{0,1}\d+[\s\d]*$/ #osetreni mobilnich cisel
             tval.gsub!(/[^+\-0-9,e]/,'')
             tval.rstrip!
             tval.lstrip!
-            td.push(Integer(tval));
+            td.push(Integer(tval))
             next
           end
 
-          if(tval =~ /^[+-]?\d+\s*\d*\.\d+[e+\-\d]*\s*$/)
-            td.push(Float(tval));
+          if tval =~ /^[+-]?\d+\s*\d*\.\d+[e+\-\d]*\s*$/
+            td.push(Float(tval))
             next
           end
 
-          if(tval =~ /^\d+-\d+$/)
+          if tval =~ /^\d+-\d+$/
             td.push(String(tval))
             next
           end
 
-          if(tval =~ /^[+-]?\d+[\S\s]*\d*,?\d+[e+\-\d]*\s*$/)
+          if tval =~ /^[+-]?\d+[\S\s]*\d*,?\d+[e+\-\d]*\s*$/
             #pouzita ceska forma zapisu
             #puts "Prevedeno z ceske normy"
             tval.gsub!(/[^+\-0-9,e]/,'')
