@@ -12,12 +12,12 @@ module Portal
 
       #navraci cestu k adresari, TODO - sjednotit zdroj s ostatnimi moduly
       def userDir()
-        storagePath = "temp"
+        storagepath = "temp"
         user = Account.current.surname unless Account.current.nil?
         user = user || "global"
-        store = File.join(storagePath,user)
+        store = File.join(storagepath,user)
         logger.info store
-        return store
+        store
       end
 
       #osetreni snahy uniknout z mista ukladani
@@ -52,6 +52,7 @@ module Portal
         # samostatne je osetrena situace, kdy se jedna o Export nebo Report dat, pak se u parametru file provede nahrada
         data.each { |modu|
           modu.each { |modul,parameters|
+            next if parameters.respond_to?(:each)
             parameters.each {|k, val|
               next unless val.is_a?(String)
 
