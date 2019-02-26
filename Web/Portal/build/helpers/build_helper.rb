@@ -52,7 +52,7 @@ module Portal
         # samostatne je osetrena situace, kdy se jedna o Export nebo Report dat, pak se u parametru file provede nahrada
         data.each { |modu|
           modu.each { |modul,parameters|
-            next if parameters.respond_to?(:each)
+            next unless parameters.respond_to?(:each)
             parameters.each {|k, val|
               next unless val.is_a?(String)
 
