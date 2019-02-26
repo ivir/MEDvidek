@@ -37,7 +37,13 @@ class DBJoin < ModuleMED
   def execute(fdata)
     # spusteni zpracovani
     stor = @memory[@store]
-    stor.join(@memory[@source],@pair)
+    if @source.is_a?(Array)
+      @source.each do |input|
+        stor.join(@memory[input],@pair)
+      end
+    else
+      stor.join(@memory[@source],@pair)
+    end
 
     #puts @memory
   end
