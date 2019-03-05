@@ -38,7 +38,7 @@ class LoadO2 < ModuleMED
         end
       end
     end
-    if !@rename.nil? do
+    if !@rename.nil?
       @rename.each do |col|
         col.each_pair do | key, value|
           position = @inputcolumns.index(key)
