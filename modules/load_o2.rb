@@ -38,10 +38,12 @@ class LoadO2 < ModuleMED
         end
       end
     end
-    @rename.each do |col|
-      col.each_pair do | key, value|
-        position = @inputcolumns.index(key)
-        @outputcolumns[position] = value unless position.nil?
+    if !@rename.nil? do
+      @rename.each do |col|
+        col.each_pair do | key, value|
+          position = @inputcolumns.index(key)
+          @outputcolumns[position] = value unless position.nil?
+        end
       end
     end
 
