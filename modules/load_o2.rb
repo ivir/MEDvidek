@@ -142,7 +142,7 @@ class LoadO2 < ModuleMED
       @line["zpravy_castka"] = getValue(usach,'usageCharge[usageType="M"]','subtotalPrice')
       @line["roaming_castka"] = getValue(usach,'usageCharge[usageType="R"]','subtotalPrice')
 
-      @line["data_objem"] = getValue(usach,'usageCharge[usageType="D"] ucItem','quantity')
+      @line["data_objem"] = getValue(usach,'usageCharge[usageType="D"] ucItem',['quantity','totalUnits'])
       @line["data_jednotka"] = getValue(usach,'usageCharge[usageType="D"] ucItem','displayedUom')
     end
 
@@ -170,6 +170,13 @@ class LoadO2 < ModuleMED
       something = where[value] unless where.nil?
 
       convert(something)
+    end
+
+    def get_value_recursive(node,path,value)
+      node.at_css(path).each do |where|
+        something = ""
+        something = where[value] unless where.nil?
+        end
     end
 
 end
