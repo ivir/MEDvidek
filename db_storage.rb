@@ -109,21 +109,29 @@ class Dataset
         end
 
         #spojeni dat z vice datasetu
-        def join(secDataset,pair)
+        def join(secDataset,pair,append=false)
             #print "\n#{pair}\n"
             pair[0].downcase! unless @columns.include?(pair[0])
             pair[1].downcase! unless secDataset.columns.include?(pair[1])
+            addedIndexes = Array.new
             @data.each do |row|
-                secDataset.each do |row2|
+                secDataset.each_with_index do |row2,index|
                     #print "\nPorovnavam #{row[pair[0]]} s #{row2[pair[1]]}\n"
                   if (row[pair[0]] == row2[pair[1]])
                     row.merge!(row2)
+                    addedIndexes.push(index)
                     break
                   end
                 end
                 #secDataset.find(pair[0])
                 #TODO zoptimalizovat -> zlepsit slozitost z m*n!
             end
+            if append
+                secDataset.each_with_index do |value, index|
+                    row.push(value) unless addedIndexes.include?(index)
+                end
+            end
+
             sloupce = secDataset.columns
             sloupce.each do |sl|
                 set_column(sl,nil)

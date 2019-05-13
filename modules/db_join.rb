@@ -15,6 +15,7 @@ class DBJoin < ModuleMED
     #@store = Dataset.new if @store.nil?
     @source = fdata["source"]
     @pair = fdata["pair"]
+    @append = fdata["append"]
 
     @memory["output"] = @store
   end
@@ -39,10 +40,10 @@ class DBJoin < ModuleMED
     stor = @memory[@store]
     if @source.is_a?(Array)
       @source.each do |input|
-        stor.join(@memory[input],@pair)
+        stor.join(@memory[input],@pair,@append)
       end
     else
-      stor.join(@memory[@source],@pair)
+      stor.join(@memory[@source],@pair,@append)
     end
 
     #puts @memory
