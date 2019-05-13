@@ -128,7 +128,7 @@ class Dataset
             end
             if append
                 secDataset.each_with_index do |value, index|
-                    row.push(value) unless addedIndexes.include?(index)
+                    @data.push(value) unless addedIndexes.include?(index)
                 end
             end
 
