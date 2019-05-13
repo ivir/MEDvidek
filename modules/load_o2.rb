@@ -145,7 +145,12 @@ class LoadO2 < ModuleMED
       @line["roaming_castka"] = getValue(usach,'usageCharge[usageType="R"]','subtotalPrice')
 
       objemy = getValue(usach,'usageCharge[usageType="D"] ucItem',['quantity','totalUnits'],0)
-      @line["data_objem"] = objemy.max
+      if objemy.is_a?(Array)
+        @line["data_objem"] = objemy.max
+      else
+        @line["data_objem"] = objemy
+      end
+
       @line["data_jednotka"] = getValue(usach,'usageCharge[usageType="D"] ucItem','displayedUom')
     end
 
@@ -167,7 +172,7 @@ class LoadO2 < ModuleMED
 
     def getValue(node,path,value,nilvalue=nil)
       #nalezne hodnotu a provede konverzi, kterou navrati
-      return nilvalue if node.nil?
+      return nil if node.nil?
       where = node.at_css(path)
       something = ""
       if value.is_a?(Array)
