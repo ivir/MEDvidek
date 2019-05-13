@@ -29,9 +29,9 @@ class Ping < ModuleMED
 end
 
 module Format
-  def convert(data)
+  def convert(data,nilvalue=nil)
       #provede konverzi retezce na spravny typ vcetne podpory desetinne carky
-      return nil if data.nil?
+      return nilvalue if data.nil?
       data.gsub!(/^".*"$/,'')
 
       if data =~ /^[+-]?\d+\s*$/
