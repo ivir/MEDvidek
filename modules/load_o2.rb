@@ -144,7 +144,8 @@ class LoadO2 < ModuleMED
       @line["zpravy_castka"] = getValue(usach,'usageCharge[usageType="M"]','subtotalPrice')
       @line["roaming_castka"] = getValue(usach,'usageCharge[usageType="R"]','subtotalPrice')
 
-      @line["data_objem"] = getValue(usach,'usageCharge[usageType="D"] ucItem',['quantity','totalUnits'])
+      objemy = getValue(usach,'usageCharge[usageType="D"] ucItem',['quantity','totalUnits'])
+      @line["data_objem"] = objemy.max
       @line["data_jednotka"] = getValue(usach,'usageCharge[usageType="D"] ucItem','displayedUom')
     end
 
@@ -169,9 +170,17 @@ class LoadO2 < ModuleMED
       return nil if node.nil?
       where = node.at_css(path)
       something = ""
-      something = where[value] unless where.nil?
+      if value.is_a?(Array)
+        something = Array.new
+        value.each do |v|
+          something.push(convert(where[v])) unless where.nil?
+        end
+      else
+        something = convert(where[value]) unless where.nil?
+      end
 
-      convert(something)
+      return something
+
     end
 
     def get_value_recursive(node,path,value)
