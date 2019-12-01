@@ -102,11 +102,14 @@ class LoadO2 < ModuleMED
     include Format
 
     def subscriber(node)
-      phoneNumber = node["phoneNumber"]
+      phoneNumber = convert(node["phoneNumber"])
+      coreProductNumber = convert(node["coreProductNumber"])
+      serviceNumber = convert(node["serviceNumber"])
+
       #puts phoneNumber
       summaryPrice = node["summaryPrice"]
 
-      @line["mobil"] = convert(phoneNumber)
+      @line["mobil"] = phoneNumber | coreProductNumber | serviceNumber
       @line["uctovano"] = convert summaryPrice
 
       oneTimeCharges node
